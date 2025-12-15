@@ -16,7 +16,7 @@ const projects = [
     {
         title: "Project Spirit Vein",
         description: "2D Isometric Turn-Based RPG built in Unity. Features dynamic fog of war, shadow casting, and complex persistent world state.",
-        tags: ["Unity", "C#", "Algorithm", "Game Dev"],
+        tags: ["Unity", "C#", "Algorithm", "Game Dev", "In Development"],
         image: "https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?auto=format&fit=crop&q=80&w=1000",
         links: { demo: "/projects/spirit-vein", github: "#" },
     },
