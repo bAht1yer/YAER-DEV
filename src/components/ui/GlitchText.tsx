@@ -12,8 +12,14 @@ interface GlitchTextProps {
 export default function GlitchText({ text1, text2, className = "" }: GlitchTextProps) {
     const [currentText, setCurrentText] = useState(text1);
     const [isGlitching, setIsGlitching] = useState(false);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (!mounted) return;
         const interval = setInterval(() => {
             // Trigger glitch effect randomly
             if (Math.random() > 0.7) {
@@ -35,7 +41,7 @@ export default function GlitchText({ text1, text2, className = "" }: GlitchTextP
         }, 3000);
 
         return () => clearInterval(interval);
-    }, [text1, text2]);
+    }, [text1, text2, mounted]);
 
     return (
         <motion.span

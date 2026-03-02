@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import ElectricGrid from "@/components/ui/ElectricGrid";
+import { SessionProvider } from "next-auth/react";
 
 // ... imports
 
@@ -35,7 +36,9 @@ export default function RootLayout({
       >
         <div className="fixed inset-0 cyber-grid -z-10 pointer-events-none" />
         <ElectricGrid />
-        <SmoothScroll>{children}</SmoothScroll>
+        <SessionProvider>
+          <SmoothScroll>{children}</SmoothScroll>
+        </SessionProvider>
       </body>
     </html>
   );

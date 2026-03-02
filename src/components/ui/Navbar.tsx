@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Code2, Terminal, User, Mail } from "lucide-react";
+import { Menu, X, Code2, Terminal, User, Mail, FileText } from "lucide-react";
 import GlitchText from "./GlitchText";
 
 const navItems = [
     { name: "About", href: "/#about", icon: User },
     { name: "Skills", href: "/#skills", icon: Terminal },
     { name: "Projects", href: "/#projects", icon: Code2 },
+    { name: "Blog", href: "/blog", icon: FileText },
     { name: "Contact", href: "/#contact", icon: Mail },
 ];
 
@@ -37,7 +38,7 @@ export default function Navbar() {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
                     <div className="flex-shrink-0 cursor-pointer">
-                        <Link href="/" className="text-2xl tracking-tighter">
+                        <Link href="/" className="text-2xl tracking-tighter flex items-baseline font-bold leading-none">
                             <span className="text-primary">&lt;</span>
                             <GlitchText text1="YAER" text2="Y43R" className="text-white mx-1" />
                             <span className="text-primary">/&gt;</span>

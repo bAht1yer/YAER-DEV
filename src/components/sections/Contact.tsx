@@ -17,7 +17,7 @@ export default function Contact() {
                 <h2 className="text-4xl font-bold mb-6 flex items-center justify-center gap-3">
                     <span className="text-primary">04.</span> Get In Touch
                 </h2>
-                <p className="text-gray-400 text-lg mb-12">
+                <p className="text-gray-300 text-lg mb-12">
                     I&apos;m currently looking for new opportunities. Whether you have a question or just want to say hi,
                     I&apos;ll try my best to get back to you!
                 </p>
@@ -63,7 +63,7 @@ export default function Contact() {
 
                         <button
                             type="button"
-                            className="w-full md:w-auto px-8 py-3 bg-transparent border border-primary text-primary hover:bg-primary hover:text-black transition-all duration-300 rounded-lg font-medium flex items-center justify-center gap-2 mx-auto"
+                            className="w-full md:w-auto px-8 py-3 bg-transparent border border-primary text-primary hover:bg-primary hover:text-black hover:shadow-[0_0_15px_rgba(0,240,255,0.5)] transition-all duration-300 rounded-lg font-medium flex items-center justify-center gap-2 mx-auto"
                         >
                             <Send className="w-4 h-4" />
                             Send Message

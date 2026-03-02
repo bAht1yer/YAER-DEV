@@ -19,12 +19,19 @@ export default function TypewriterText({
     cursor = true,
     hideCursorOnComplete = false,
 }: TypewriterTextProps & { hideCursorOnComplete?: boolean }) {
-    const [displayedText, setDisplayedText] = useState("");
+    // Start with the full text for SSR / SEO
+    const [displayedText, setDisplayedText] = useState(text);
     const [started, setStarted] = useState(false);
     const [completed, setCompleted] = useState(false);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        if (!started) return;
+        // Once mounted on client, we can clear the text and prepare for animation
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (!started || !mounted) return;
 
         let currentIndex = 0;
         setDisplayedText("");
@@ -44,15 +51,16 @@ export default function TypewriterText({
     }, [started, text, speed]);
 
     useEffect(() => {
+        if (!mounted) return;
         setDisplayedText("");
         setStarted(false);
         const startTimeout = setTimeout(() => {
             setStarted(true);
         }, delay);
         return () => clearTimeout(startTimeout);
-    }, [text, delay]);
+    }, [text, delay, mounted]);
 
-    const showCursor = cursor && started && (!hideCursorOnComplete || !completed);
+    const showCursor = cursor && mounted && (!hideCursorOnComplete || !completed);
 
     return (
         <span className={className}>

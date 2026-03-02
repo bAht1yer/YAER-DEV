@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Section from "../ui/Section";
 import { ExternalLink, Github, Terminal, Cpu } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const projects = [
     {
@@ -30,6 +31,7 @@ const projects = [
 ];
 
 export default function Projects() {
+    const router = useRouter();
     return (
         <Section id="projects" className="bg-transparent relative">
             <div className="max-w-6xl mx-auto z-10 relative">
@@ -52,51 +54,53 @@ export default function Projects() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="group relative glass-panel overflow-hidden hover:neon-border transition-all duration-300 h-full flex flex-col"
+                            className="h-full"
                         >
-                            {/* Cyberpunk Decor */}
-                            <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
-                            <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
-                            <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
-                            <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
+                            <div onClick={() => router.push(project.links.demo)} className="group relative glass-panel overflow-hidden hover:neon-border transition-all duration-300 h-full flex flex-col block cursor-pointer">
+                                {/* Cyberpunk Decor */}
+                                <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
+                                <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
+                                <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
+                                <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
 
-                            {/* Image Overlay */}
-                            <div className="relative h-48 overflow-hidden border-b border-white/10">
-                                <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-300 z-10" />
-                                <Image
-                                    src={project.image}
-                                    alt={project.title}
-                                    fill
-                                    className="object-cover transform group-hover:scale-110 transition-transform duration-500 grayscale group-hover:grayscale-0"
-                                />
-                            </div>
-
-                            {/* Content */}
-                            <div className="p-6 flex-grow flex flex-col">
-                                <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors flex items-center gap-2">
-                                    <Cpu className="w-5 h-5 text-accent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    {project.title}
-                                </h3>
-
-                                <p className="text-gray-400 mb-6 text-sm flex-grow">
-                                    {project.description}
-                                </p>
-
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    {project.tags.map((tag) => (
-                                        <span key={tag} className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 rounded border border-primary/20">
-                                            {tag}
-                                        </span>
-                                    ))}
+                                {/* Image Overlay */}
+                                <div className="relative h-48 overflow-hidden border-b border-white/10">
+                                    <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-300 z-10" />
+                                    <Image
+                                        src={project.image}
+                                        alt={project.title}
+                                        fill
+                                        className="object-cover transform group-hover:scale-110 transition-transform duration-500 grayscale group-hover:grayscale-0"
+                                    />
                                 </div>
 
-                                <div className="flex gap-4 mt-auto">
-                                    <a href={project.links.github} className="text-gray-400 hover:text-white hover:text-glow transition-all">
-                                        <Github className="w-5 h-5" />
-                                    </a>
-                                    <a href={project.links.demo} className="text-gray-400 hover:text-white hover:text-glow transition-all">
-                                        <ExternalLink className="w-5 h-5" />
-                                    </a>
+                                {/* Content */}
+                                <div className="p-6 flex-grow flex flex-col relative z-20">
+                                    <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors flex items-center gap-2">
+                                        <Cpu className="w-5 h-5 text-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                        {project.title}
+                                    </h3>
+
+                                    <p className="text-gray-400 mb-6 text-sm flex-grow">
+                                        {project.description}
+                                    </p>
+
+                                    <div className="flex flex-wrap gap-2 mb-6">
+                                        {project.tags.map((tag) => (
+                                            <span key={tag} className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 rounded border border-primary/20">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    <div className="flex gap-4 mt-auto">
+                                        <a href={project.links.github} onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-white hover:text-glow transition-all">
+                                            <Github className="w-5 h-5" />
+                                        </a>
+                                        <a href={project.links.demo} onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-white hover:text-glow transition-all ml-auto">
+                                            <ExternalLink className="w-5 h-5" />
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>

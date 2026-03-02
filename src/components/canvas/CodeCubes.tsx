@@ -65,6 +65,7 @@ function CodeBlock({
     useEffect(() => {
         if (clickedIndex === index) {
             const newColor = COLORS[Math.floor(Math.random() * COLORS.length)];
+            // eslint-disable-next-line react-hooks/rules-of-hooks
             setColor(newColor);
             onColorChange(index, newColor);
         }
@@ -172,6 +173,16 @@ export default function CodeCubes() {
     const cubeRefs = useRef<THREE.Group[]>([]);
     const [clickedIndex, setClickedIndex] = useState<number | null>(null);
     const raycaster = useMemo(() => new THREE.Raycaster(), []);
+    const [cubeCount, setCubeCount] = useState(COUNT); // Default to full count
+
+    useEffect(() => {
+        const handleResize = () => {
+            setCubeCount(window.innerWidth < 768 ? 2 : COUNT);
+        };
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     // Centralized position validator to prevent overlaps
     const validatePosition = useCallback((newPos: THREE.Vector3, resetY: number) => {
@@ -181,7 +192,9 @@ export default function CodeCubes() {
         safePos.y = resetY;
 
         do {
-            safePos.x = (Math.random() - 0.5) * viewport.width * 0.9;
+            const side = Math.random() > 0.5 ? 1 : -1;
+            // Generate cubes primarily on the left or right 20% to avoid overlapping central text
+            safePos.x = side * (viewport.width * 0.25 + Math.random() * viewport.width * 0.2);
             // Stagger Y slightly so they don't all appear exactly at the same line
             safePos.y = resetY + Math.random() * 5;
 
@@ -244,16 +257,20 @@ export default function CodeCubes() {
         };
     }, [camera, raycaster]);
 
-    const cubes = useMemo<CubeData[]>(() => {
+    const [cubes, setCubes] = useState<CubeData[]>([]);
+
+    useEffect(() => {
         const positions: THREE.Vector3[] = [];
         const minDistance = 7; // Much stricter initial separation
+        const newCubes: CubeData[] = [];
 
-        for (let i = 0; i < COUNT; i++) {
+        for (let i = 0; i < cubeCount; i++) {
             let attempts = 0;
             let newPos: THREE.Vector3;
             do {
+                const side = Math.random() > 0.5 ? 1 : -1;
                 newPos = new THREE.Vector3(
-                    (Math.random() - 0.5) * 22,
+                    side * (6 + Math.random() * 5), // Keep away from center X=0, between 6 and 11
                     (Math.random() - 0.5) * 18,
                     -2 - i * 2 // Force distinct Z layers
                 );
@@ -263,22 +280,23 @@ export default function CodeCubes() {
                 positions.some((p) => p.distanceTo(newPos) < minDistance)
             );
             positions.push(newPos);
+
+            newCubes.push({
+                position: newPos,
+                baseVelocity: 0.005 + Math.random() * 0.005, // More uniform velocity to prevent catching up
+                rotationSpeed: new THREE.Vector3(
+                    (Math.random() - 0.5) * 0.8,
+                    (Math.random() - 0.5) * 0.8,
+                    (Math.random() - 0.5) * 0.4
+                ),
+                scale: 0.8 + Math.random() * 0.5,
+                color: COLORS[i % COLORS.length],
+                text: PHRASES[i % PHRASES.length],
+            });
         }
 
-        // Sort slightly by Z so they render predictably? Not strictly needed for collision logic
-        return positions.map((position, i) => ({
-            position,
-            baseVelocity: 0.005 + Math.random() * 0.005, // More uniform velocity to prevent catching up
-            rotationSpeed: new THREE.Vector3(
-                (Math.random() - 0.5) * 0.8,
-                (Math.random() - 0.5) * 0.8,
-                (Math.random() - 0.5) * 0.4
-            ),
-            scale: 0.8 + Math.random() * 0.5,
-            color: COLORS[i % COLORS.length],
-            text: PHRASES[i % PHRASES.length],
-        }));
-    }, []);
+        setCubes(newCubes);
+    }, [cubeCount]);
 
     const handleColorChange = useCallback((index: number, color: string) => {
         // Color change handled via state
