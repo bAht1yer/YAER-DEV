@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-
+import { revalidatePath } from "next/cache";
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
     const session = await auth();
     if (!session?.user?.id) {
@@ -58,6 +58,8 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
             }
         });
 
+        revalidatePath("/blog");
+        revalidatePath(`/blog/${slug}`);
         return NextResponse.json(post);
     } catch (error: unknown) {
         const err = error as Error;
@@ -78,6 +80,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
             where: { id }
         });
 
+        revalidatePath("/blog");
         return NextResponse.json({ success: true });
     } catch (error: unknown) {
         const err = error as Error;

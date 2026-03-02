@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-
+import { revalidatePath } from "next/cache";
 export async function POST(req: Request) {
     const session = await auth();
     if (!session?.user?.id) {
@@ -33,8 +33,10 @@ export async function POST(req: Request) {
             }
         });
 
+        revalidatePath("/blog");
         return NextResponse.json(post);
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        const err = error as Error;
+        return NextResponse.json({ error: err.message }, { status: 500 });
     }
 }
