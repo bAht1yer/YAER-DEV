@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Section from "../ui/Section";
 import ContactForm from "../ui/ContactForm";
+import { Terminal } from "lucide-react";
 
 export default function Contact() {
 
@@ -15,7 +16,8 @@ export default function Contact() {
                 transition={{ duration: 0.8 }}
                 className="max-w-2xl mx-auto w-full text-center"
             >
-                <h2 className="text-4xl font-bold mb-6 flex items-center justify-center gap-3">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 flex items-center justify-center gap-3">
+                    <Terminal className="text-primary w-8 h-8 md:w-10 md:h-10" />
                     <span className="text-primary">04.</span> Get In Touch
                 </h2>
                 <p className="text-gray-300 text-lg mb-12">

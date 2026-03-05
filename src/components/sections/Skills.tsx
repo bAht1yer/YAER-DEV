@@ -5,10 +5,11 @@ import Section from "../ui/Section";
 
 const skills = [
     { category: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Three.js"] },
-    { category: "Backend", items: ["Node.js", "Express", "PostgreSQL", "GraphQL", "Python"] },
-    { category: "Tools", items: ["Git", "Docker", "Figma", "Blender", "VS Code"] },
-    { category: "Design", items: ["UI/UX", "Motion Design", "3D Modeling", "Prototyping"] },
+    { category: "Backend", items: ["Node.js", "PostgreSQL", "Prisma ORM", "REST APIs", "Python"] },
+    { category: "AI & Automation", items: ["Dify.ai", "LLM Chatflows", "OpenAI API", "Prompt Engineering", "RAG Pipelines"] },
+    { category: "DevOps & Tools", items: ["Git", "Docker", "Vercel", "Linux / VPS", "CI/CD"] },
 ];
+import { Terminal } from "lucide-react";
 
 export default function Skills() {
     return (
@@ -19,8 +20,9 @@ export default function Skills() {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-5xl font-bold mb-12 text-white"
+                    className="text-4xl md:text-5xl font-bold mb-12 text-white flex items-center gap-3"
                 >
+                    <Terminal className="text-primary w-8 h-8 md:w-10 md:h-10" />
                     <span className="text-primary">02.</span> Tech Stack
                 </motion.h2>
 

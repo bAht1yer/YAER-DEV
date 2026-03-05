@@ -15,16 +15,17 @@ export default function About() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
                 >
-                    <h2 className="text-4xl font-bold mb-6 flex items-center gap-3">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 flex items-center gap-3">
+                        <TerminalIcon className="text-primary w-8 h-8 md:w-10 md:h-10" />
                         <span className="text-primary">01.</span> About Me
                     </h2>
                     <p className="text-gray-400 text-lg mb-6 leading-relaxed">
-                        I&apos;m a passionate <span className="text-white">Full Stack Developer</span> based in the digital realm.
-                        I specialize in building exceptional websites, applications, and everything in between.
+                        I&apos;m a <span className="text-white">Full Stack Developer</span> with a focus on
+                        building production-grade web applications and integrating <span className="text-white">AI-powered solutions</span> into real-world products.
                     </p>
                     <p className="text-gray-400 text-lg leading-relaxed">
-                        With a background in <span className="text-accent">3D Graphics</span> and <span className="text-accent">Web Technologies</span>,
-                        I bridge the gap between design and engineering to create truly immersive experiences.
+                        From deploying autonomous <span className="text-accent">AI chatflows</span> to architecting
+                        <span className="text-accent"> full-stack platforms</span>, I specialize in bridging the gap between emerging AI capabilities and scalable web infrastructure.
                     </p>
                 </motion.div>
 
@@ -55,13 +56,13 @@ export default function About() {
                                 <span className="text-primary">&quot;name&quot;</span>: <span className="text-accent">&quot;YAER&quot;</span>,
                             </div>
                             <div className="pl-4">
-                                <span className="text-primary">&quot;role&quot;</span>: <span className="text-accent">&quot;Creative Developer&quot;</span>,
+                                <span className="text-primary">&quot;role&quot;</span>: <span className="text-accent">&quot;Full Stack + AI Developer&quot;</span>,
                             </div>
                             <div className="pl-4">
-                                <span className="text-primary">&quot;location&quot;</span>: <span className="text-accent">&quot;Worldwide&quot;</span>,
+                                <span className="text-primary">&quot;location&quot;</span>: <span className="text-accent">&quot;Canada&quot;</span>,
                             </div>
                             <div className="pl-4">
-                                <span className="text-primary">&quot;hobbies&quot;</span>: [<span className="text-accent">&quot;Coding&quot;</span>, <span className="text-accent">&quot;Gaming&quot;</span>, <span className="text-accent">&quot;Design&quot;</span>]
+                                <span className="text-primary">&quot;focus&quot;</span>: [<span className="text-accent">&quot;AI Integration&quot;</span>, <span className="text-accent">&quot;Web Apps&quot;</span>, <span className="text-accent">&quot;Automation&quot;</span>]
                             </div>
                             {`}`}
                         </div>

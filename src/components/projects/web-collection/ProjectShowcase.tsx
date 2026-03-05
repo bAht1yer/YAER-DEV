@@ -94,6 +94,11 @@ export default function ProjectShowcase() {
                                         {t}
                                     </span>
                                 ))}
+                                {project.status && (
+                                    <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-primary/20 text-primary border border-primary/30 uppercase tracking-tighter">
+                                        {project.status}
+                                    </span>
+                                )}
                             </div>
 
                             <div className="pt-4">
