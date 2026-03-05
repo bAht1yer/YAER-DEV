@@ -1,42 +1,57 @@
-# YAER Developer Portfolio
+# YAER | Developer Portfolio & Services
 
-This is the source code for the portfolio and service agency site of YAER (Y43R). It is built with Next.js, uses Framer Motion for animations, and integrates a custom AI Chatflow using Dify.ai for the Revamp Solutions demonstration.
+This repository contains the source code for the personal portfolio and service agency website of **YAER** (Y43R). It is designed to showcase a collection of full-stack projects, digital services, and technical capabilities, featuring an immersive 3D background and smooth, high-performance animations.
+
+## Key Features & Highlights
+
+- **Immersive 3D Experience:** Uses `@react-three/fiber` and `@react-three/drei` to render an interactive, cyber-themed background canvas.
+- **Web Project Collection:** A dedicated showcase of functional, deployed applications, including:
+  - **Revamp Solutions:** A live service agency site integrating a custom autonomous AI Chatbot powered by **Dify.ai**.
+  - **Mystery Cavern:** A complex state-driven Roguelike RPG.
+  - **Ombrilo & BlogYu:** E-commerce and full-stack SaaS SaaS platforms with Stripe and CMS database integrations.
+- **Secure Authentication:** Integrated `NextAuth.js` credentials provider and Prisma ORM for an embedded dashboard and blog management system.
+- **Automated Contact Flow:** Embedded modal architecture that uses `Resend` to dispatch contact form submissions directly to email.
 
 ## Technologies Used
 
-- Next.js 15 (App Router)
-- React 19
-- Framer Motion
-- Tailwind CSS
-- Prisma ORM
-- NextAuth.js
-- Dify AI (Chatbot Integration)
-- Resend (Email API)
+- **Frontend Framework:** Next.js 15 (App Router), React 19
+- **Styling & Animation:** Tailwind CSS, Framer Motion, clsx
+- **3D Graphics:** Three.js, React Three Fiber
+- **Database & Auth:** Prisma ORM, PostgreSQL (Vercel Postgres), NextAuth, bcryptjs
+- **Integrations:** Dify AI, Resend Email API
 
-## Getting Started
+## Local Development Requirements
 
-First, install dependencies:
+1. **Install Dependencies:**
 
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-Copy the example environment variables:
+2. **Setup Environment:**
+   Copy the example environment variables template to set up your local secrets.
 
-```bash
-cp .env.example .env.local
-```
+   ```bash
+   cp .env.example .env.local
+   ```
 
-Fill in the `.env.local` file with your actual keys.
+   *Note: Ensure you fill in valid `PRISMA_DATABASE_URL`, `AUTH_SECRET`, and `RESEND_API_KEY` values.*
 
-Then, run the development server:
+3. **Database Migration:**
 
-```bash
-npm run dev
-```
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. **Run Server:**
+
+   ```bash
+   npm run dev
+   ```
+
+   Navigate to [http://localhost:3000](http://localhost:3000) to view the application.
 
 ## Deployment
 
-See `VERCEL_DEPLOYMENT.md` for instructions on deploying the full stack application to Vercel, including the Postgres database setup.
+This application is fully optimized for edge deployment on Vercel. See the `VERCEL_DEPLOYMENT.md` file located in the root directory for a comprehensive guide on migrating the local database to Vercel Postgres and deploying the application.
