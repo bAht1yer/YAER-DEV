@@ -8,15 +8,6 @@ export default function Footer() {
                     <span className="text-primary">&lt;</span> YAER <span className="text-primary">/&gt;</span>
                 </h3>
                 <div className="flex gap-8 mb-8">
-                    <a href="mailto:hello@example.com" className="text-gray-400 hover:text-primary transition-colors font-mono text-sm">
-                        hello@example.com
-                    </a>
-                    <a href="#" className="text-gray-400 hover:text-primary transition-colors font-mono text-sm">
-                        github.com/yaer
-                    </a>
-                    <a href="#" className="text-gray-400 hover:text-primary transition-colors font-mono text-sm">
-                        twitter.com/yaer
-                    </a>
                 </div>
                 <p className="text-gray-600 text-xs font-mono">
                     © {new Date().getFullYear()} YAER. All systems operational.

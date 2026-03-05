@@ -43,6 +43,8 @@ export default function GlitchText({ text1, text2, className = "" }: GlitchTextP
         return () => clearInterval(interval);
     }, [text1, text2, mounted]);
 
+    if (!mounted) return <span className={className}>{text1}</span>;
+
     return (
         <motion.span
             className={`relative inline-block font-mono font-bold ${className}`}

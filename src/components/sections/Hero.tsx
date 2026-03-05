@@ -5,9 +5,12 @@ import GlitchText from "../ui/GlitchText";
 import TypewriterText from "../ui/TypewriterText";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
+import { useState } from "react";
+import ContactModal from "../ui/ContactModal";
 
 export default function Hero() {
     const { data: session } = useSession();
+    const [isContactOpen, setIsContactOpen] = useState(false);
     const userStatus = session?.user?.name ? `SYSTEM.INIT(USER: ${session.user.name.toUpperCase()})` : "SYSTEM.INIT(USER: VISITOR)";
 
     return (
@@ -86,18 +89,31 @@ export default function Hero() {
                     transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
                     className="mt-12 pointer-events-auto"
                 >
-                    <a
-                        href="#projects"
-                        className="group relative inline-flex items-center gap-2 px-8 py-3 bg-transparent overflow-hidden rounded-sm hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(0,240,255,0.5)] transition-all duration-300"
-                    >
-                        <span className="absolute inset-0 border border-primary group-hover:border-primary/50 transition-colors duration-300"></span>
-                        <span className="absolute inset-0 bg-primary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
-                        <span className="relative text-primary font-mono uppercase tracking-widest text-sm group-hover:text-white transition-colors">
-                            Initialize_Project_View()
-                        </span>
-                    </a>
+                    <div className="flex flex-col sm:flex-row gap-4 items-center">
+                        <a
+                            href="#projects"
+                            className="group relative inline-flex items-center gap-2 px-8 py-3 bg-transparent overflow-hidden rounded-sm hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(0,240,255,0.5)] transition-all duration-300"
+                        >
+                            <span className="absolute inset-0 border border-primary group-hover:border-primary/50 transition-colors duration-300"></span>
+                            <span className="absolute inset-0 bg-primary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+                            <span className="relative text-primary font-mono uppercase tracking-widest text-sm group-hover:text-white transition-colors">
+                                Initialize_Project_View()
+                            </span>
+                        </a>
+
+                        <button
+                            onClick={() => setIsContactOpen(true)}
+                            className="group relative inline-flex items-center gap-2 px-8 py-3 bg-white/5 border border-white/10 rounded-sm hover:bg-white/10 hover:border-primary/50 hover:-translate-y-1 transition-all duration-300"
+                        >
+                            <span className="relative text-gray-300 font-mono uppercase tracking-widest text-sm group-hover:text-primary transition-colors">
+                                Send_Message()
+                            </span>
+                        </button>
+                    </div>
                 </motion.div>
             </div>
+
+            <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
         </section>
     );
 }

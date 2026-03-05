@@ -1,26 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, ShoppingCart, Bot, Gamepad2, PenTool, Layout, Terminal, Database, Star } from "lucide-react";
+import { ExternalLink, ShoppingCart, Bot, Gamepad2, PenTool, Layout } from "lucide-react";
 import Image from "next/image";
+import BrowserMockup from "@/components/ui/BrowserMockup";
 
 const projects = [
     {
-        title: "Ombrilo",
-        type: "E-Commerce / Dropshipping",
-        desc: "A premium dropshipping platform focused on furniture and home decor. Features a curated catalog and seamless checkout experience.",
-        tech: ["Next.js", "Stripe", "Tailwind", "Vercel"],
-        link: "https://ombrilo.vercel.app/",
-        color: "text-rose-400",
-        border: "border-rose-500/20",
-        bg: "bg-rose-500/5",
-        icon: <ShoppingCart className="w-6 h-6" />
-    },
-    {
         title: "Revamp Solutions",
         type: "Service Agency + AI",
-        desc: "Single-page application for a construction company featuring a live, domain-deployed custom OpenAI chatbot for 24/7 customer support.",
-        tech: ["Next.js", "OpenAI API", "Framer Motion", "Live Production"],
+        desc: "Interactive business site featuring a custom Dify.ai Chatflow integration for intelligent, 24/7 autonomous customer support.",
+        tech: ["Next.js", "Dify AI", "Framer Motion", "Tailwind CSS"],
         link: "https://www.revampsolutions.ca/",
         color: "text-amber-400",
         border: "border-amber-500/20",
@@ -50,7 +40,19 @@ const projects = [
         border: "border-purple-500/20",
         bg: "bg-purple-500/5",
         icon: <PenTool className="w-6 h-6" />
-    }
+    },
+    {
+        title: "Ombrilo",
+        type: "E-Commerce / Dropshipping",
+        desc: "A premium dropshipping platform focused on furniture and home decor. Features a curated catalog and seamless checkout experience.",
+        tech: ["Next.js", "Stripe", "Tailwind", "Vercel"],
+        link: "https://ombrilo.vercel.app/",
+        color: "text-rose-400",
+        border: "border-rose-500/20",
+        bg: "bg-rose-500/5",
+        icon: <ShoppingCart className="w-6 h-6" />,
+        status: "Work in Progress"
+    },
 ];
 
 export default function ProjectShowcase() {
@@ -75,6 +77,11 @@ export default function ProjectShowcase() {
                                 <span className={`font-mono text-sm tracking-widest uppercase ${project.color}`}>
                                     {project.type}
                                 </span>
+                                {project.status && (
+                                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-primary/20 text-primary border border-primary/30 uppercase tracking-tighter">
+                                        {project.status}
+                                    </span>
+                                )}
                             </div>
 
                             <h2 className="text-4xl font-bold text-white">{project.title}</h2>
@@ -102,47 +109,38 @@ export default function ProjectShowcase() {
                         </div>
 
                         {/* Visual / Abstract Representation */}
-                        <div className={`flex-1 w-full aspect-video rounded-2xl border border-white/10 bg-[#0a0a0a] relative overflow-hidden group ${i % 2 === 1 ? 'md:order-1' : ''}`}>
-                            <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent z-10 pointer-events-none" />
-
-                            {/* Browser Mockup Header */}
-                            <div className="absolute top-0 left-0 right-0 h-8 bg-white/5 border-b border-white/5 flex items-center px-4 gap-2 z-20">
-                                <div className="w-2 h-2 rounded-full bg-red-500/50" />
-                                <div className="w-2 h-2 rounded-full bg-yellow-500/50" />
-                                <div className="w-2 h-2 rounded-full bg-green-500/50" />
-                            </div>
-
-                            {/* Project Preview (Image or Iframe) */}
-                            {project.staticImage ? (
-                                <div className="absolute inset-0 pt-8 bg-[#0a0a0a] group-hover:scale-105 transition-transform duration-700">
-                                    <Image
-                                        src={project.staticImage}
-                                        alt={project.title}
-                                        fill
-                                        className="object-contain p-8 opacity-80 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0"
-                                    />
-                                    {/* Abstract Icon Overlay (Fades out on hover) */}
-                                    <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none">
-                                        {i === 1 && <Bot className="w-32 h-32 text-amber-500/20" />}
-                                        {i === 2 && <Gamepad2 className="w-32 h-32 text-emerald-500/20" />}
+                        <div className={`flex-1 w-full relative group ${i % 2 === 1 ? 'md:order-1' : ''}`}>
+                            <BrowserMockup url={project.link.replace("https://", "")}>
+                                {project.staticImage ? (
+                                    <div className="relative w-full h-[600px] md:h-[800px] bg-[#0a0a0a] group-hover:scale-[1.02] transition-transform duration-700">
+                                        <Image
+                                            src={project.staticImage}
+                                            alt={project.title}
+                                            fill
+                                            className="object-cover object-top opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                                        />
+                                        {/* Abstract Icon Overlay (Fades out on hover) */}
+                                        <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none bg-black/40">
+                                            {project.title === "Revamp Solutions" && <Bot className="w-32 h-32 text-amber-500/40" />}
+                                            {project.title === "Mystery Cavern" && <Gamepad2 className="w-32 h-32 text-emerald-500/40" />}
+                                        </div>
                                     </div>
-                                </div>
-                            ) : (
-                                <>
-                                    <div className="absolute inset-0 pt-8 flex items-center justify-center text-gray-800 pointer-events-none">
-                                        {/* Abstract Pattern Based on Project Type */}
-                                        {i === 0 && <ShoppingCart className="w-32 h-32 text-rose-500/10" />}
-                                        {i === 3 && <Layout className="w-32 h-32 text-purple-500/10" />}
+                                ) : (
+                                    <div className="relative w-full h-full bg-white">
+                                        <div className="absolute inset-0 flex items-center justify-center text-gray-800 pointer-events-none bg-white z-0">
+                                            {/* Abstract Pattern Based on Project Type */}
+                                            {project.title === "Ombrilo" && <ShoppingCart className="w-32 h-32 text-rose-500/10" />}
+                                            {project.title === "BlogYu" && <Layout className="w-32 h-32 text-purple-500/10" />}
+                                        </div>
+                                        <iframe
+                                            src={project.link}
+                                            className="relative z-10 w-[200%] h-[200%] scale-50 origin-top-left border-none opacity-90 hover:opacity-100 transition-all duration-700"
+                                            tabIndex={-1}
+                                            loading="lazy"
+                                        />
                                     </div>
-
-                                    <iframe
-                                        src={project.link}
-                                        className="w-[200%] h-[200%] scale-50 origin-top-left border-none opacity-100 grayscale hover:grayscale-0 transition-all duration-700 bg-white"
-                                        tabIndex={-1}
-                                        loading="lazy"
-                                    />
-                                </>
-                            )}
+                                )}
+                            </BrowserMockup>
                         </div>
                     </motion.div>
                 ))}

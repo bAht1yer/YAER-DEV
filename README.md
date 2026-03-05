@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# YAER Developer Portfolio
+
+This is the source code for the portfolio and service agency site of YAER (Y43R). It is built with Next.js, uses Framer Motion for animations, and integrates a custom AI Chatflow using Dify.ai for the Revamp Solutions demonstration.
+
+## Technologies Used
+
+- Next.js 15 (App Router)
+- React 19
+- Framer Motion
+- Tailwind CSS
+- Prisma ORM
+- NextAuth.js
+- Dify AI (Chatbot Integration)
+- Resend (Email API)
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
+
+```bash
+npm install
+```
+
+Copy the example environment variables:
+
+```bash
+cp .env.example .env.local
+```
+
+Fill in the `.env.local` file with your actual keys.
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See `VERCEL_DEPLOYMENT.md` for instructions on deploying the full stack application to Vercel, including the Postgres database setup.

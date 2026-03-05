@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Code, Cpu, Globe, Lock } from "lucide-react";
-import Link from "next/link";
+import { useState } from "react";
+import ContactModal from "../../ui/ContactModal";
 
 const capabilities = [
     { icon: Globe, label: "SEO Optimized" },
@@ -12,6 +13,8 @@ const capabilities = [
 ];
 
 export default function CapabilitiesCTA() {
+    const [isContactOpen, setIsContactOpen] = useState(false);
+
     return (
         <section className="py-20 px-6 relative overflow-hidden">
             {/* Background Grid */}
@@ -41,22 +44,24 @@ export default function CapabilitiesCTA() {
                     viewport={{ once: true }}
                     className="relative p-12 rounded-2xl border border-primary/20 bg-primary/5 overflow-hidden"
                 >
-                    <div className="absolute inset-0 bg-primary/5 blur-3xl opacity-20" />
+                    <div className="absolute inset-0 bg-primary/5 blur-3xl opacity-20 pointer-events-none" />
 
-                    <h3 className="text-3xl md:text-4xl font-bold mb-4">Have a Vision?</h3>
-                    <p className="text-gray-400 max-w-xl mx-auto mb-8">
+                    <h3 className="text-3xl md:text-4xl font-bold mb-4 relative z-10">Have a Vision?</h3>
+                    <p className="text-gray-400 max-w-xl mx-auto mb-8 relative z-10">
                         From simple landing pages to complex AI integrated platforms, I can bring your digital presence to life.
                     </p>
 
-                    <Link
-                        href="/#contact"
-                        className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-black font-bold rounded-lg hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
+                    <button
+                        onClick={() => setIsContactOpen(true)}
+                        className="relative z-10 inline-flex items-center gap-2 px-8 py-4 bg-primary text-black font-bold rounded-lg hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
                     >
                         <span>Create Your Site Now</span>
                         <ArrowRight className="w-5 h-5" />
-                    </Link>
+                    </button>
                 </motion.div>
             </div>
+
+            <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
         </section>
     );
 }
