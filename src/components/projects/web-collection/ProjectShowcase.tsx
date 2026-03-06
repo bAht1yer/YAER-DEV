@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, ShoppingCart, Bot, Gamepad2, PenTool, Layout } from "lucide-react";
+import { ExternalLink, ShoppingCart, Bot, Gamepad2, PenTool, Layout, BookOpen, Smartphone } from "lucide-react";
 import Image from "next/image";
 
 const projects = [
@@ -16,6 +16,18 @@ const projects = [
         bg: "bg-amber-500/5",
         icon: <Bot className="w-6 h-6" />,
         staticImage: "/projects/revamp.png"
+    },
+    {
+        title: "DigiTao",
+        type: "Mobile App · Cultural Education + Meditation",
+        desc: "A mobile-first Tao Te Ching companion built with Expo for iOS & Android. Features interactive character etymology, AI-powered wisdom interpreter, guided meditation with ambient soundscapes, and seasonal wellness based on the 24 Solar Terms.",
+        tech: ["Expo", "React Native", "Cross-Platform", "AI Guidance"],
+        link: "https://tao-blue.vercel.app/",
+        playStoreLink: "",
+        color: "text-cyan-400",
+        border: "border-cyan-500/20",
+        bg: "bg-cyan-500/5",
+        icon: <BookOpen className="w-6 h-6" />
     },
     {
         title: "Mystery Cavern",
@@ -101,7 +113,7 @@ export default function ProjectShowcase() {
                                 )}
                             </div>
 
-                            <div className="pt-4">
+                            <div className="pt-4 flex flex-wrap items-center gap-4">
                                 <a
                                     href={project.link}
                                     target="_blank"
@@ -111,6 +123,17 @@ export default function ProjectShowcase() {
                                     <span className="font-bold">Visit Live Site</span>
                                     <ExternalLink className={`w-4 h-4 ${project.color} group-hover:scale-110 transition-transform`} />
                                 </a>
+                                {project.playStoreLink && (
+                                    <a
+                                        href={project.playStoreLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg border ${project.border} ${project.bg} ${project.color} hover:scale-105 transition-all duration-300 group`}
+                                    >
+                                        <Smartphone className="w-4 h-4" />
+                                        <span className="font-bold text-sm">Google Play</span>
+                                    </a>
+                                )}
                             </div>
                         </div>
 
@@ -137,15 +160,16 @@ export default function ProjectShowcase() {
                                     {/* Abstract Icon Overlay (Fades out on hover) */}
                                     <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none">
                                         {i === 0 && <Bot className="w-32 h-32 text-amber-500/20" />}
-                                        {i === 1 && <Gamepad2 className="w-32 h-32 text-emerald-500/20" />}
+                                        {i === 1 && <BookOpen className="w-32 h-32 text-cyan-500/20" />}
+                                        {i === 2 && <Gamepad2 className="w-32 h-32 text-emerald-500/20" />}
                                     </div>
                                 </div>
                             ) : (
                                 <>
                                     <div className="absolute inset-0 pt-8 flex items-center justify-center text-gray-800 pointer-events-none">
                                         {/* Abstract Pattern Based on Project Type */}
-                                        {i === 2 && <Layout className="w-32 h-32 text-purple-500/10" />}
-                                        {i === 3 && <ShoppingCart className="w-32 h-32 text-rose-500/10" />}
+                                        {i === 3 && <Layout className="w-32 h-32 text-purple-500/10" />}
+                                        {i === 4 && <ShoppingCart className="w-32 h-32 text-rose-500/10" />}
                                     </div>
 
                                     <iframe
