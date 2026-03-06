@@ -15,11 +15,11 @@ const projects = [
         links: { demo: "/projects/web-collection", github: "#" }, // Using the provided link for demo, github is placeholder
     },
     {
-        title: "Project Spirit Vein",
-        description: "2D Isometric Turn-Based RPG built in Unity. Features dynamic fog of war, shadow casting, and complex persistent world state.",
-        tags: ["Unity", "C#", "Algorithm", "Game Dev", "In Development"],
-        image: "https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?auto=format&fit=crop&q=80&w=1000",
-        links: { demo: "/projects/spirit-vein", github: "#" },
+        title: "DigiTao",
+        description: "A mobile-first Tao Te Ching companion built with Expo for iOS & Android. Features interactive character etymology, AI-powered wisdom interpreter, and guided meditation.",
+        tags: ["Expo", "React Native", "AI", "Mobile"],
+        image: "/projects/digitao/home.png", // Using the captured home screenshot
+        links: { demo: "/projects/digitao", github: "https://github.com/Neilblaze/digitao" },
     },
     {
         title: "CoinBot",

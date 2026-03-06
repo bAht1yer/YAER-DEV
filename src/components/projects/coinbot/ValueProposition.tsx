@@ -16,19 +16,19 @@ export default function ValueProposition() {
             >
 
                 <div>
-                    <h2 className="text-2xl font-bold mb-6">Why I Built This</h2>
+                    <h2 className="text-2xl font-bold mb-6"><span className="text-primary">{">_"}</span> Why I Built This</h2>
                     <div className="space-y-6 text-gray-400 leading-relaxed">
                         <p>
                             Cryptocurrency markets run 24/7, but humans need sleep. Manual trading is often plagued by emotional decision-making, hesitation, and fatigue.
                         </p>
                         <p>
-                            I wanted to build a system that was <span className="text-white">cold, calculated, and relentless</span>. CoinBot wasn't just a coding project; it was an attempt to engineer discipline.
+                            I wanted to build a system that was <span className="text-white">cold, calculated, and relentless</span>. CoinBot wasn&apos;t just a coding project; it was an attempt to engineer discipline.
                         </p>
                     </div>
                 </div>
 
                 <div>
-                    <h2 className="text-2xl font-bold mb-6">Technical Challenges Solved</h2>
+                    <h2 className="text-2xl font-bold mb-6"><span className="text-primary">{">_"}</span> Technical Challenges Solved</h2>
                     <ul className="space-y-4">
                         {[
                             "Handling Websocket reconnection logic and heartbeat management.",

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code, Terminal, FileCode } from "lucide-react";
 import Section from "../../ui/Section";
 
 const FILES = [
@@ -80,7 +79,7 @@ export default function TechDeepDive() {
                     transition={{ duration: 0.7 }}
                     className="w-full"
                 >
-                    <h2 className="text-3xl font-bold mb-4 text-center">Under the Hood</h2>
+                    <h2 className="text-3xl font-bold mb-4 text-center"><span className="text-primary">{">_"}</span> Under the Hood</h2>
                     <p className="text-gray-400 text-center max-w-2xl mx-auto mb-12">
                         A look at the core logic driving the autonomous decision making.
                     </p>

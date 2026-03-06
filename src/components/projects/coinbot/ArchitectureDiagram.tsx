@@ -15,14 +15,14 @@ export default function ArchitectureDiagram() {
                     transition={{ duration: 0.7, ease: "easeOut" }}
                 >
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Decoupled Architecture</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4"><span className="text-primary">{">_"}</span> Decoupled Architecture</h2>
                         <p className="text-gray-400 max-w-2xl mx-auto">
                             The Worker runs independently of the web UI, ensuring trades execute reliably even when the browser is closed.
                         </p>
                     </div>
 
                     {/* Diagram Container */}
-                    <div className="relative max-w-4xl mx-auto h-[400px] md:h-[500px] rounded-2xl glass-panel border border-white/5 p-8 flex items-center justify-center overflow-hidden">
+                    <div className="relative max-w-4xl mx-auto h-auto md:h-[500px] py-12 md:py-0 rounded-2xl glass-panel border border-white/5 p-8 flex items-center justify-center overflow-hidden">
 
                         {/* Background Grid - Localized */}
                         <div className="absolute inset-0 opacity-20"
@@ -64,7 +64,7 @@ export default function ArchitectureDiagram() {
                             {/* Worker - The Star */}
                             <Node
                                 icon={<RefreshCw className="w-8 h-8 text-black animate-spin-slow" />}
-                                label="Worker Service"
+                                label="Worker Service (Railway)"
                                 sub="Node.js Loop"
                                 color="bg-primary"
                                 position="center-right"
@@ -127,7 +127,7 @@ const shakeVariant = {
     }
 };
 
-function Node({ icon, label, sub, color, position, glow = false }: { icon: any, label: string, sub: string, color: string, position: string, glow?: boolean }) {
+function Node({ icon, label, sub, color, position: _position, glow = false }: { icon: React.ReactNode, label: string, sub: string, color: string, position?: string, glow?: boolean }) {
     return (
         <motion.div
             initial="idle"

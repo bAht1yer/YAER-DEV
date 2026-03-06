@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Shield, Activity, Coins, Lock, Zap, Ghost } from "lucide-react";
+import { Shield, Lock, Zap, Ghost } from "lucide-react";
 import Section from "../../ui/Section";
 
 const features = [
@@ -49,7 +49,7 @@ export default function FeaturesGrid() {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-3xl font-bold mb-4">Mission Critical Features</h2>
+                    <h2 className="text-3xl font-bold mb-4"><span className="text-primary">{">_"}</span> Mission Critical Features</h2>
                     <p className="text-gray-400 max-w-2xl mx-auto">Built for reliability and performance in high-frequency environments.</p>
                 </motion.div>
 

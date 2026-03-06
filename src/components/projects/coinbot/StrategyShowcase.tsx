@@ -14,7 +14,7 @@ export default function StrategyShowcase() {
                     transition={{ duration: 0.7 }}
                 >
                     <div className="mb-16 text-center">
-                        <h2 className="text-3xl font-bold mb-4">Algorithmic Strategies</h2>
+                        <h2 className="text-3xl font-bold mb-4"><span className="text-primary">{">_"}</span> Algorithmic Strategies</h2>
                         <p className="text-gray-400 max-w-2xl mx-auto">Pre-built logic modules that can be hot-swapped into the execution engine.</p>
                     </div>
 

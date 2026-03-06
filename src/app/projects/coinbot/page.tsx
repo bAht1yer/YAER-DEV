@@ -6,6 +6,7 @@ import Hero from "../../../components/projects/coinbot/Hero";
 import ArchitectureDiagram from "../../../components/projects/coinbot/ArchitectureDiagram";
 import FeaturesGrid from "../../../components/projects/coinbot/FeaturesGrid";
 import TechDeepDive from "../../../components/projects/coinbot/TechDeepDive";
+import BackendLogs from "../../../components/projects/coinbot/BackendLogs";
 import StrategyShowcase from "../../../components/projects/coinbot/StrategyShowcase";
 import ValueProposition from "../../../components/projects/coinbot/ValueProposition";
 
@@ -16,6 +17,7 @@ export default function CoinBotPage() {
             <div className="pt-20"> {/* Add padding for fixed navbar */}
                 <Hero />
                 <ArchitectureDiagram />
+                <BackendLogs />
                 <FeaturesGrid />
                 <TechDeepDive />
                 <StrategyShowcase />
