@@ -28,7 +28,8 @@ const projects = [
         border: "border-emerald-500/20",
         bg: "bg-emerald-500/5",
         icon: <Gamepad2 className="w-6 h-6" />,
-        staticImage: "/projects/mystery-cavern.png"
+        staticImage: "/projects/mystery-cavern.png",
+        status: "Demo"
     },
     {
         title: "BlogYu",
@@ -39,7 +40,8 @@ const projects = [
         color: "text-purple-400",
         border: "border-purple-500/20",
         bg: "bg-purple-500/5",
-        icon: <PenTool className="w-6 h-6" />
+        icon: <PenTool className="w-6 h-6" />,
+        status: "Demo"
     },
     {
         title: "Ombrilo",
@@ -51,7 +53,7 @@ const projects = [
         border: "border-rose-500/20",
         bg: "bg-rose-500/5",
         icon: <ShoppingCart className="w-6 h-6" />,
-        status: "In Development"
+        status: "Demo"
     }
 ];
 
