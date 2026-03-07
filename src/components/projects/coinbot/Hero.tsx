@@ -52,7 +52,7 @@ export default function Hero() {
                             <ExternalLink className="w-5 h-5 text-accent group-hover:scale-110 transition-transform" />
                             <span>Live Demo</span>
                         </Link>
-                        <Link href="#" className="flex items-center gap-2 px-5 py-2 text-sm bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-md transition-all group backdrop-blur-sm">
+                        <Link href="https://github.com/bAht1yer/coinbot" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2 text-sm bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-md transition-all group backdrop-blur-sm">
                             <Github className="w-4 h-4 group-hover:scale-110 transition-transform" />
                             <span>View Source Code</span>
                         </Link>

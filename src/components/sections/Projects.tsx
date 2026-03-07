@@ -12,7 +12,7 @@ const projects = [
         description: "E-commerce, AI Solutions, SaaS Platforms, and Web Gaming. Real production deployments.",
         tags: ["Next.js", "React", "AI", "Stripe"],
         image: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?auto=format&fit=crop&q=80&w=1000", // Reusing the original image for now, as no new image was provided for "Full Stack Websites"
-        links: { demo: "/projects/web-collection", github: "#" }, // Using the provided link for demo, github is placeholder
+        links: { demo: "/projects/web-collection", github: "https://github.com/bAht1yer/YAER-DEV" }, // Using the provided link for demo, github is placeholder
     },
     {
         title: "DigiTao",
@@ -26,7 +26,7 @@ const projects = [
         description: "Institutional-grade algorithmic trading platform for Coinbase Advanced Trade. Features decoupled microservices, real-time risk engine, and AES-256 encrypted key management.",
         tags: ["Next.js 16", "Node.js Worker", "PostgreSQL", "WebSocket"],
         image: "https://images.unsplash.com/photo-1642104704074-907c0698cbd9?auto=format&fit=crop&q=80&w=1000",
-        links: { demo: "/projects/coinbot", github: "#" },
+        links: { demo: "/projects/coinbot", github: "https://github.com/bAht1yer/coinbot" },
     },
 ];
 
