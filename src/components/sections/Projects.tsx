@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Section from "../ui/Section";
-import { ExternalLink, Github, Terminal, Cpu } from "lucide-react";
+import { Github, Terminal, Cpu } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -94,12 +94,11 @@ export default function Projects() {
                                     </div>
 
                                     <div className="flex gap-4 mt-auto">
-                                        <a href={project.links.github} onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-white hover:text-glow transition-all">
-                                            <Github className="w-5 h-5" />
-                                        </a>
-                                        <a href={project.links.demo} onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-white hover:text-glow transition-all ml-auto">
-                                            <ExternalLink className="w-5 h-5" />
-                                        </a>
+                                        {project.title !== "DigiTao" && (
+                                            <a href={project.links.github} onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-white hover:text-glow transition-all">
+                                                <Github className="w-5 h-5" />
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
                             </div>
