@@ -22,11 +22,9 @@ export default function About() {
                     <p className="text-gray-400 text-lg mb-6 leading-relaxed">
                         I&apos;m a <span className="text-white">Full-Stack Developer</span> focused on building production-ready applications and integrating <span className="text-white">AI tools (Dify.ai, custom LLMs)</span> into real-world products.
                     </p>
-                    <p className="text-gray-400 text-lg mb-6 leading-relaxed">
-                        I specialize in <span className="text-accent">bridging the gap</span> between complex technical architecture and non-technical client needs, translating business requirements into scalable, autonomous solutions.
-                    </p>
                     <p className="text-gray-400 text-lg leading-relaxed">
-                        Let&apos;s connect on <a href="https://linkedin.com/in/neil-blanchard" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold">LinkedIn</a> to discuss how we can build together.
+                        From deploying autonomous <span className="text-primary">AI chatflows</span> to architecting
+                        <span className="text-primary"> full-stack platforms</span>, I specialize in bridging the gap between emerging AI capabilities and scalable web infrastructure.
                     </p>
                 </motion.div>
 
