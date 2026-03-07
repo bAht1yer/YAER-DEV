@@ -10,8 +10,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "YAER | 3D Developer Portfolio",
-  description: "Immersive 3D Portfolio of YAER (Y43R)",
+  title: "YAER | Full-Stack Developer | AI-integrated applications",
+  description: "Full-Stack Developer bridging technical capabilities with non-technical client needs using AI tools like Dify.ai.",
 };
 
 import SmoothScroll from "@/components/ui/SmoothScroll";

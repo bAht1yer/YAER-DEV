@@ -31,11 +31,11 @@ export default function Hero() {
                         <h1 className="text-5xl md:text-7xl font-bold font-serif leading-tight mb-6 text-[#D4C4A8]">
                             DigiTao<br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4A7856] to-[#D4C4A8] relative">
-                                道德經.
+                                數·道
                                 <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[#4A7856]/50 to-transparent blur-sm"></span>
                             </span>
                             <br />
-                            <span className="text-3xl md:text-5xl text-gray-300">Inner Peace</span>
+                            <span className="text-3xl md:text-5xl text-gray-300">道法自然</span>
                         </h1>
 
                         <p className="text-xl text-gray-400 max-w-lg leading-relaxed">

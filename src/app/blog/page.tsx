@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import Section from "@/components/ui/Section";
-import ElectricGrid from "@/components/ui/ElectricGrid";
+
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 
@@ -15,7 +15,7 @@ export default async function BlogIndex() {
     return (
         <main className="min-h-screen bg-black text-white relative font-mono selection:bg-primary/30">
             <div className="fixed inset-0 z-0 pointer-events-none">
-                <ElectricGrid />
+
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)]" />
             </div>
 

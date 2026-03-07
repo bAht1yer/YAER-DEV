@@ -1,13 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, ShoppingCart, Bot, Gamepad2, PenTool, Layout, Smartphone } from "lucide-react";
+import { ExternalLink, ShoppingCart, Bot, Gamepad2, PenTool, Layout } from "lucide-react";
 import Image from "next/image";
 
 const projects = [
     {
         title: "Revamp Solutions",
         type: "Service Agency + AI Chatflow",
+        isFeatured: true,
         desc: "A comprehensive multi-page company website featuring a live, domain-deployed custom AI chatbot powered by Dify for 24/7 autonomous customer support.",
         tech: ["Next.js", "Dify AI", "Framer Motion", "Live Production"],
         link: "https://www.revampsolutions.ca/",
@@ -78,7 +79,14 @@ export default function ProjectShowcase() {
                                 </span>
                             </div>
 
-                            <h2 className="text-4xl font-bold text-white">{project.title}</h2>
+                            <h2 className="text-4xl font-bold text-white flex items-center gap-4">
+                                {project.title}
+                                {project.isFeatured && (
+                                    <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 uppercase tracking-tighter">
+                                        ⭐ Featured Project
+                                    </span>
+                                )}
+                            </h2>
                             <p className="text-gray-400 text-lg leading-relaxed">{project.desc}</p>
 
                             <div className="flex flex-wrap gap-3">

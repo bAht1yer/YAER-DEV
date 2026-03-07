@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import ElectricGrid from "@/components/ui/ElectricGrid";
+
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -29,7 +29,7 @@ export default function LoginPage() {
     return (
         <main className="min-h-screen bg-black text-white relative flex justify-center items-center font-mono">
             <div className="fixed inset-0 z-0 pointer-events-none">
-                <ElectricGrid />
+
             </div>
 
             <div className="relative z-10">

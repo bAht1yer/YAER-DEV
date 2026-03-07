@@ -44,9 +44,9 @@ export default function ElectricGrid() {
             const x = Math.floor(Math.random() * (canvas.width / GRID_SIZE)) * GRID_SIZE;
             const y = Math.floor(Math.random() * (canvas.height / GRID_SIZE)) * GRID_SIZE;
 
-            // Variable speed: some slow (2-3), some fast (6-9)
+            // Variable speed: some slow (1-2), some fast (3-4)
             const isFast = Math.random() > 0.6;
-            const speed = isFast ? 6 + Math.random() * 3 : 2 + Math.random() * 1.5;
+            const speed = isFast ? 3 + Math.random() * 1.5 : 1 + Math.random() * 1;
 
             return {
                 x,
@@ -92,7 +92,7 @@ export default function ElectricGrid() {
             const onGridX = Math.abs(p.x % GRID_SIZE) < tolerance;
             const onGridY = Math.abs(p.y % GRID_SIZE) < tolerance;
 
-            if (onGridX && onGridY && Math.random() < 0.2) {
+            if (onGridX && onGridY && Math.random() < 0.05) {
                 // Snap to exact grid
                 p.x = Math.round(p.x / GRID_SIZE) * GRID_SIZE;
                 p.y = Math.round(p.y / GRID_SIZE) * GRID_SIZE;
@@ -127,18 +127,18 @@ export default function ElectricGrid() {
             ctx.lineTo(end.x, end.y);
 
             // Intense core 
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.4})`;
+            ctx.lineWidth = 1;
             ctx.stroke();
 
             // Outer glow
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.4})`;
-            ctx.lineWidth = 6;
+            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.15})`;
+            ctx.lineWidth = 3;
             ctx.stroke();
 
             // Wide haze
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.1})`;
-            ctx.lineWidth = 12;
+            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.05})`;
+            ctx.lineWidth = 8;
             ctx.stroke();
         };
 
@@ -183,7 +183,7 @@ export default function ElectricGrid() {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed inset-0 -z-10 pointer-events-none"
+            className="fixed inset-0 -z-10 pointer-events-none opacity-40 mix-blend-screen"
             style={{ background: "transparent" }}
         />
     );

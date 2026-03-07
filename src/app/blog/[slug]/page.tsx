@@ -6,7 +6,7 @@ import rehypeSlug from "rehype-slug";
 import { ChevronLeft } from "lucide-react";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
-import ElectricGrid from "@/components/ui/ElectricGrid";
+
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = await params;
@@ -23,7 +23,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     return (
         <main className="min-h-screen bg-black text-gray-300 relative font-mono selection:bg-primary/30">
             <div className="fixed inset-0 z-0 pointer-events-none opacity-20">
-                <ElectricGrid />
+
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)]" />
             </div>
 

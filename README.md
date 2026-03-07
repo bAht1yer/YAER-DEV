@@ -1,14 +1,15 @@
-# YAER | Developer Portfolio & Services
+# YAER | Full-Stack Developer | AI-integrated applications
 
 This repository contains the source code for the personal portfolio and service agency website of **YAER** (Y43R). It is designed to showcase a collection of full-stack projects, digital services, and technical capabilities, featuring an immersive 3D background and smooth, high-performance animations.
 
 ## Key Features & Highlights
 
-- **Immersive 3D Experience:** Uses `@react-three/fiber` and `@react-three/drei` to render an interactive, cyber-themed background canvas.
+- **AI Integration Focus:** Extensive experience building real client-facing products using **Dify.ai**. Built custom autonomous AI chatbots and bridged technical capabilities with non-technical client needs.
 - **Web Project Collection:** A dedicated showcase of functional, deployed applications, including:
-  - **Revamp Solutions:** A live service agency site integrating a custom autonomous AI Chatbot powered by **Dify.ai**.
+  - **Revamp Solutions:** A live service agency site integrating a custom autonomous AI Chatbot powered by Dify.ai for autonomous customer support.
   - **Mystery Cavern:** A complex state-driven Roguelike RPG.
   - **Ombrilo & BlogYu:** E-commerce and full-stack SaaS SaaS platforms with Stripe and CMS database integrations.
+- **Immersive 3D Experience:** Uses `@react-three/fiber` and `@react-three/drei` to render an interactive, cyber-themed background canvas.
 - **Secure Authentication:** Integrated `NextAuth.js` credentials provider and Prisma ORM for an embedded dashboard and blog management system.
 - **Automated Contact Flow:** Embedded modal architecture that uses `Resend` to dispatch contact form submissions directly to email.
 

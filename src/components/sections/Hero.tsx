@@ -67,7 +67,7 @@ export default function Hero() {
                     <div className="text-gray-300 text-xl md:text-2xl font-mono max-w-2xl mx-auto leading-relaxed mt-4 flex flex-col gap-2">
                         <div>
                             <span className="text-accent mr-2">&gt;</span>
-                            <TypewriterText text="Full Stack Creative Developer" delay={1000} speed={50} cursor={true} hideCursorOnComplete={true} />
+                            <TypewriterText text="Full-Stack Developer | AI-integrated applications" delay={1000} speed={30} cursor={true} hideCursorOnComplete={true} />
                         </div>
                         <div>
                             <motion.span
@@ -78,7 +78,7 @@ export default function Hero() {
                             >
                                 &gt;
                             </motion.span>
-                            <TypewriterText text="Building Digital Realities" delay={3000} speed={50} cursor={true} />
+                            <TypewriterText text="Bridging tech capabilities with client needs" delay={3000} speed={30} cursor={true} />
                         </div>
                     </div>
                 </motion.div>
