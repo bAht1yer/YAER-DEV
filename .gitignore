@@ -41,3 +41,11 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+
+# custom ignores
+dev.db
+prisma/dev.db
+prisma_error.log
+debug.js
+debug_prisma.js
+output.txt
