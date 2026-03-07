@@ -43,7 +43,7 @@ export default function Projects() {
                     className="text-4xl md:text-5xl font-bold mb-12 text-white flex items-center gap-3"
                 >
                     <Terminal className="text-primary w-8 h-8 md:w-10 md:h-10" />
-                    <span className="text-primary">03.</span> Featured_Projects
+                    <span className="text-primary">03.</span> Featured Projects
                 </motion.h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

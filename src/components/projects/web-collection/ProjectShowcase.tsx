@@ -53,7 +53,7 @@ const projects = [
         border: "border-rose-500/20",
         bg: "bg-rose-500/5",
         icon: <ShoppingCart className="w-6 h-6" />,
-        status: "Demo"
+        status: "In Development"
     }
 ];
 
