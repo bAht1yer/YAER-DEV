@@ -36,6 +36,7 @@ const config: Config = {
             animation: {
                 "glitch-1": "glitch-1 2.5s infinite linear alternate-reverse",
                 "glitch-2": "glitch-2 2.5s infinite linear alternate-reverse",
+                "scan": "scan 8s ease-in-out infinite alternate",
             },
             keyframes: {
                 "glitch-1": {
@@ -54,6 +55,10 @@ const config: Config = {
                     "80%": { clipPath: "inset(70% 0 10% 0)" },
                     "100%": { clipPath: "inset(20% 0 60% 0)" },
                 },
+                "scan": {
+                    "0%": { transform: "translateY(-100%)" },
+                    "100%": { transform: "translateY(100vh)" },
+                }
             },
         },
     },
