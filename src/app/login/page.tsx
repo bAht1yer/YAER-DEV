@@ -2,8 +2,8 @@
 
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-
 import Link from "next/link";
+import InteractiveGrid from "@/components/ui/InteractiveGrid";
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
@@ -28,9 +28,7 @@ export default function LoginPage() {
 
     return (
         <main className="min-h-screen bg-black text-white relative flex justify-center items-center font-mono">
-            <div className="fixed inset-0 z-0 pointer-events-none">
-
-            </div>
+            <InteractiveGrid />
 
             <div className="relative z-10">
                 <Link href="/" className="absolute -top-16 left-0 text-gray-400 hover:text-primary transition-colors text-sm">
