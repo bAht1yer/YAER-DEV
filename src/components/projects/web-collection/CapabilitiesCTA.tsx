@@ -17,9 +17,6 @@ export default function CapabilitiesCTA() {
 
     return (
         <section className="py-20 px-6 relative overflow-hidden">
-            {/* Background Grid */}
-            <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-
             <div className="max-w-5xl mx-auto text-center">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
