@@ -10,59 +10,74 @@ const FILES = [
         icon: <ShieldCheckIcon />,
         color: "text-rose-400",
         code: `export class RiskManager {
-  private readonly MAX_DAILY_LOSS = 0.05; // 5%
+  // Sophisticated Volatility-Adjusted Risk
+  private getDynamicLimit(volatility: number): number {
+    return Math.max(0.01, 0.05 / (volatility * 1.5));
+  }
 
-  public async validateTrade(state: PortfolioState): Promise<boolean> {
-    const dailyPnL = await this.calculateDailyPnL(state.accountId);
+  public async validateTrade(setup: TradeSetup): Promise<boolean> {
+    const { currentDrawdown, marketVol } = await this.telemetry.getMetrics();
+    const dynamicLimit = this.getDynamicLimit(marketVol);
     
-    // Hard circuit breaker
-    if (dailyPnL < -this.MAX_DAILY_LOSS) {
-        await this.emergencyShutdown("Daily loss limit exceeded");
+    // Hard circuit breaker with exponential backoff on violations
+    if (currentDrawdown > dynamicLimit) {
+        await this.killSwitch.engage("VOLATILITY_OVERSHOOT_PROTECTION");
         return false;
     }
 
+    // Position sizing based on Kelly Criterion
+    setup.size = this.calculateKellySize(setup.winProbability);
     return true;
   }
 }`
     },
     {
-        name: "executionEngine.ts",
+        name: "ExecutionEngine.ts",
         icon: <TerminalIcon />,
         color: "text-primary",
-        code: `export async function executeOrder(order: OrderParams) {
-  if (process.env.PaperTrading === 'true') {
-     return await this.shadowLedger.placeOrder(order);
-  }
-
-  // Live Execution
-  const signature = signRequest(order, API_SECRET);
-  const response = await coinbase.placeOrder(order, signature);
-  
-  if (response.status === 'FILLED') {
-      await alertSystem.notify(\`Order Filled: \${order.side} \${order.product_id}\`);
+        code: `export class ExecutionEngine {
+  public async executeOrder(order: OrderParams) {
+    const context = await this.preFlightCheck(order);
+    
+    // Atomic execution with slippage protection
+    const maxSlippage = context.isHighVolatility ? 0.001 : 0.0005;
+    
+    try {
+      const tx = await this.provider.signAndSend(order, {
+        maxSlippage,
+        forcePostOnly: true, // Prevent taking liqudity
+        retryStrategy: new ExponentialBackoff({ maxRetries: 3 })
+      });
+      
+      await eventBus.publish('ORDER_FILLED', tx.receipt);
+    } catch (e) {
+      if (e instanceof SlippageError) return this.reRoute(order);
+      throw e;
+    }
   }
 }`
     },
     {
-        name: "worker.ts",
+        name: "ScaleWorker.ts",
         icon: <CpuIcon />,
         color: "text-emerald-400",
-        code: `// Main Event Loop
-setInterval(async () => {
-   const activeBots = await db.botConfig.findMany({ where: { isActive: true } });
-   
-   for (const bot of activeBots) {
-       try {
-           const signals = await strategy[bot.strategy].analyze(bot.marketData);
-           
-           if (signals.shouldEntry) {
-               await executionQueue.add({ botId: bot.id, action: 'BUY' });
-           }
-       } catch (err) {
-           console.error(\`Worker error on bot \${bot.id}: \`, err);
-       }
-   }
-}, 1000);`
+        code: `// Scalable Event-Driven Orchestrator
+export const startOrchestrator = () => {
+  const stream = marketData.pipe(
+    filter(tick => tick.liquidity > THRESHOLD),
+    bufferTime(50), // Batch to prevent event loop starvation
+  ).subscribe(async (signals) => {
+    for (const signal of signals) {
+        // Distributed lock to prevent double-execution
+        if (await redis.setnx(\`lock:\${signal.id}\`, '1')) {
+            await executionQueue.add(signal, { 
+                priority: signal.urgency,
+                removeOnComplete: true 
+            });
+        }
+    }
+  });
+};`
     }
 ];
 
