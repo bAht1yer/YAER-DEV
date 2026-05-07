@@ -14,12 +14,12 @@ export default function WebHero() {
                     className="mb-6 inline-block"
                 >
                     <span className="px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-mono mb-4 inline-block">
-                        PRODUCTION READY
+                        PRODUCTION AI SYSTEMS
                     </span>
                 </motion.div>
 
                 <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-                    <GlitchText text1="Full Stack" text2="Web Suite" className="text-white" />
+                    <GlitchText text1="Applied AI" text2="Web Suite" className="text-white" />
                 </h1>
 
                 <motion.p
@@ -28,12 +28,10 @@ export default function WebHero() {
                     transition={{ delay: 0.2 }}
                     className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
                 >
-                    A collection of deployed applications demonstrating versatility in E-commerce, <span className="text-primary">AI Integration</span>, SaaS Platforms, and Interactive Gaming.
+                    Live products with teeth: domain workflows, <span className="text-primary">AI integration</span>,
+                    conversion design, secure data paths, and the operational polish to survive real users.
                 </motion.p>
             </div>
-
-            {/* Background Elements handled globally by page wrapper, but adding local glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/20 blur-[120px] rounded-full opacity-20 pointer-events-none" />
         </section>
     );
 }

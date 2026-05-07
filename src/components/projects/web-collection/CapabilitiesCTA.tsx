@@ -6,10 +6,10 @@ import { useState } from "react";
 import ContactModal from "../../ui/ContactModal";
 
 const capabilities = [
-    { icon: Globe, label: "SEO Optimized" },
-    { icon: Cpu, label: "AI Integration" },
-    { icon: Lock, label: "Secure Auth" },
-    { icon: Code, label: "Modern Stack" },
+    { icon: Globe, label: "Domain Workflows" },
+    { icon: Cpu, label: "AI Orchestration" },
+    { icon: Lock, label: "Secure Data Paths" },
+    { icon: Code, label: "Production Delivery" },
 ];
 
 export default function CapabilitiesCTA() {
@@ -24,7 +24,7 @@ export default function CapabilitiesCTA() {
                     viewport={{ once: true }}
                     className="mb-12"
                 >
-                    <h2 className="text-3xl font-bold mb-8">Summary of Capabilities</h2>
+                    <h2 className="text-3xl font-bold mb-8">Systems I Can Ship</h2>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4">
                         {capabilities.map((cap, i) => (
                             <div key={i} className="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5">
@@ -43,16 +43,17 @@ export default function CapabilitiesCTA() {
                 >
                     <div className="absolute inset-0 bg-primary/5 blur-3xl opacity-20 pointer-events-none" />
 
-                    <h3 className="text-3xl md:text-4xl font-bold mb-4 relative z-10">Have a Vision?</h3>
+                    <h3 className="text-3xl md:text-4xl font-bold mb-4 relative z-10">Need an AI System Built?</h3>
                     <p className="text-gray-400 max-w-xl mx-auto mb-8 relative z-10">
-                        From simple landing pages to complex AI integrated platforms, I can bring your digital presence to life.
+                        From first workflow map to deployed product, I can integrate the AI layer, data model,
+                        interface, automation, and operations path.
                     </p>
 
                     <button
                         onClick={() => setIsContactOpen(true)}
                         className="relative z-10 inline-flex items-center gap-2 px-8 py-4 bg-primary text-black font-bold rounded-lg hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
                     >
-                        <span>Create Your Site Now</span>
+                        <span>Discuss a System Build</span>
                         <ArrowRight className="w-5 h-5" />
                     </button>
                 </motion.div>

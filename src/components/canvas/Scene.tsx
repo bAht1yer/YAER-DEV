@@ -44,11 +44,12 @@ export default function Scene({ children, className = "" }: SceneProps) {
     }
 
     return (
-        <div className={`absolute inset-0 w-full h-full z-0 ${className}`}>
+        <div className={`absolute inset-0 w-full h-full z-0 ${className}`} aria-hidden="true">
             <Canvas
                 camera={{ position: [0, 0, 5], fov: 45 }}
-                gl={{ antialias: true, alpha: true }}
+                gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
                 dpr={[1, 2]}
+                performance={{ min: 0.65 }}
                 onError={(error) => {
                     console.error("Three.js/R3F Error:", error);
                     setIsWebGLAvailable(false);

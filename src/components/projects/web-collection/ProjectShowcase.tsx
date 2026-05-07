@@ -1,15 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, ShoppingCart, Bot, Gamepad2, PenTool, Layout } from "lucide-react";
+import { ExternalLink, ShoppingCart, Bot, Gamepad2, PenTool, Layout, ReceiptText } from "lucide-react";
 import Image from "next/image";
 
 const projects = [
     {
-        title: "Revamp Solutions",
-        type: "Service Agency + AI Chatflow",
+        title: "Bossimating",
+        type: "Contractor SaaS with useful AI",
         isFeatured: true,
-        desc: "A comprehensive multi-page company website featuring a live, domain-deployed custom AI chatbot powered by Dify for 24/7 autonomous customer support.",
+        desc: "A live product for small construction crews. It helps with estimates, invoices, payments, approvals, project tracking, and the everyday AI helpers that save time without getting in the way.",
+        tech: ["Live SaaS", "AI Suite", "Payments", "Audit Trail", "Multi-region Tax"],
+        link: "https://bossimating.com/",
+        color: "text-green-400",
+        border: "border-green-500/20",
+        bg: "bg-green-500/5",
+        icon: <ReceiptText className="w-6 h-6" />,
+        staticImage: "/projects/bossimating-home.png",
+        imageMode: "cover"
+    },
+    {
+        title: "Revamp Solutions",
+        type: "Service website with AI support",
+        desc: "A customer-facing service site with clear pages, a polished brand feel, and a live Dify support flow that can answer common questions.",
         tech: ["Next.js", "Dify AI", "Framer Motion", "Live Production"],
         link: "https://www.revampsolutions.ca/",
         color: "text-amber-400",
@@ -81,11 +94,11 @@ export default function ProjectShowcase() {
                                 </span>
                             </div>
 
-                            <h2 className="text-4xl font-bold text-white flex items-center gap-4">
+                            <h2 className="text-4xl font-bold text-white flex flex-wrap items-center gap-4">
                                 {project.title}
                                 {project.isFeatured && (
-                                    <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 uppercase tracking-tighter">
-                                        ⭐ Featured Project
+                                    <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-green-500/20 text-green-400 border border-green-500/30 uppercase tracking-tighter">
+                                        Live Product
                                     </span>
                                 )}
                             </h2>
@@ -95,12 +108,12 @@ export default function ProjectShowcase() {
                                 {project.tech.map((t, idx) => (
                                     <span
                                         key={idx}
-                                        className={`px-3 py-1 border rounded-full text-xs font-mono ${t === "Live Production"
+                                        className={`px-3 py-1 border rounded-full text-xs font-mono ${t === "Live Production" || t === "Live SaaS"
                                             ? "bg-green-500/20 border-green-500/50 text-green-400 font-bold shadow-[0_0_10px_rgba(34,197,94,0.3)]"
                                             : "bg-white/5 border-white/10 text-gray-300"
                                             }`}
                                     >
-                                        {t === "Live Production" && <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-400 mr-2 animate-pulse" />}
+                                        {(t === "Live Production" || t === "Live SaaS") && <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-400 mr-2 animate-pulse" />}
                                         {t}
                                     </span>
                                 ))}
@@ -126,7 +139,7 @@ export default function ProjectShowcase() {
                         </div>
 
                         {/* Visual / Abstract Representation */}
-                        <div className={`flex-1 w-full aspect-video rounded-2xl border border-white/10 bg-[#0a0a0a] relative overflow-hidden group ${i % 2 === 1 ? 'md:order-1' : ''}`}>
+                        <div className={`flex-1 w-full aspect-video rounded-lg border border-white/10 bg-[#0a0a0a] relative overflow-hidden group ${i % 2 === 1 ? 'md:order-1' : ''}`}>
                             <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent z-10 pointer-events-none" />
 
                             {/* Browser Mockup Header */}
@@ -143,20 +156,21 @@ export default function ProjectShowcase() {
                                         src={project.staticImage}
                                         alt={project.title}
                                         fill
-                                        className="object-contain p-8 opacity-80 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0"
+                                        className={`${project.imageMode === "cover" ? "object-cover object-top p-0" : "object-contain p-8"} opacity-80 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0`}
                                     />
                                     {/* Abstract Icon Overlay (Fades out on hover) */}
                                     <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none">
-                                        {i === 0 && <Bot className="w-32 h-32 text-amber-500/20" />}
-                                        {i === 1 && <Gamepad2 className="w-32 h-32 text-emerald-500/20" />}
+                                        {project.title === "Bossimating" && <ReceiptText className="w-32 h-32 text-green-500/20" />}
+                                        {project.title === "Revamp Solutions" && <Bot className="w-32 h-32 text-amber-500/20" />}
+                                        {project.title === "Mystery Cavern" && <Gamepad2 className="w-32 h-32 text-emerald-500/20" />}
                                     </div>
                                 </div>
                             ) : (
                                 <>
                                     <div className="absolute inset-0 pt-8 flex items-center justify-center text-gray-800 pointer-events-none">
                                         {/* Abstract Pattern Based on Project Type */}
-                                        {i === 2 && <Layout className="w-32 h-32 text-purple-500/10" />}
-                                        {i === 3 && <ShoppingCart className="w-32 h-32 text-rose-500/10" />}
+                                        {project.title === "BlogYu" && <Layout className="w-32 h-32 text-purple-500/10" />}
+                                        {project.title === "Ombrilo" && <ShoppingCart className="w-32 h-32 text-rose-500/10" />}
                                     </div>
 
                                     <iframe

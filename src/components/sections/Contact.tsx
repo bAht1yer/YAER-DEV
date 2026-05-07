@@ -18,11 +18,11 @@ export default function Contact() {
             >
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 flex items-center justify-center gap-3">
                     <Terminal className="text-primary w-8 h-8 md:w-10 md:h-10" />
-                    <span className="text-primary">04.</span> Get In Touch
+                    Tell Me What You&apos;re Building
                 </h2>
                 <p className="text-gray-300 text-lg mb-12">
-                    I&apos;m currently looking for new opportunities. Whether you have a question or just want to say hi,
-                    I&apos;ll try my best to get back to you!
+                    Send the rough idea, the messy workflow, or the product you want to improve. I&apos;ll read it and
+                    get back to you with a clear next step.
                 </p>
 
                 <motion.div

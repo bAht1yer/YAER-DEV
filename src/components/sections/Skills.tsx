@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 import Section from "../ui/Section";
 
 const skills = [
-    { category: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Three.js"] },
-    { category: "Backend", items: ["Node.js", "PostgreSQL", "Prisma ORM", "REST APIs", "Python"] },
-    { category: "AI & Automation", items: ["Dify.ai", "LLM Chatflows", "OpenAI API", "Prompt Engineering", "RAG Pipelines"] },
-    { category: "DevOps & Tools", items: ["Git", "Docker", "Vercel", "Linux / VPS", "CI/CD"] },
+    { category: "Shape the product", items: ["SaaS workflows", "Client portals", "Admin tools", "Dashboards", "Content systems"] },
+    { category: "Add useful AI", items: ["Dify.ai", "LLM workflows", "OpenAI API", "RAG", "Agent handoffs"] },
+    { category: "Build the stack", items: ["Next.js", "React Native", "TypeScript", "Node.js", "PostgreSQL"] },
+    { category: "Ship and maintain", items: ["Vercel", "Docker", "Prisma", "Linux / VPS", "CI/CD"] },
 ];
 import { Terminal } from "lucide-react";
 
@@ -23,7 +23,7 @@ export default function Skills() {
                     className="text-4xl md:text-5xl font-bold mb-12 text-white flex items-center gap-3"
                 >
                     <Terminal className="text-primary w-8 h-8 md:w-10 md:h-10" />
-                    <span className="text-primary">02.</span> Tech Stack
+                    How I Help
                 </motion.h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

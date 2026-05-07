@@ -2,36 +2,72 @@
 
 import { motion } from "framer-motion";
 import Section from "../ui/Section";
-import { Github, Terminal, Cpu } from "lucide-react";
+import { Bot, ExternalLink, Github, ReceiptText, Smartphone, Terminal, type LucideIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const projects = [
+type Project = {
+    title: string;
+    eyebrow: string;
+    description: string;
+    tags: string[];
+    links: {
+        demo: string;
+        github?: string;
+    };
+    icon: LucideIcon;
+    image?: string;
+    featured?: boolean;
+    external?: boolean;
+    metrics?: string[];
+};
+
+const projects: Project[] = [
     {
-        title: "Full Stack Websites",
-        description: "E-commerce, AI Solutions, SaaS Platforms, and Web Gaming. Real production deployments.",
-        tags: ["Next.js", "React", "AI", "Stripe"],
-        image: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?auto=format&fit=crop&q=80&w=1000", // Reusing the original image for now, as no new image was provided for "Full Stack Websites"
-        links: { demo: "/projects/web-collection", github: "https://github.com/bAht1yer/YAER-DEV" }, // Using the provided link for demo, github is placeholder
+        title: "Bossimating",
+        eyebrow: "Live contractor product",
+        description: "A product for small construction teams that brings estimates, invoices, payments, approvals, dashboards, and helpful AI tools into one practical workspace.",
+        tags: ["SaaS", "AI Helpers", "Payments", "Approvals"],
+        links: { demo: "https://bossimating.com/" },
+        icon: ReceiptText,
+        image: "/projects/bossimating-home.png",
+        featured: true,
+        external: true,
+        metrics: ["Estimates in minutes", "Built for small crews", "Real product, live now"],
+    },
+    {
+        title: "Revamp Solutions",
+        eyebrow: "AI support experience",
+        description: "A service website with a live AI support flow, clear service pages, and a polished brand presence that feels ready for customers.",
+        tags: ["Next.js", "Dify AI", "Customer Support", "Live Site"],
+        image: "/projects/revamp.png",
+        links: { demo: "https://www.revampsolutions.ca/" },
+        icon: Bot,
+        external: true,
     },
     {
         title: "DigiTao",
-        description: "A mobile-first Tao Te Ching companion built with Expo for iOS & Android. Features interactive character etymology, AI-powered wisdom interpreter, and guided meditation.",
-        tags: ["Expo", "React Native", "AI", "Mobile"],
-        image: "/projects/digitao/home.png", // Using the captured home screenshot
+        eyebrow: "Mobile learning companion",
+        description: "A calm mobile app for reading the Tao Te Ching with character notes, AI interpretation, bilingual recitation, and guided practice.",
+        tags: ["Expo", "React Native", "AI Guidance", "Mobile UX"],
+        image: "/projects/digitao/home.png",
         links: { demo: "/projects/digitao", github: "https://github.com/Neilblaze/digitao" },
-    },
-    {
-        title: "CoinBot",
-        description: "Institutional-grade algorithmic trading platform for Coinbase Advanced Trade. Features decoupled microservices, real-time risk engine, and AES-256 encrypted key management.",
-        tags: ["Next.js 16", "Node.js Worker", "PostgreSQL", "WebSocket"],
-        image: "https://images.unsplash.com/photo-1642104704074-907c0698cbd9?auto=format&fit=crop&q=80&w=1000",
-        links: { demo: "/projects/coinbot", github: "https://github.com/bAht1yer/coinbot" },
+        icon: Smartphone,
     },
 ];
 
 export default function Projects() {
     const router = useRouter();
+
+    const openProject = (project: (typeof projects)[number]) => {
+        if (project.external) {
+            window.open(project.links.demo, "_blank", "noopener,noreferrer");
+            return;
+        }
+
+        router.push(project.links.demo);
+    };
+
     return (
         <Section id="projects" className="bg-transparent relative">
             <div className="max-w-6xl mx-auto z-10 relative">
@@ -43,10 +79,10 @@ export default function Projects() {
                     className="text-4xl md:text-5xl font-bold mb-12 text-white flex items-center gap-3"
                 >
                     <Terminal className="text-primary w-8 h-8 md:w-10 md:h-10" />
-                    <span className="text-primary">03.</span> Featured Projects
+                    Selected Work
                 </motion.h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {projects.map((project, index) => (
                         <motion.div
                             key={project.title}
@@ -54,9 +90,9 @@ export default function Projects() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="h-full"
+                            className={`h-full ${project.featured ? "lg:col-span-2" : ""}`}
                         >
-                            <div onClick={() => router.push(project.links.demo)} className="group relative glass-panel overflow-hidden hover:neon-border transition-all duration-300 h-full flex flex-col block cursor-pointer">
+                            <div onClick={() => openProject(project)} className="group relative glass-panel overflow-hidden hover:neon-border transition-all duration-300 h-full flex flex-col block cursor-pointer">
                                 {/* Cyberpunk Decor */}
                                 <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
                                 <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
@@ -64,26 +100,75 @@ export default function Projects() {
                                 <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
 
                                 {/* Image Overlay */}
-                                <div className="relative h-48 overflow-hidden border-b border-white/10">
-                                    <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-300 z-10" />
-                                    <Image
-                                        src={project.image}
-                                        alt={project.title}
-                                        fill
-                                        className="object-cover transform group-hover:scale-110 transition-transform duration-500 grayscale group-hover:grayscale-0"
-                                    />
+                                <div className={`relative overflow-hidden border-b border-white/10 ${project.featured ? "h-72 md:h-80" : "h-56"}`}>
+                                    {project.image ? (
+                                        <>
+                                            <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-300 z-10" />
+                                            <Image
+                                                src={project.image}
+                                                alt={project.title}
+                                                fill
+                                                className="object-cover object-top transform group-hover:scale-110 transition-transform duration-500 grayscale group-hover:grayscale-0"
+                                            />
+                                        </>
+                                    ) : (
+                                        <div className="absolute inset-0 bg-[#070707] p-5">
+                                            <div className="h-full border border-[#39FF14]/20 bg-[#0d0d0d] p-4 shadow-[inset_0_0_25px_rgba(57,255,20,0.04)]">
+                                                <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-3">
+                                                    <div>
+                                                        <div className="font-mono text-[10px] uppercase tracking-widest text-gray-500">Dashboard</div>
+                                                        <div className="text-sm font-bold text-white">Apex Contracting</div>
+                                                    </div>
+                                                    <div className="font-mono text-lg font-bold text-[#39FF14]">$184.2k</div>
+                                                </div>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    {[
+                                                        ["Projects", "14"],
+                                                        ["Pending", "5"],
+                                                        ["Outstanding", "$22.4k"],
+                                                        ["Approvals", "Court-ready"],
+                                                    ].map(([label, value]) => (
+                                                        <div key={label} className="border border-white/10 bg-white/[0.03] p-3">
+                                                            <div className="font-mono text-[10px] uppercase tracking-widest text-gray-500">{label}</div>
+                                                            <div className="mt-2 text-base font-bold text-white">{value}</div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                                <div className="mt-4 h-2 overflow-hidden bg-white/10">
+                                                    <div className="h-full w-[68%] bg-[#39FF14]" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Content */}
                                 <div className="p-6 flex-grow flex flex-col relative z-20">
-                                    <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors flex items-center gap-2">
-                                        <Cpu className="w-5 h-5 text-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <div className="mb-3 flex items-center justify-between gap-3">
+                                        <span className="font-mono text-[11px] uppercase tracking-widest text-primary">
+                                            {project.eyebrow}
+                                        </span>
+                                        {project.external && <ExternalLink className="h-4 w-4 text-gray-500 group-hover:text-primary transition-colors" />}
+                                    </div>
+
+                                    <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors flex items-center gap-2">
+                                        <project.icon className="w-5 h-5 text-accent opacity-80 group-hover:opacity-100 transition-opacity" />
                                         {project.title}
                                     </h3>
 
-                                    <p className="text-gray-400 mb-6 text-sm flex-grow">
+                                    <p className="text-gray-400 mb-6 text-sm leading-6 flex-grow">
                                         {project.description}
                                     </p>
+
+                                    {project.metrics && (
+                                        <div className="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                            {project.metrics.map((metric) => (
+                                                <span key={metric} className="border border-[#39FF14]/20 bg-[#39FF14]/5 px-3 py-2 font-mono text-[11px] text-[#39FF14]">
+                                                    {metric}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    )}
 
                                     <div className="flex flex-wrap gap-2 mb-6">
                                         {project.tags.map((tag) => (
@@ -94,7 +179,7 @@ export default function Projects() {
                                     </div>
 
                                     <div className="flex gap-4 mt-auto">
-                                        {project.title !== "DigiTao" && (
+                                        {project.links.github && (
                                             <a href={project.links.github} onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-white hover:text-glow transition-all">
                                                 <Github className="w-5 h-5" />
                                             </a>

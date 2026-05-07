@@ -10,8 +10,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "YAER | Full-Stack Developer | AI-integrated applications",
-  description: "Full-Stack Developer bridging technical capabilities with non-technical client needs using AI tools like Dify.ai.",
+  title: "YAER | AI Products That Ship",
+  description: "I build practical AI-powered products, SaaS workflows, mobile apps, and tools people can actually use.",
 };
 
 import SmoothScroll from "@/components/ui/SmoothScroll";
