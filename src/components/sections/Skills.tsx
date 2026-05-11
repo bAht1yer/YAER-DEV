@@ -3,30 +3,41 @@
 import { motion } from "framer-motion";
 import Section from "../ui/Section";
 
+/**
+ * Skills (Capabilities) — industrial restyle.
+ * Same content, swapped to industrial tokens: lime accent on headings, hairline
+ * panels instead of glass, mono category labels.
+ */
 const skills = [
     { category: "Shape the product", items: ["SaaS workflows", "Client portals", "Admin tools", "Dashboards", "Content systems"] },
     { category: "Add useful AI", items: ["Dify.ai", "LLM workflows", "OpenAI API", "RAG", "Agent handoffs"] },
     { category: "Build the stack", items: ["Next.js", "React Native", "TypeScript", "Node.js", "PostgreSQL"] },
     { category: "Ship and maintain", items: ["Vercel", "Docker", "Prisma", "Linux / VPS", "CI/CD"] },
 ];
-import { Terminal } from "lucide-react";
 
 export default function Skills() {
     return (
         <Section id="skills" className="bg-transparent">
-            <div className="max-w-6xl mx-auto">
-                <motion.h2
+            <div className="max-w-6xl mx-auto w-full">
+                <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-5xl font-bold mb-12 text-white flex items-center gap-3"
+                    className="mb-12"
                 >
-                    <Terminal className="text-primary w-8 h-8 md:w-10 md:h-10" />
-                    How I Help
-                </motion.h2>
+                    <div className="flex items-center gap-3 mb-2">
+                        <span className="h-px w-10 bg-[#E6FF3A]" />
+                        <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#E6FF3A]">
+                            Capabilities
+                        </span>
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white">
+                        How I help.
+                    </h2>
+                </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {skills.map((skill, index) => (
                         <motion.div
                             key={skill.category}
@@ -34,15 +45,21 @@ export default function Skills() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-lg hover:border-primary/50 transition-colors group"
+                            className="border border-[#23262B] bg-[#121316] p-6 transition-colors hover:border-[#E6FF3A]/45 group"
                         >
-                            <h3 className="text-xl font-bold mb-4 text-primary group-hover:text-glow transition-all">
+                            <div className="mb-4 flex items-center gap-2">
+                                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-gray-500 group-hover:text-[#E6FF3A] transition-colors">
+                                    0{index + 1}
+                                </span>
+                                <span className="h-px flex-1 bg-[#23262B]" />
+                            </div>
+                            <h3 className="text-lg font-bold mb-4 text-white">
                                 {skill.category}
                             </h3>
                             <ul className="space-y-2">
                                 {skill.items.map((item) => (
-                                    <li key={item} className="text-gray-400 flex items-center gap-2">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                                    <li key={item} className="text-sm text-gray-400 flex items-center gap-2">
+                                        <span className="w-1 h-1 bg-[#E6FF3A]/70" />
                                         {item}
                                     </li>
                                 ))}

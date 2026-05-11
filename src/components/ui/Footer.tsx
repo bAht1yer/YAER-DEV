@@ -1,19 +1,26 @@
-import { } from "lucide-react";
+import Image from "next/image";
 
+/**
+ * Footer -- minimal industrial. Uses the Y mark next to the domain caption.
+ */
 export default function Footer() {
     return (
-        <footer className="relative bg-black py-12">
-            {/* Luminated Line */}
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-
+        <footer className="relative border-t border-[#23262B] bg-transparent py-12">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
-                <h3 className="text-2xl font-bold text-white mb-4 tracking-tighter">
-                    <span className="text-primary">&lt;</span> YAER <span className="text-primary">/&gt;</span>
-                </h3>
-                <div className="flex gap-8 mb-8">
+                <div className="mb-4 flex items-center gap-3">
+                    <Image
+                        src="/brand/yaer-mark.png"
+                        alt="YAER"
+                        width={28}
+                        height={28}
+                        className="h-6 w-6"
+                    />
+                    <span className="font-mono text-sm uppercase tracking-[0.25em] text-white">
+                        yaer<span className="text-gray-500">.dev</span>
+                    </span>
                 </div>
-                <p className="text-gray-600 text-xs font-mono">
-                    © {new Date().getFullYear()} YAER. All systems operational.
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gray-500">
+                    © {new Date().getFullYear()} · All systems operational
                 </p>
             </div>
         </footer>

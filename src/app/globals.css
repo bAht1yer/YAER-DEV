@@ -7,8 +7,23 @@ html {
 }
 
 :root {
-  --background: #050505;
-  --foreground: #ededed;
+  /* Industrial palette — replaces cyberpunk */
+  --background: #0A0B0D;
+  --foreground: #ECEEF1;
+  --muted: #9CA3AF;
+
+  --panel: #121316;
+  --panel-edge: #23262B;
+  --hairline: rgba(255, 255, 255, 0.06);
+
+  --lime: #E6FF3A;          /* primary industrial accent */
+  --lime-soft: rgba(230, 255, 58, 0.08);
+  --steel: #D4DCE3;         /* secondary, brushed metal */
+  --safety: #FF5A1F;        /* signal / warning */
+
+  /* Legacy variable names kept so we don't break existing references during the migration. */
+  --primary: #E6FF3A;
+  --accent: #D4DCE3;
 }
 
 @layer base {
@@ -20,54 +35,148 @@ html {
     @apply min-h-screen;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-inter), sans-serif;
     font-weight: 700;
+    letter-spacing: -0.015em;
   }
 
-  code,
-  pre {
+  code, pre {
     font-family: var(--font-jetbrains-mono), monospace;
   }
 }
 
 @layer utilities {
-  .text-glow {
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3);
+  /* -------------- Industrial utilities -------------- */
+  .panel-industrial {
+    background: var(--panel);
+    border: 1px solid var(--panel-edge);
+    border-radius: 0;
   }
 
-  .text-glow-purple {
-    text-shadow: 0 0 10px rgba(112, 0, 255, 0.5), 0 0 20px rgba(112, 0, 255, 0.3);
+  .panel-industrial-glow {
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.03);
   }
+
+  .hairline {
+    border-color: var(--hairline);
+  }
+
+  .mono-label {
+    font-family: var(--font-jetbrains-mono), monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .mono-label-accent {
+    font-family: var(--font-jetbrains-mono), monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--lime);
+  }
+
+  /* Corner notches — engineered look for panels */
+  .notch-corners {
+    position: relative;
+  }
+  .notch-corners::before,
+  .notch-corners::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+  }
+  .notch-corners::before {
+    top: -1px; left: -1px;
+    border-top: 1px solid var(--lime);
+    border-left: 1px solid var(--lime);
+  }
+  .notch-corners::after {
+    bottom: -1px; right: -1px;
+    border-bottom: 1px solid var(--lime);
+    border-right: 1px solid var(--lime);
+  }
+
+  .btn-industrial-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: var(--lime);
+    color: #0A0B0D;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--lime);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .btn-industrial-primary:hover {
+    background: #d4ed2e;
+  }
+
+  .btn-industrial-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: transparent;
+    color: var(--steel);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--panel-edge);
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .btn-industrial-secondary:hover {
+    border-color: var(--steel);
+    color: #ffffff;
+  }
+
+  /* -------------- Legacy utilities (kept, retitled visually as industrial) --------
+     These names are still referenced across the codebase (.glass-panel, .neon-border,
+     .text-glow). Rather than risk breakage in a single pass, we redefine them to the
+     industrial look so existing usage degrades gracefully. */
 
   .glass-panel {
-    @apply bg-black/40 backdrop-blur-md border border-white/10 rounded-xl;
+    @apply bg-[#121316] border border-[#23262B];
+    border-radius: 0;
   }
 
   .neon-border {
-    @apply border border-primary/50;
-    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    border: 1px solid var(--lime);
+    box-shadow: none;
+  }
+
+  .text-glow {
+    text-shadow: none;
+  }
+
+  .text-glow-purple {
+    text-shadow: none;
   }
 
   .cyber-grid {
-    background-size: 40px 40px;
-    background-image: linear-gradient(to right, transparent 1px, transparent 1px),
-      linear-gradient(to bottom, transparent 1px, transparent 1px);
-    mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+    background-size: 80px 80px;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, black 35%, transparent 85%);
+            mask-image: radial-gradient(circle at 50% 50%, black 35%, transparent 85%);
   }
 
+  /* Gradient border — kept for blog/dashboard, neutralized for the homepage. */
   .gradient-border {
-    --borderWidth: 2px;
+    --borderWidth: 1px;
     position: relative;
-    border-radius: 12px;
+    border-radius: 0;
     z-index: 1;
   }
-
   .gradient-border::after {
     content: '';
     position: absolute;
@@ -75,20 +184,16 @@ html {
     left: calc(-1 * var(--borderWidth));
     height: calc(100% + var(--borderWidth) * 2);
     width: calc(100% + var(--borderWidth) * 2);
-    background: linear-gradient(60deg, #00f0ff, #7000ff, #00f0ff);
-    border-radius: calc(12px + var(--borderWidth));
+    background: var(--panel-edge);
+    border-radius: 0;
     z-index: -1;
-    animation: animatedgradient 4s ease alternate infinite;
-    background-size: 300% 300%;
   }
 
   .hover-gradient-border {
-    --borderWidth: 2px;
+    --borderWidth: 1px;
     position: relative;
-    border-radius: 12px;
     z-index: 1;
   }
-
   .hover-gradient-border::after {
     content: '';
     position: absolute;
@@ -96,48 +201,72 @@ html {
     left: calc(-1 * var(--borderWidth));
     height: calc(100% + var(--borderWidth) * 2);
     width: calc(100% + var(--borderWidth) * 2);
-    background: linear-gradient(60deg, #00f0ff, #7000ff, #00f0ff);
-    border-radius: calc(12px + var(--borderWidth));
+    background: var(--lime);
     z-index: -1;
-    background-size: 300% 300%;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.3s ease;
   }
-
   .hover-gradient-border:hover::after {
-    opacity: 1;
-    animation: animatedgradient 4s ease alternate infinite;
+    opacity: 0.8;
   }
 }
 
-@keyframes animatedgradient {
-  0% {
-    background-position: 0% 50%;
-  }
+/* -------------- Background composition keyframes -- Upwork-style breathing --
 
-  50% {
-    background-position: 100% 50%;
-  }
+   Each blob runs on:
+     - 4 keyframe stops (irregular, so motion never feels like a loop)
+     - independent long period (50s / 78s / 64s / 95s — intentionally co-prime
+       so the four blobs never realign and the composite always looks fresh)
+     - position drift + scale pulse + opacity breathing combined
 
-  100% {
-    background-position: 0% 50%;
-  }
+   The result reads as atmospheric "breathing", not a back-and-forth bounce.
+*/
+@keyframes aurora-drift-1 {
+  0%   { transform: translate3d(0, 0, 0) scale(0.95);          opacity: 0.35; }
+  28%  { transform: translate3d(260px, 140px, 0) scale(1.25);  opacity: 1; }
+  55%  { transform: translate3d(440px, 360px, 0) scale(1.1);   opacity: 0.55; }
+  78%  { transform: translate3d(180px, 460px, 0) scale(1.35);  opacity: 0.95; }
+  100% { transform: translate3d(0, 0, 0) scale(0.95);          opacity: 0.35; }
 }
 
-/* Custom Scrollbar */
+@keyframes aurora-drift-2 {
+  0%   { transform: translate3d(0, 0, 0) scale(1);             opacity: 0.3; }
+  32%  { transform: translate3d(-320px, -180px, 0) scale(1.18); opacity: 0.95; }
+  58%  { transform: translate3d(-460px, -380px, 0) scale(0.92); opacity: 0.5; }
+  82%  { transform: translate3d(-160px, -300px, 0) scale(1.28); opacity: 1; }
+  100% { transform: translate3d(0, 0, 0) scale(1);             opacity: 0.3; }
+}
+
+@keyframes aurora-drift-3 {
+  0%   { transform: translate3d(0, 0, 0) scale(1);             opacity: 0.4; }
+  26%  { transform: translate3d(280px, -160px, 0) scale(1.15); opacity: 1; }
+  52%  { transform: translate3d(400px, -340px, 0) scale(1.32); opacity: 0.6; }
+  74%  { transform: translate3d(120px, -440px, 0) scale(0.96); opacity: 1; }
+  100% { transform: translate3d(0, 0, 0) scale(1);             opacity: 0.4; }
+}
+
+@keyframes aurora-drift-4 {
+  0%   { transform: translate3d(0, 0, 0) scale(0.7);           opacity: 0; }
+  20%  { transform: translate3d(-160px, 220px, 0) scale(1);    opacity: 0.9; }
+  45%  { transform: translate3d(220px, 120px, 0) scale(1.2);   opacity: 1; }
+  70%  { transform: translate3d(160px, -260px, 0) scale(0.9);  opacity: 0.6; }
+  100% { transform: translate3d(0, 0, 0) scale(0.7);           opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob { animation: none !important; }
+}
+
+/* Custom Scrollbar — industrial */
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: #0A0B0D;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
+  background: #23262B;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #3A3D43;
 }

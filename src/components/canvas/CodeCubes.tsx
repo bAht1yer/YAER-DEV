@@ -4,6 +4,18 @@ import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } f
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
+/**
+ * CodeCubes — industrial re-material.
+ *
+ * Same scene as before (labelled cubes drifting down, pointer-reactive tilt, click
+ * to cycle palette) but re-materialized for the industrial aesthetic:
+ *  - Single tight palette (lime + steel + safety) instead of rainbow neon
+ *  - Lower emissive intensity (glow as accent, not signature)
+ *  - Heavier wireframe edges (engineering, not hacker)
+ *  - Slower motion, fewer cubes by default
+ *  - Neutral lighting (white/steel) instead of cyan + orange point lights
+ */
+
 const DESKTOP_COUNT = 5;
 const MOBILE_COUNT = 3;
 
@@ -15,12 +27,14 @@ const CAPABILITY_STEPS = [
     "SHIP",
 ];
 
+// Industrial palette — three options instead of five. Lime carries it; steel and
+// safety appear as accents to keep the cubes distinguishable but cohesive.
 const PALETTE = [
-    { edge: "#00FBFB", glow: "#00FBFB" },
-    { edge: "#39FF14", glow: "#39FF14" },
-    { edge: "#ff8b3d", glow: "#ff6b16" },
-    { edge: "#d8ecff", glow: "#7dd3fc" },
-    { edge: "#a7f3d0", glow: "#5eead4" },
+    { edge: "#E6FF3A", glow: "#E6FF3A" }, // lime — primary
+    { edge: "#D4DCE3", glow: "#D4DCE3" }, // steel
+    { edge: "#FF5A1F", glow: "#FF5A1F" }, // safety
+    { edge: "#E6FF3A", glow: "#E6FF3A" }, // lime again — weighted toward the primary
+    { edge: "#D4DCE3", glow: "#D4DCE3" }, // steel
 ];
 
 interface CubeData {
@@ -62,21 +76,22 @@ function makeLabelTexture(label: string, color: string) {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.globalAlpha = 1;
+    // Subtle shadow only — industrial means restraint, not blown-out glow
     ctx.shadowColor = color;
-    ctx.shadowBlur = 16;
-    ctx.fillStyle = "#f8fbff";
+    ctx.shadowBlur = 6;
+    ctx.fillStyle = "#f4f6f8";
     ctx.font = `700 ${label.length > 6 ? 58 : 76}px JetBrains Mono, Consolas, monospace`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(label, 256, 256);
 
     ctx.shadowBlur = 0;
-    ctx.globalAlpha = 0.5;
+    ctx.globalAlpha = 0.55;
     ctx.strokeStyle = color;
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(176, 324);
-    ctx.lineTo(336, 324);
+    ctx.moveTo(196, 324);
+    ctx.lineTo(316, 324);
     ctx.stroke();
 
     const texture = new THREE.CanvasTexture(canvas);
@@ -87,8 +102,12 @@ function makeLabelTexture(label: string, color: string) {
 }
 
 function buildCubeData(count: number, viewportHeight: number, compact: boolean): CubeData[] {
-    const desktopLanes = [-0.68, 0.66, -0.52, 0.51, -0.76];
-    const mobileLanes = [-0.56, 0.55, -0.44];
+    // Lane factor: -1..1 mapped to usable horizontal range. The previous version had
+    // factors > 0.5 which all got clamped to the viewport edge — same-side cubes
+    // stacked on top of each other. New lanes are spread so each cube has its own
+    // X column with enough gap to never overlap, even with drift sin() motion.
+    const desktopLanes = [-0.80, 0.55, -0.20, 0.80, -0.50];
+    const mobileLanes = [-0.65, 0.65, 0.05];
     const lanes = compact ? mobileLanes : desktopLanes;
     const spacing = (viewportHeight + 8) / count;
 
@@ -108,15 +127,16 @@ function buildCubeData(count: number, viewportHeight: number, compact: boolean):
             y: viewportHeight / 2 + 4 - index * spacing,
             z: -2.4 - depthCycle * 1.15,
             scale: (compact ? 0.54 : 0.7) + (index % 2) * 0.06,
-            velocity: compact ? 0.22 : 0.26,
-            drift: compact ? 0.1 : 0.18,
-            driftSpeed: 0.24 + (index % 3) * 0.035,
+            // Velocity / drift slowed ~30% from the cyberpunk version — industrial = restrained motion
+            velocity: compact ? 0.15 : 0.18,
+            drift: compact ? 0.08 : 0.14,
+            driftSpeed: 0.18 + (index % 3) * 0.025,
             phase: index * 1.37,
             rotationBase: new THREE.Euler(0.16 * (index % 2 ? -1 : 1), 0.28 * (index % 3 - 1), 0.08),
             rotationSpeed: new THREE.Vector3(
-                0.04 + (index % 3) * 0.01,
-                0.052 + (index % 3) * 0.012,
-                0.025 + (index % 2) * 0.006
+                0.028 + (index % 3) * 0.008,
+                0.036 + (index % 3) * 0.01,
+                0.018 + (index % 2) * 0.005
             ),
         };
     });
@@ -191,71 +211,69 @@ function CodeBlock({
         const elapsed = state.clock.elapsedTime + data.phase;
         const motionScale = reducedMotion ? 0.18 : 1;
         const depthViewport = viewport.getCurrentViewport(camera, new THREE.Vector3(0, 0, data.z));
-        const laneX = THREE.MathUtils.clamp(
-            data.laneFactor * depthViewport.width,
-            -depthViewport.width / 2 + 1.05,
-            depthViewport.width / 2 - 1.05
-        );
-        const pointerNudge = pointer.current.x * (compact ? 0.08 : 0.14);
+        // Map laneFactor (-1..1) directly onto the usable half-width — no clamp,
+        // because lane factors are already constrained to ±0.85 in buildCubeData.
+        const usableHalfWidth = Math.max(depthViewport.width / 2 - 1.1, 1.6);
+        const laneX = data.laneFactor * usableHalfWidth;
+        const pointerNudge = pointer.current.x * (compact ? 0.06 : 0.1);
         const targetX = laneX + Math.sin(elapsed * data.driftSpeed) * data.drift * motionScale + pointerNudge;
 
         group.position.x = THREE.MathUtils.damp(group.position.x, targetX, 4.2, delta);
         group.position.y -= data.velocity * delta * motionScale;
-        group.position.z = data.z + Math.sin(elapsed * 0.25) * 0.2;
+        group.position.z = data.z + Math.sin(elapsed * 0.2) * 0.15;
 
         const verticalLimit = depthViewport.height / 2 + data.scale * 1.8;
         if (group.position.y < -verticalLimit) {
-            group.position.y = verticalLimit + (index % 3) * 0.75;
+            // Stagger respawn by full cube index so cycling doesn't bunch them up over time
+            group.position.y = verticalLimit + index * 1.4;
         }
 
         const proximity = Math.max(
             0,
             1 - Math.hypot(pointer.current.x * viewport.width * 0.5 - group.position.x, pointer.current.y * viewport.height * 0.5 - group.position.y) / (compact ? 3.2 : 4.6)
         );
-        const tiltX = data.rotationBase.x + pointer.current.y * proximity * 0.42;
-        const tiltY = data.rotationBase.y - pointer.current.x * proximity * 0.42;
+        const tiltX = data.rotationBase.x + pointer.current.y * proximity * 0.32;
+        const tiltY = data.rotationBase.y - pointer.current.x * proximity * 0.32;
 
         group.rotation.x = THREE.MathUtils.damp(
             group.rotation.x,
-            tiltX + Math.sin(elapsed * data.rotationSpeed.x) * 0.18 * motionScale,
+            tiltX + Math.sin(elapsed * data.rotationSpeed.x) * 0.14 * motionScale,
             3.6,
             delta
         );
         group.rotation.y = THREE.MathUtils.damp(
             group.rotation.y,
-            tiltY + Math.cos(elapsed * data.rotationSpeed.y) * 0.22 * motionScale,
+            tiltY + Math.cos(elapsed * data.rotationSpeed.y) * 0.16 * motionScale,
             3.6,
             delta
         );
         group.rotation.z = THREE.MathUtils.damp(
             group.rotation.z,
-            data.rotationBase.z + Math.sin(elapsed * data.rotationSpeed.z) * 0.12 * motionScale,
+            data.rotationBase.z + Math.sin(elapsed * data.rotationSpeed.z) * 0.09 * motionScale,
             3.6,
             delta
         );
 
         pulse.current = THREE.MathUtils.damp(pulse.current, 0, 5.8, delta);
         const pulseValue = pulse.current;
-        const edgeWave = (Math.sin(elapsed * 1.6) + 1) * 0.5;
-        group.scale.setScalar(data.scale * (1 + pulseValue * 0.11));
+        const edgeWave = (Math.sin(elapsed * 1.2) + 1) * 0.5;
+        group.scale.setScalar(data.scale * (1 + pulseValue * 0.09));
 
+        // Lower emissive than the cyberpunk version — glow as accent, not signature
         if (bodyMaterial.current) {
-            bodyMaterial.current.emissiveIntensity = 0.08 + proximity * 0.11 + pulseValue * 0.22;
+            bodyMaterial.current.emissiveIntensity = 0.04 + proximity * 0.07 + pulseValue * 0.16;
         }
         if (coreMaterial.current) {
-            coreMaterial.current.opacity = 0.13 + proximity * 0.06 + pulseValue * 0.18;
+            coreMaterial.current.opacity = 0.06 + proximity * 0.04 + pulseValue * 0.14;
         }
         if (edgeMaterial.current) {
-            edgeMaterial.current.opacity = 0.68 + proximity * 0.18 + edgeWave * 0.2 + pulseValue * 0.2;
+            edgeMaterial.current.opacity = 0.55 + proximity * 0.18 + edgeWave * 0.14 + pulseValue * 0.2;
         }
     });
 
     const initialViewport = viewport.getCurrentViewport(camera, new THREE.Vector3(0, 0, data.z));
-    const initialX = THREE.MathUtils.clamp(
-        data.laneFactor * initialViewport.width,
-        -initialViewport.width / 2 + 1.05,
-        initialViewport.width / 2 - 1.05
-    );
+    const initialUsableHalfWidth = Math.max(initialViewport.width / 2 - 1.1, 1.6);
+    const initialX = data.laneFactor * initialUsableHalfWidth;
 
     return (
         <group
@@ -268,13 +286,13 @@ function CodeBlock({
                 <boxGeometry args={[1, 1, 1]} />
                 <meshStandardMaterial
                     ref={bodyMaterial}
-                    color="#05090b"
+                    color="#16181C"
                     emissive={activePalette.glow}
-                    emissiveIntensity={0.08}
-                    roughness={0.48}
-                    metalness={0.42}
+                    emissiveIntensity={0.04}
+                    roughness={0.62}
+                    metalness={0.36}
                     transparent
-                    opacity={0.82}
+                    opacity={0.72}
                 />
             </mesh>
 
@@ -283,7 +301,7 @@ function CodeBlock({
                     ref={edgeMaterial}
                     color={activePalette.edge}
                     transparent
-                    opacity={0.72}
+                    opacity={0.58}
                     depthWrite={false}
                     toneMapped={false}
                 />
@@ -295,7 +313,7 @@ function CodeBlock({
                     ref={coreMaterial}
                     color={activePalette.glow}
                     transparent
-                    opacity={0.11}
+                    opacity={0.06}
                     depthWrite={false}
                     toneMapped={false}
                 />
@@ -308,7 +326,7 @@ function CodeBlock({
                         <meshBasicMaterial
                             map={faceTexture}
                             transparent
-                            opacity={0.86}
+                            opacity={0.78}
                             depthWrite={false}
                             polygonOffset
                             polygonOffsetFactor={-1}
@@ -320,7 +338,7 @@ function CodeBlock({
                         <meshBasicMaterial
                             map={faceTexture}
                             transparent
-                            opacity={0.86}
+                            opacity={0.78}
                             depthWrite={false}
                             polygonOffset
                             polygonOffsetFactor={-1}
@@ -430,11 +448,13 @@ export default function CodeCubes() {
 
     return (
         <group ref={groupRef}>
-            <fog attach="fog" args={["#050505", 7, 18]} />
-            <ambientLight intensity={0.28} />
-            <directionalLight position={[6, 8, 5]} intensity={0.9} color="#ffffff" />
-            <pointLight position={[-6, 4, 2]} intensity={0.45} color="#00FBFB" />
-            <pointLight position={[7, -5, 1]} intensity={0.4} color="#ff8b3d" />
+            {/* Industrial fog — neutral, no neon color cast */}
+            <fog attach="fog" args={["#0A0B0D", 7, 18]} />
+            <ambientLight intensity={0.32} />
+            <directionalLight position={[6, 8, 5]} intensity={0.85} color="#ffffff" />
+            {/* Subtle steel rim + lime accent — replaces cyberpunk cyan/orange combo */}
+            <pointLight position={[-6, 4, 2]} intensity={0.28} color="#D4DCE3" />
+            <pointLight position={[7, -5, 1]} intensity={0.22} color="#E6FF3A" />
 
             {cubes.map((data, index) => (
                 <CodeBlock

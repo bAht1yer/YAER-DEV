@@ -2,16 +2,23 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import ContactForm from "./ContactForm";
+import ContactForm, { type ProjectType } from "./ContactForm";
 import { useEffect } from "react";
 
 interface ContactModalProps {
     isOpen: boolean;
     onClose: () => void;
+    /** Preselect a project type when the modal opens (used by offer section CTAs). */
+    projectType?: ProjectType;
 }
 
-export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
-    // Lock scroll when modal is open
+/**
+ * ContactModal — industrial restyle.
+ * Drops the terminal-prompt header and cyan accent in favor of a hairline panel
+ * with mono caps title. Accepts an optional projectType to preselect the
+ * dropdown when opened from an offer section CTA.
+ */
+export default function ContactModal({ isOpen, onClose, projectType }: ContactModalProps) {
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = "hidden";
@@ -36,34 +43,38 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                         className="absolute inset-0 bg-black/80 backdrop-blur-sm"
                     />
 
-                    {/* Modal Content */}
+                    {/* Panel */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="relative w-full max-w-2xl bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+                        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        className="relative w-full max-w-2xl bg-[#121316] border border-[#23262B] notch-corners overflow-hidden"
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Header */}
-                        <div className="flex items-center justify-between p-6 border-b border-white/10">
-                            <h2 className="text-2xl font-bold flex items-center gap-2">
-                                <span className="text-primary">&gt;</span> Initialize_Contact()
-                            </h2>
+                        <div className="flex items-center justify-between p-5 border-b border-[#23262B]">
+                            <div className="flex items-center gap-3">
+                                <span className="h-2 w-2 rounded-full bg-[#E6FF3A]" />
+                                <h2 className="font-mono text-[12px] uppercase tracking-[0.22em] text-white">
+                                    New project -- intake
+                                </h2>
+                            </div>
                             <button
                                 onClick={onClose}
-                                className="p-2 hover:bg-white/5 rounded-full transition-colors"
+                                className="p-2 text-gray-400 hover:text-white transition-colors"
+                                aria-label="Close"
                             >
-                                <X className="w-6 h-6 text-gray-400 hover:text-white" />
+                                <X className="w-5 h-5" />
                             </button>
                         </div>
 
                         {/* Body */}
-                        <div className="p-8 md:p-12 max-h-[80vh] overflow-y-auto">
-                            <p className="text-gray-400 mb-8 font-mono text-sm leading-relaxed">
-                                // Ready to bring your vision to life. <br />
-                                // Fill out the form below and I&apos;ll get back to you within 24 hours.
+                        <div className="p-6 md:p-10 max-h-[80vh] overflow-y-auto">
+                            <p className="text-sm leading-7 text-gray-400 mb-6">
+                                Tell me what you&apos;re building. Rough is fine -- I&apos;ll come back with a clear next step within 24 hours.
                             </p>
-                            <ContactForm onSuccess={onClose} />
+                            <ContactForm onSuccess={onClose} initialProjectType={projectType} />
                         </div>
                     </motion.div>
                 </div>

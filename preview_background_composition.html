@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Background composition preview — industrial + aurora + cubes</title>
+<style>
+  :root {
+    --bg: #0A0B0D;
+    --panel: #121316;
+    --panel-edge: #23262B;
+    --text: #ECEEF1;
+    --muted: #9CA3AF;
+    --lime: #E6FF3A;
+    --steel: #D4DCE3;
+    --safety: #FF5A1F;
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ---------- LAYERED BACKGROUND STACK ---------- */
+  .bg-stack {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* Layer 1 — Aurora glow blobs */
+  .aurora {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    will-change: transform, opacity;
+  }
+  .aurora.a1 {
+    width: 820px; height: 820px;
+    background: radial-gradient(circle, rgba(230,255,58,0.18), rgba(230,255,58,0) 65%);
+    top: -200px; left: -120px;
+    animation: drift1 50s ease-in-out infinite;
+  }
+  .aurora.a2 {
+    width: 740px; height: 740px;
+    background: radial-gradient(circle, rgba(212,220,227,0.10), rgba(212,220,227,0) 65%);
+    top: 30%; right: -180px;
+    animation: drift2 60s ease-in-out infinite;
+  }
+  .aurora.a3 {
+    width: 680px; height: 680px;
+    background: radial-gradient(circle, rgba(230,255,58,0.10), rgba(230,255,58,0) 65%);
+    bottom: -200px; left: 30%;
+    animation: drift3 70s ease-in-out infinite;
+  }
+
+  @keyframes drift1 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(80px, 120px) scale(1.1); }
+  }
+  @keyframes drift2 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(-120px, -80px) scale(1.08); }
+  }
+  @keyframes drift3 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(100px, -60px) scale(1.05); }
+  }
+
+  /* Layer 2 — Cubes (SVG, faking three.js wireframe material) */
+  .cubes {
+    position: absolute;
+    inset: 0;
+    opacity: 0.95;
+  }
+  /* IMPORTANT: animation goes on INNER <g> only — outer <g> holds the SVG transform="translate()"
+     attribute for position. Putting a CSS `transform` on the outer <g> would override the SVG
+     attribute and snap every cube to (0,0). */
+  .cube-pos { /* outer wrapper, no CSS transform here */ }
+  .cube { animation: float 20s ease-in-out infinite; }
+  .cube polygon { fill: rgba(42,45,51,0.55); stroke: rgba(230,255,58,0.75); stroke-width: 1.2; }
+  .cube polygon.dark { fill: rgba(16,18,22,0.7); }
+  .cube polygon.face-top { fill: rgba(78,84,94,0.55); }
+  .cube.slow { animation-duration: 32s; }
+  .cube.fast { animation-duration: 14s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-22px); }
+  }
+
+  /* Layer 3 — Structural grid */
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, black 35%, transparent 85%);
+            mask-image: radial-gradient(circle at 50% 50%, black 35%, transparent 85%);
+  }
+
+  /* Layer 4 — Vignette */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(0,0,0,0.55) 100%);
+  }
+
+  /* ---------- FOREGROUND CONTENT ---------- */
+  .stage { position: relative; z-index: 1; }
+
+  .frame-label {
+    position: fixed;
+    top: 18px; left: 24px;
+    z-index: 5;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+  }
+  .frame-label span { color: var(--lime); }
+
+  /* Hero section */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 48px;
+    align-items: center;
+    padding: 80px max(40px, 6vw);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; padding-top: 120px; }
+  }
+
+  .hero h1 {
+    font-family: var(--sans);
+    font-weight: 900;
+    font-size: clamp(48px, 7vw, 96px);
+    letter-spacing: -0.03em;
+    line-height: 0.92;
+    margin: 0 0 24px;
+    color: #fff;
+  }
+  .hero h1 .accent { color: var(--safety); }
+  .hero .lede {
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 460px;
+    margin: 0 0 36px;
+  }
+  .hero .lede em { color: #fff; font-style: normal; }
+  .hero .lede .l { color: var(--lime); }
+  .hero .lede .s { color: var(--steel); }
+
+  .cta-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 24px;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--lime);
+    color: #000;
+  }
+  .btn-primary:hover { background: #d4ed2e; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--steel);
+    border-color: var(--panel-edge);
+  }
+  .btn-secondary:hover { border-color: var(--steel); }
+  .tertiary-link {
+    display: inline-block;
+    margin-top: 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(255,255,255,0.2);
+    padding-bottom: 2px;
+  }
+  .tertiary-link:hover { color: var(--lime); border-color: var(--lime); }
+
+  /* Bossimating-style right panel */
+  .right-panel {
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--panel-edge);
+    padding: 0;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  }
+  .corner-notch { position: absolute; width: 14px; height: 14px; pointer-events: none; }
+  .corner-notch.tl { top: -1px; left: -1px; border-top: 1px solid var(--lime); border-left: 1px solid var(--lime); }
+  .corner-notch.tr { top: -1px; right: -1px; border-top: 1px solid var(--lime); border-right: 1px solid var(--lime); }
+  .corner-notch.bl { bottom: -1px; left: -1px; border-bottom: 1px solid var(--lime); border-left: 1px solid var(--lime); }
+  .corner-notch.br { bottom: -1px; right: -1px; border-bottom: 1px solid var(--lime); border-right: 1px solid var(--lime); }
+
+  .panel-head {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--panel-edge);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .panel-head .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 8px rgba(230,255,58,0.6); margin-right: 8px; }
+  .panel-screen {
+    aspect-ratio: 16 / 10;
+    background: linear-gradient(135deg, #16181C 0%, #0E0F12 100%);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--panel-edge);
+    display: flex; align-items: flex-end;
+    padding: 24px;
+  }
+  .panel-screen::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(230,255,58,0.07), transparent 50%),
+      linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.6) 100%);
+  }
+  .panel-screen-label {
+    position: relative; z-index: 2;
+    font-family: var(--sans);
+    font-size: clamp(20px, 2.4vw, 30px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #fff;
+    max-width: 280px;
+    letter-spacing: -0.02em;
+  }
+  .panel-screen-pill {
+    position: absolute; top: 18px; left: 18px; z-index: 2;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--safety);
+    background: rgba(255,90,31,0.12);
+    border: 1px solid rgba(255,90,31,0.4);
+    padding: 6px 10px;
+    text-transform: uppercase;
+  }
+  .panel-body { padding: 22px; }
+  .panel-body p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0 0 18px;
+  }
+  .panel-body p strong { color: #fff; font-weight: 600; }
+  .panel-body p .l { color: var(--lime); }
+  .panel-body p .s { color: var(--steel); }
+
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .metric-cell {
+    border: 1px solid var(--panel-edge);
+    background: rgba(255,255,255,0.02);
+    padding: 12px;
+  }
+  .metric-cell .lbl {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .metric-cell .val {
+    margin-top: 6px;
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: 18px;
+    color: #fff;
+  }
+  .metric-cell .det {
+    margin-top: 4px;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* Offer section */
+  .offer-section {
+    position: relative;
+    padding: 120px max(40px, 6vw);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .offer-index {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--lime);
+    margin-bottom: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-transform: uppercase;
+  }
+  .offer-index .line { width: 60px; height: 1px; background: var(--lime); display: inline-block; }
+  .recommended-tag {
+    margin-left: 12px;
+    border: 1px solid var(--lime);
+    background: rgba(230,255,58,0.08);
+    color: var(--lime);
+    padding: 4px 10px;
+    font-size: 10px;
+  }
+
+  .offer-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 960px) { .offer-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+  .offer-title {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: clamp(32px, 4vw, 52px);
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    margin: 0 0 24px;
+    color: #fff;
+  }
+  .offer-sub {
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0 0 32px;
+    max-width: 520px;
+  }
+
+  .deliverables {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 36px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 24px;
+  }
+  .deliverables li {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--steel);
+    padding-left: 22px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .deliverables li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 7px;
+    width: 12px; height: 1px;
+    background: var(--lime);
+  }
+
+  .bossimating-callout {
+    border-left: 2px solid var(--lime);
+    padding: 16px 20px;
+    background: rgba(230,255,58,0.04);
+    margin-bottom: 36px;
+    max-width: 540px;
+  }
+  .bossimating-callout p {
+    margin: 0;
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.7;
+    color: #DCE0E5;
+    font-style: italic;
+  }
+
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+  .price {
+    font-family: var(--sans);
+    font-weight: 900;
+    font-size: 44px;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .price-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* Schematic diagram on right of offer-3 */
+  .schematic {
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--panel-edge);
+    padding: 32px;
+  }
+  .schematic-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .schematic svg { width: 100%; height: auto; display: block; }
+
+  /* Footer note */
+  .footnote {
+    position: fixed;
+    bottom: 18px; right: 24px;
+    z-index: 5;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+  .footnote span { color: var(--lime); }
+</style>
+</head>
+<body>
+
+<!-- LABEL -->
+<div class="frame-label"><span>•</span> PREVIEW / background composition · industrial · aurora · cubes</div>
+
+<!-- LAYERED BACKGROUND — z-order (back→front): aurora · grid · cubes · vignette -->
+<div class="bg-stack" aria-hidden="true">
+  <div class="aurora a1"></div>
+  <div class="aurora a2"></div>
+  <div class="aurora a3"></div>
+
+  <div class="grid"></div>
+
+  <!-- Cubes — SVG wireframe (Path A material preview)
+       Double-wrapped: outer <g> = SVG transform for position; inner <g class="cube"> = CSS animation -->
+  <svg class="cubes" viewBox="0 0 1600 1200" preserveAspectRatio="xMidYMid slice">
+    <!-- Cube 1 top-left -->
+    <g class="cube-pos" transform="translate(180,160)">
+      <g class="cube">
+        <polygon class="face-top" points="0,0 90,-45 180,0 90,45"/>
+        <polygon points="0,0 90,45 90,135 0,90"/>
+        <polygon class="dark" points="180,0 90,45 90,135 180,90"/>
+      </g>
+    </g>
+    <!-- Cube 2 right -->
+    <g class="cube-pos" transform="translate(1280,260)">
+      <g class="cube slow">
+        <polygon class="face-top" points="0,0 70,-35 140,0 70,35"/>
+        <polygon points="0,0 70,35 70,105 0,70"/>
+        <polygon class="dark" points="140,0 70,35 70,105 140,70"/>
+      </g>
+    </g>
+    <!-- Cube 3 mid-right -->
+    <g class="cube-pos" transform="translate(1380,640)">
+      <g class="cube fast">
+        <polygon class="face-top" points="0,0 50,-25 100,0 50,25"/>
+        <polygon points="0,0 50,25 50,75 0,50"/>
+        <polygon class="dark" points="100,0 50,25 50,75 100,50"/>
+      </g>
+    </g>
+    <!-- Cube 4 lower-left -->
+    <g class="cube-pos" transform="translate(220,820)">
+      <g class="cube">
+        <polygon class="face-top" points="0,0 60,-30 120,0 60,30"/>
+        <polygon points="0,0 60,30 60,90 0,60"/>
+        <polygon class="dark" points="120,0 60,30 60,90 120,60"/>
+      </g>
+    </g>
+    <!-- Cube 5 bottom-mid -->
+    <g class="cube-pos" transform="translate(740,1020)">
+      <g class="cube slow">
+        <polygon class="face-top" points="0,0 80,-40 160,0 80,40"/>
+        <polygon points="0,0 80,40 80,120 0,80"/>
+        <polygon class="dark" points="160,0 80,40 80,120 160,80"/>
+      </g>
+    </g>
+    <!-- Cube 6 small floater -->
+    <g class="cube-pos" transform="translate(960,420)">
+      <g class="cube fast">
+        <polygon class="face-top" points="0,0 35,-18 70,0 35,18"/>
+        <polygon points="0,0 35,18 35,52 0,34"/>
+        <polygon class="dark" points="70,0 35,18 35,52 70,34"/>
+      </g>
+    </g>
+    <!-- Cube 7 upper-mid (extra for density) -->
+    <g class="cube-pos" transform="translate(600,300)">
+      <g class="cube slow">
+        <polygon class="face-top" points="0,0 45,-22 90,0 45,22"/>
+        <polygon points="0,0 45,22 45,67 0,45"/>
+        <polygon class="dark" points="90,0 45,22 45,67 90,45"/>
+      </g>
+    </g>
+    <!-- Cube 8 right-mid (extra for density) -->
+    <g class="cube-pos" transform="translate(1100,860)">
+      <g class="cube fast">
+        <polygon class="face-top" points="0,0 55,-28 110,0 55,28"/>
+        <polygon points="0,0 55,28 55,82 0,55"/>
+        <polygon class="dark" points="110,0 55,28 55,82 110,55"/>
+      </g>
+    </g>
+  </svg>
+
+  <div class="vignette"></div>
+</div>
+
+<!-- HERO -->
+<div class="stage">
+  <section class="hero">
+    <div>
+      <h1>AI SYSTEMS<br/><span class="accent">THAT SHIP</span></h1>
+      <p class="lede">
+        I design and build <em>SaaS</em>, internal tools, and
+        <span class="l">lead systems</span> for teams that need software working in
+        <span class="s">production</span> — not in a demo.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#">See work →</a>
+        <a class="btn btn-secondary" href="#">Start a project</a>
+      </div>
+      <a class="tertiary-link" href="#offer">Run a small business? Jump to packages →</a>
+    </div>
+
+    <div class="right-panel">
+      <span class="corner-notch tl"></span>
+      <span class="corner-notch tr"></span>
+      <span class="corner-notch bl"></span>
+      <span class="corner-notch br"></span>
+
+      <div class="panel-head">
+        <span><span class="dot"></span>Live snapshot / contractor SaaS</span>
+        <span>bossimating.com ↗</span>
+      </div>
+      <div class="panel-screen">
+        <span class="panel-screen-pill">● Live SaaS</span>
+        <div class="panel-screen-label">Contractor estimates, invoices, and AI.</div>
+      </div>
+      <div class="panel-body">
+        <p>
+          <strong>Bossimating</strong> puts <span class="l">estimates</span>,
+          <span class="s">invoices</span>, payments, approvals, dashboards, and AI helpers in one product.
+        </p>
+        <div class="metrics-row">
+          <div class="metric-cell"><div class="lbl">Estimate</div><div class="val">5 min</div><div class="det">brief to PDF</div></div>
+          <div class="metric-cell"><div class="lbl">Catalog</div><div class="val">422+</div><div class="det">trade-ready items</div></div>
+          <div class="metric-cell"><div class="lbl">Seats</div><div class="val">$0</div><div class="det">small crew friendly</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFER 3 PREVIEW (the recommended one) -->
+  <section class="offer-section" id="offer">
+    <div class="offer-index">
+      <span class="line"></span>
+      03 / LEAD SYSTEM
+      <span class="recommended-tag">RECOMMENDED</span>
+    </div>
+
+    <div class="offer-grid">
+      <div>
+        <h2 class="offer-title">A site that asks the right questions and turns visitors into estimates.</h2>
+        <p class="offer-sub">
+          Lead capture, intake flow, quote scaffolding, and the operational glue around them. Built from real contractor workflow.
+        </p>
+
+        <ul class="deliverables">
+          <li>Professional site / landing page</li>
+          <li>Estimate request form</li>
+          <li>PDF quote / intake flow concept</li>
+          <li>GBP optimization checklist</li>
+          <li>CRM lead sheet / email notification</li>
+          <li>Optional AI chatbot demo</li>
+        </ul>
+
+        <div class="bossimating-callout">
+          <p>I built Bossimating, a contractor-focused estimating platform, so I understand how contractors quote jobs and capture leads.</p>
+        </div>
+
+        <div class="price-row">
+          <span class="price">$1,500–$2,000</span>
+          <span class="price-meta">2–3 weeks · scope dependent</span>
+        </div>
+
+        <a class="btn btn-primary" href="#">Build my lead system →</a>
+      </div>
+
+      <div class="schematic">
+        <div class="schematic-title">— FLOW DIAGRAM / lead capture</div>
+        <svg viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#E6FF3A"/>
+            </marker>
+          </defs>
+
+          <!-- Visitor node -->
+          <g>
+            <rect x="20" y="30" width="120" height="56" fill="none" stroke="#E6FF3A" stroke-width="1"/>
+            <text x="80" y="55" text-anchor="middle" fill="#fff" font-family="Inter, sans-serif" font-size="13" font-weight="600">Visitor</text>
+            <text x="80" y="72" text-anchor="middle" fill="#9CA3AF" font-family="JetBrains Mono, monospace" font-size="10">arrives</text>
+          </g>
+
+          <!-- Form node -->
+          <g>
+            <rect x="180" y="30" width="120" height="56" fill="none" stroke="#E6FF3A" stroke-width="1"/>
+            <text x="240" y="55" text-anchor="middle" fill="#fff" font-family="Inter, sans-serif" font-size="13" font-weight="600">Intake form</text>
+            <text x="240" y="72" text-anchor="middle" fill="#9CA3AF" font-family="JetBrains Mono, monospace" font-size="10">scope · budget</text>
+          </g>
+
+          <!-- CRM node -->
+          <g>
+            <rect x="340" y="30" width="120" height="56" fill="none" stroke="#E6FF3A" stroke-width="1"/>
+            <text x="400" y="55" text-anchor="middle" fill="#fff" font-family="Inter, sans-serif" font-size="13" font-weight="600">CRM + email</text>
+            <text x="400" y="72" text-anchor="middle" fill="#9CA3AF" font-family="JetBrains Mono, monospace" font-size="10">notified instantly</text>
+          </g>
+
+          <!-- Connectors row 1 -->
+          <line x1="140" y1="58" x2="180" y2="58" stroke="#E6FF3A" stroke-width="1" marker-end="url(#arrow)"/>
+          <line x1="300" y1="58" x2="340" y2="58" stroke="#E6FF3A" stroke-width="1" marker-end="url(#arrow)"/>
+
+          <!-- Vertical connector -->
+          <line x1="400" y1="86" x2="400" y2="160" stroke="#E6FF3A" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="400" y1="160" x2="240" y2="160" stroke="#E6FF3A" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="240" y1="160" x2="240" y2="200" stroke="#E6FF3A" stroke-width="1" marker-end="url(#arrow)"/>
+
+          <!-- Estimate node -->
+          <g>
+            <rect x="180" y="200" width="120" height="56" fill="none" stroke="#D4DCE3" stroke-width="1"/>
+            <text x="240" y="225" text-anchor="middle" fill="#fff" font-family="Inter, sans-serif" font-size="13" font-weight="600">Estimate</text>
+            <text x="240" y="242" text-anchor="middle" fill="#9CA3AF" font-family="JetBrains Mono, monospace" font-size="10">PDF · sent</text>
+          </g>
+
+          <!-- Follow-up node -->
+          <g>
+            <rect x="180" y="290" width="120" height="56" fill="none" stroke="#D4DCE3" stroke-width="1"/>
+            <text x="240" y="315" text-anchor="middle" fill="#fff" font-family="Inter, sans-serif" font-size="13" font-weight="600">Follow-up</text>
+            <text x="240" y="332" text-anchor="middle" fill="#9CA3AF" font-family="JetBrains Mono, monospace" font-size="10">approval · close</text>
+          </g>
+
+          <line x1="240" y1="256" x2="240" y2="290" stroke="#D4DCE3" stroke-width="1" marker-end="url(#arrow)"/>
+
+          <!-- Annotations -->
+          <text x="20" y="125" fill="#5F6168" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">— REAL-TIME CAPTURE</text>
+          <text x="20" y="370" fill="#5F6168" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">— EVERY LEAD ACCOUNTED FOR</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="footnote"><span>—</span> single preview file · open in browser to see aurora drift</div>
+
+</body>
+</html>
