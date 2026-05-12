@@ -1,5 +1,6 @@
 import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/sections/Hero";
+import PackagesDivider from "@/components/sections/PackagesDivider";
 import OfferQuickFix from "@/components/sections/offers/OfferQuickFix";
 import OfferOnePage from "@/components/sections/offers/OfferOnePage";
 import OfferLeadSystem from "@/components/sections/offers/OfferLeadSystem";
@@ -16,12 +17,13 @@ import GridOverlay from "@/components/canvas/GridOverlay";
  * Homepage composition.
  *
  * Background stack (back -> front):
- *   z-0  Aurora - drifting CSS blobs (lime + steel)
+ *   z-0   Aurora - drifting CSS blobs (lime + steel), breathing
  *   z-[1] CodeCubes - 3D scene, transparent canvas, industrial palette
  *   z-[2] GridOverlay - structural grid + vignette
  *
  * Content flow:
  *   Navbar -> Hero (AI/SaaS architect spine) ->
+ *   PackagesDivider (animated chapter break) ->
  *   Three contractor offer sections (Quick Fix -> One-Page -> Lead System) ->
  *   Skills -> Projects -> Contact -> Footer
  */
@@ -50,8 +52,7 @@ export default function Home() {
                 <Navbar hideOnTop={true} />
                 <Hero />
 
-                {/* Section divider - separates AI/SaaS hero from contractor offer funnel */}
-                <SectionDivider label="Contractor Website Packages" sublabel="Three ways to work together" />
+                <PackagesDivider />
 
                 <OfferQuickFix />
                 <OfferOnePage />
@@ -63,26 +64,5 @@ export default function Home() {
                 <Footer />
             </div>
         </main>
-    );
-}
-
-function SectionDivider({ label, sublabel }: { label: string; sublabel: string }) {
-    return (
-        <div className="relative py-16">
-            <div className="max-w-7xl mx-auto px-4 md:px-10">
-                <div className="flex flex-col items-center text-center gap-3">
-                    <div className="flex items-center gap-4">
-                        <span className="h-px w-12 bg-[#E6FF3A]/40" />
-                        <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#E6FF3A]">
-                            {label}
-                        </span>
-                        <span className="h-px w-12 bg-[#E6FF3A]/40" />
-                    </div>
-                    <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-gray-500">
-                        {sublabel}
-                    </p>
-                </div>
-            </div>
-        </div>
     );
 }

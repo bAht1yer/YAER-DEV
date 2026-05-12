@@ -255,6 +255,31 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   .aurora-blob { animation: none !important; }
+  .scroll-cue-chevron { animation: none !important; }
+  .scroll-cue-label { animation: none !important; }
+}
+
+/* -------------- Scroll-down cue --------------
+   Three stacked chevrons cascade downward on staggered delays to create a
+   continuous "flow" pointing the eye toward the next section.
+
+   IMPORTANT: each chevron is positioned with `left: 50%` and the keyframe
+   carries the `translateX(-50%)` together with the vertical motion. Splitting
+   horizontal centering into a CSS class transform would be overwritten the
+   instant the animation's `transform` property kicks in.
+*/
+@keyframes scroll-cue-wave {
+  0%   { transform: translate(-50%, -14px); opacity: 0; }
+  35%  { transform: translate(-50%, -2px);  opacity: 1; }
+  70%  { transform: translate(-50%, 12px);  opacity: 1; }
+  100% { transform: translate(-50%, 22px);  opacity: 0; }
+}
+
+/* Label below the chevrons -- slow opacity pulse so it reads as a faint,
+   breathing hint rather than a static caption. */
+@keyframes scroll-cue-label-pulse {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 0.9; }
 }
 
 /* Custom Scrollbar — industrial */
