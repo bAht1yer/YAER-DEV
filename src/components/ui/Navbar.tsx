@@ -7,14 +7,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Code2, Terminal, User, Mail, FileText, Package } from "lucide-react";
 
 /**
- * Navbar -- industrial restyle, built around the yaer.dev brand mark.
+ * Navbar -- industrial restyle.
  *
- * Logo: image asset (full YAER.DEV wordmark on desktop, Y-only mark on mobile).
- * Drop the assets at:
- *   public/brand/yaer-wordmark.png   -- full horizontal wordmark
- *   public/brand/yaer-mark.png       -- Y-only square mark (for mobile nav)
- *   src/app/icon.png                 -- favicon (App Router auto-detects)
- *   src/app/apple-icon.png           -- iOS home-screen icon (optional)
+ * Logo: Y mark image (28x28) + "yaer.dev" rendered as mono caps text in HTML.
+ * Hovering the link tints ".dev" lime. Clicking returns to homepage.
+ *
+ * Same display on desktop and mobile so the brand reads identically everywhere.
  */
 const navItems = [
     { name: "About", href: "/#about", icon: User },
@@ -53,34 +51,24 @@ export default function Navbar({ hideOnTop = false }: { hideOnTop?: boolean }) {
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-12">
-                    {/* Logo */}
+                    {/* Logo: mark + text */}
                     <div className="flex-shrink-0">
                         <Link
                             href="/"
-                            className="group inline-flex items-center"
+                            className="group inline-flex items-center gap-2.5"
                             aria-label="yaer.dev home"
                         >
-                            {/* Desktop -- full wordmark */}
-                            <span className="hidden sm:inline-block">
-                                <Image
-                                    src="/brand/yaer-wordmark.png"
-                                    alt="YAER.DEV"
-                                    width={144}
-                                    height={32}
-                                    priority
-                                    className="h-7 w-auto"
-                                />
-                            </span>
-                            {/* Mobile -- Y mark only */}
-                            <span className="sm:hidden">
-                                <Image
-                                    src="/brand/yaer-mark.png"
-                                    alt="YAER"
-                                    width={32}
-                                    height={32}
-                                    priority
-                                    className="h-7 w-7"
-                                />
+                            <Image
+                                src="/brand/yaer-mark.png"
+                                alt=""
+                                width={28}
+                                height={28}
+                                priority
+                                className="h-6 w-6"
+                            />
+                            <span className="flex items-baseline gap-0.5 font-mono text-[13px] tracking-[0.22em] uppercase">
+                                <span className="text-white">yaer</span>
+                                <span className="text-gray-500 group-hover:text-[#E6FF3A] transition-colors">.dev</span>
                             </span>
                         </Link>
                     </div>

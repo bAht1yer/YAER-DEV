@@ -12,11 +12,26 @@ const jetbrainsMono = JetBrains_Mono({
     variable: "--font-jetbrains-mono",
 });
 
+/**
+ * Single source of truth for the brand icon: public/brand/yaer-mark.png
+ *
+ * Both the browser favicon and the iOS home-screen icon resolve to this one
+ * file via metadata.icons below. The Navbar and Footer reference the same
+ * /brand/yaer-mark.png path. Maintaining one PNG = no drift, no double work.
+ *
+ * The previous app/icon.png + app/apple-icon.png file-convention duplicates
+ * have been removed.
+ */
 export const metadata: Metadata = {
     metadataBase: new URL("https://yaer.dev"),
     title: "YAER.DEV -- AI systems that ship",
     description:
         "SaaS, internal tools, and contractor lead systems. Shipped software, not demos. Built by Neil Bahtiyer.",
+    icons: {
+        icon: [{ url: "/brand/yaer-mark.png", type: "image/png" }],
+        apple: [{ url: "/brand/yaer-mark.png", type: "image/png" }],
+        shortcut: "/brand/yaer-mark.png",
+    },
     openGraph: {
         title: "YAER.DEV -- AI systems that ship",
         description:
