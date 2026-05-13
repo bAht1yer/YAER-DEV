@@ -152,14 +152,16 @@ export default function ContactForm({ onSuccess, initialProjectType = "" }: Cont
                 />
             </div>
 
-            <button
-                type="submit"
-                disabled={status === "loading"}
-                className="btn-industrial-primary w-full md:w-auto justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-                <Send className="w-4 h-4" />
-                {status === "loading" ? "Sending..." : "Send message"}
-            </button>
+            <div className="flex justify-center pt-2">
+                <button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className="btn-industrial-primary w-full md:w-auto justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    <Send className="w-4 h-4" />
+                    {status === "loading" ? "Sending..." : "Send message"}
+                </button>
+            </div>
 
             {status === "success" && (
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#E6FF3A] text-center">

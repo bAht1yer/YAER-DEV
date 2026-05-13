@@ -107,16 +107,6 @@ export default function HeroOverview() {
                         </button>
                     </motion.div>
 
-                    <motion.a
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.7, delay: 0.6 }}
-                        href="#packages"
-                        className="mt-2 inline-block w-fit border-b border-dashed border-white/20 pb-1 font-mono text-[11px] uppercase tracking-[0.18em] text-gray-400 transition-colors hover:border-[#E6FF3A] hover:text-[#E6FF3A]"
-                    >
-                        Run a small business? Jump to packages &rarr;
-                    </motion.a>
-
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
