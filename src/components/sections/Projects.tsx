@@ -48,7 +48,7 @@ const projects: Project[] = [
     },
     {
         title: "Revamp Solutions",
-        eyebrow: "AI support experience",
+        eyebrow: "AI support experience · GTA",
         description:
             "A service website with a live AI support flow, clear service pages, and a polished brand presence that feels ready for customers.",
         tags: ["Next.js", "Dify AI", "Customer Support", "Live Site"],

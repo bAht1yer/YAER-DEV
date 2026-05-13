@@ -3,7 +3,6 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { clsx } from "clsx";
 import SmoothScroll from "@/components/ui/SmoothScroll";
-import ElectricGrid from "@/components/ui/ElectricGrid";
 import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -63,7 +62,6 @@ export default function RootLayout({
                 )}
             >
                 <div className="fixed inset-0 cyber-grid -z-10 pointer-events-none" />
-                <ElectricGrid />
                 <SessionProvider>
                     <SmoothScroll>{children}</SmoothScroll>
                 </SessionProvider>

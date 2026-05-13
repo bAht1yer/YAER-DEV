@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import ContactModal from "../../ui/ContactModal";
+import ParticleAccent from "../../ui/ParticleAccent";
 import type { ProjectType } from "../../ui/ContactForm";
 
 /**
@@ -11,6 +12,9 @@ import type { ProjectType } from "../../ui/ContactForm";
  *
  * Tightened from prior version: only one display headline, one subhead,
  * one body slot. No "Best for --" or "Not included" filler. Scan-friendly.
+ *
+ * Price + currency render at different sizes so "CAD" doesn't compete with
+ * the dollar value. Particles around the price/CTA fire on hover only.
  */
 interface OfferShellProps {
     id: string;
@@ -19,6 +23,8 @@ interface OfferShellProps {
     headline: string;
     subhead: string;
     price: string;
+    /** Currency suffix rendered smaller after the price digits. */
+    currency?: string;
     priceMeta: string;
     ctaLabel: string;
     projectType: ProjectType;
@@ -34,6 +40,7 @@ export default function OfferShell({
     headline,
     subhead,
     price,
+    currency = "CAD",
     priceMeta,
     ctaLabel,
     projectType,
@@ -83,22 +90,33 @@ export default function OfferShell({
 
                         {children}
 
-                        <div className="flex items-baseline gap-4 mt-2 mb-6">
-                            <span className="text-3xl md:text-4xl font-black tracking-tight text-white">
-                                {price}
-                            </span>
+                        <div className="flex flex-wrap items-baseline gap-4 mt-2 mb-6">
+                            <ParticleAccent variant="price">
+                                <span className="inline-flex items-baseline gap-2">
+                                    <span className="text-3xl md:text-4xl font-black tracking-tight text-white">
+                                        {price}
+                                    </span>
+                                    {currency && (
+                                        <span className="text-base md:text-lg font-bold tracking-[0.06em] text-gray-400">
+                                            {currency}
+                                        </span>
+                                    )}
+                                </span>
+                            </ParticleAccent>
                             <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-gray-500">
                                 {priceMeta}
                             </span>
                         </div>
 
-                        <button
-                            onClick={() => setIsContactOpen(true)}
-                            className="btn-industrial-primary"
-                        >
-                            {ctaLabel}
-                            <ArrowRight className="h-4 w-4" />
-                        </button>
+                        <ParticleAccent variant="button">
+                            <button
+                                onClick={() => setIsContactOpen(true)}
+                                className="btn-industrial-primary"
+                            >
+                                {ctaLabel}
+                                <ArrowRight className="h-4 w-4" />
+                            </button>
+                        </ParticleAccent>
                     </motion.div>
 
                     <motion.div
