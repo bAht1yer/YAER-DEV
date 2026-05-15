@@ -4,6 +4,7 @@ import "./globals.css";
 import { clsx } from "clsx";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import { SessionProvider } from "next-auth/react";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const jetbrainsMono = JetBrains_Mono({
@@ -65,6 +66,7 @@ export default function RootLayout({
                 <SessionProvider>
                     <SmoothScroll>{children}</SmoothScroll>
                 </SessionProvider>
+                <Analytics />
             </body>
         </html>
     );
