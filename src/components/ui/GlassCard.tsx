@@ -1,0 +1,84 @@
+"use client";
+
+import React, { useRef, useCallback, useEffect, useState, type ReactNode, type ElementType } from "react";
+
+/**
+ * GlassCard — the single source of the Cyan Chrome "glass feel".
+ *
+ * Frosted glass (.glass-panel) + HUD corners + cursor reactivity:
+ *  - radial cyan/violet glow that follows the pointer (--mx/--my)
+ *  - subtle 3D tilt toward the pointer (max ~5deg), springy reset on leave
+ *  - holographic sheen offset nudged by the pointer
+ * Used by the hero main card AND every project/offer card so the
+ * interaction is identical everywhere. Honors prefers-reduced-motion.
+ */
+interface GlassCardProps {
+    children: ReactNode;
+    as?: ElementType;
+    className?: string;
+    interactive?: boolean;
+    /** Max tilt in degrees. */
+    maxTilt?: number;
+    onClick?: () => void;
+}
+
+export default function GlassCard({
+    children,
+    as: Tag = "div",
+    className = "",
+    interactive = true,
+    maxTilt = 5,
+    onClick,
+}: GlassCardProps) {
+    const ref = useRef<HTMLElement | null>(null);
+    const frame = useRef<number | null>(null);
+    const [reduced, setReduced] = useState(false);
+
+    useEffect(() => {
+        const q = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const update = () => setReduced(q.matches);
+        update();
+        q.addEventListener("change", update);
+        return () => q.removeEventListener("change", update);
+    }, []);
+
+    const handleMove = useCallback((e: React.PointerEvent) => {
+        if (!interactive || reduced) return;
+        const el = ref.current;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width;   // 0..1
+        const py = (e.clientY - rect.top) / rect.height;   // 0..1
+        if (frame.current) cancelAnimationFrame(frame.current);
+        frame.current = requestAnimationFrame(() => {
+            el.style.setProperty("--mx", `${px * 100}%`);
+            el.style.setProperty("--my", `${py * 100}%`);
+            el.style.setProperty("--glow-opacity", "1");
+            el.style.setProperty("--sheen-x", `${px * 100}%`);
+            const ry = (px - 0.5) * 2 * maxTilt;           // rotateY
+            const rx = -(py - 0.5) * 2 * maxTilt;          // rotateX
+            el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        });
+    }, [interactive, reduced, maxTilt]);
+
+    const handleLeave = useCallback(() => {
+        const el = ref.current;
+        if (!el) return;
+        el.style.setProperty("--glow-opacity", "0");
+        el.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+    }, []);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return React.createElement(
+        Tag as any,
+        {
+            ref: ref,
+            onPointerMove: handleMove,
+            onPointerLeave: handleLeave,
+            onClick: onClick,
+            className: `glass-panel glass-glow hud-corners sheen-animate transition-transform duration-200 ease-out ${className}`,
+            style: { transformStyle: "preserve-3d", willChange: "transform" },
+        },
+        children,
+    );
+}
