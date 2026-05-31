@@ -86,9 +86,11 @@ Retire `Hero.tsx`'s tab system and the four `hero-tabs/*` panels as the entry su
   - HUD **stat-readout strip** at the base → `IN PRODUCTION · 5-MIN ESTIMATES · TORONTO`
 
 **Un-tabbing the old content (preserved, not deleted):**
-- `HeroOverview` Bossimating block → a **Featured Project** scroll section.
+- `HeroOverview` Bossimating block → **moves into the `Projects` grid as a standard project card** (`GlassCard`). No hero/featured treatment — Bossimating is not shown at or near the hero.
 - `HeroStart` tracks (Audit / Workflow / Product Sprint) → a **Ways to start** section above Contact.
 - `HeroCaseFiles` / `HeroBlueprint` → folded into the existing `Projects` / `Skills` sections.
+
+The hero contains only the headline, subhead, CTA, and stat strip — no product screenshot or featured project.
 
 ## Background cube system + new motion
 
