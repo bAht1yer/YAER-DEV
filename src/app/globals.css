@@ -7,23 +7,31 @@ html {
 }
 
 :root {
-  /* Industrial palette — replaces cyberpunk */
-  --background: #0A0B0D;
-  --foreground: #ECEEF1;
-  --muted: #9CA3AF;
+  /* Cyan Chrome — glassmorphism + retro-future */
+  --bg: #0A1014;
+  --bg-deep: #070B0E;
+  --background: #0A1014;            /* legacy alias */
+  --foreground: #EAF7FB;
+  --muted: #8AA3AD;
 
-  --panel: #121316;
-  --panel-edge: #23262B;
-  --hairline: rgba(255, 255, 255, 0.06);
+  --panel: #0E171D;
+  --panel-edge: #1C2A30;
+  --hairline: rgba(120, 200, 230, 0.08);
 
-  --lime: #E6FF3A;          /* primary industrial accent */
-  --lime-soft: rgba(230, 255, 58, 0.08);
-  --steel: #D4DCE3;         /* secondary, brushed metal */
-  --safety: #FF5A1F;        /* signal / warning */
+  --cyan: #34E5FF;                  /* primary accent + action color */
+  --cyan-bright: #7AF0FF;
+  --cyan-soft: rgba(52, 229, 255, 0.08);
+  --violet: #9B7BFF;                /* iridescent secondary */
+  --chrome: #CBD2D9;               /* steel / silver neutral */
+  --signal: #FF5FD2;               /* live / alert (badges only) */
 
-  /* Legacy variable names kept so we don't break existing references during the migration. */
-  --primary: #E6FF3A;
-  --accent: #D4DCE3;
+  /* Legacy aliases — remapped so existing references keep working during migration */
+  --primary: #34E5FF;
+  --accent: #CBD2D9;
+  --lime: #34E5FF;
+  --lime-soft: rgba(52, 229, 255, 0.08);
+  --steel: #CBD2D9;
+  --safety: #FF5FD2;
 }
 
 @layer base {
@@ -47,6 +55,84 @@ html {
 }
 
 @layer utilities {
+  /* ---- Cyan Chrome: glassmorphism ---- */
+  .glass-panel {
+    position: relative;
+    background: rgba(12, 22, 28, 0.5);
+    border: 1px solid rgba(52, 229, 255, 0.28);
+    border-radius: 14px;
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    box-shadow:
+      0 18px 50px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(150, 235, 255, 0.18),
+      0 0 28px rgba(52, 229, 255, 0.1);
+    overflow: hidden;
+  }
+  .glass-panel::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    pointer-events: none;
+    background: linear-gradient(
+      115deg,
+      transparent 30%,
+      rgba(120, 210, 255, 0.07) 45%,
+      rgba(155, 123, 255, 0.07) 55%,
+      transparent 70%
+    );
+    background-size: 300% 300%;
+    background-position: var(--sheen-x, 50%) 50%;
+  }
+  .glass-glow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: var(--glow-opacity, 0);
+    transition: opacity 0.25s ease;
+    background: radial-gradient(
+      220px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(52, 229, 255, 0.16),
+      rgba(155, 123, 255, 0.06) 40%,
+      transparent 70%
+    );
+  }
+
+  /* ---- HUD corner brackets ---- */
+  .hud-corners { position: relative; }
+  .hud-corners::before,
+  .hud-corners::after {
+    content: '';
+    position: absolute;
+    width: 14px; height: 14px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .hud-corners::before {
+    top: 8px; left: 8px;
+    border-top: 1px solid var(--cyan);
+    border-left: 1px solid var(--cyan);
+  }
+  .hud-corners::after {
+    bottom: 8px; right: 8px;
+    border-bottom: 1px solid var(--cyan);
+    border-right: 1px solid var(--cyan);
+  }
+
+  /* ---- retro-future overlays ---- */
+  .scanlines {
+    background-image: repeating-linear-gradient(
+      0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 3px
+    );
+  }
+  .grid-tech {
+    background-image:
+      linear-gradient(rgba(52, 229, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(52, 229, 255, 0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
   /* -------------- Industrial utilities -------------- */
   .panel-industrial {
     background: var(--panel);
@@ -204,14 +290,9 @@ html {
      .text-glow). Rather than risk breakage in a single pass, we redefine them to the
      industrial look so existing usage degrades gracefully. */
 
-  .glass-panel {
-    @apply bg-[#121316] border border-[#23262B];
-    border-radius: 0;
-  }
-
   .neon-border {
-    border: 1px solid var(--lime);
-    box-shadow: none;
+    border: 1px solid var(--cyan);
+    box-shadow: 0 0 18px rgba(52, 229, 255, 0.25);
   }
 
   .text-glow {
@@ -225,8 +306,8 @@ html {
   .cyber-grid {
     background-size: 80px 80px;
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      linear-gradient(to right, rgba(52,229,255,0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(52,229,255,0.04) 1px, transparent 1px);
     -webkit-mask-image: radial-gradient(circle at 50% 50%, black 35%, transparent 85%);
             mask-image: radial-gradient(circle at 50% 50%, black 35%, transparent 85%);
   }
@@ -394,4 +475,18 @@ html {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #3A3D43;
+}
+
+@keyframes holo-sheen {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+.sheen-animate::before { animation: holo-sheen 9s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sheen-animate::before { animation: none !important; }
 }

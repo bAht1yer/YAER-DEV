@@ -9,20 +9,21 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                background: "var(--background)",
+                background: "var(--bg)",
                 foreground: "var(--foreground)",
                 primary: {
-                    DEFAULT: "#00f0ff", // Neon Cyan
-                    dark: "#00a0aa",
+                    DEFAULT: "#34E5FF", // cyan
+                    dark: "#2BC3E0",
                 },
                 secondary: {
-                    DEFAULT: "#7000ff", // Neon Purple
-                    dark: "#4a00aa",
+                    DEFAULT: "#9B7BFF", // iridescent violet
+                    dark: "#6D4FD6",
                 },
                 accent: {
-                    DEFAULT: "#ff003c", // Cyberpunk Red
+                    DEFAULT: "#FF5FD2", // signal magenta
                 },
-                "code-bg": "#1e1e1e",
+                chrome: "#CBD2D9",
+                "code-bg": "#0E171D",
             },
             fontFamily: {
                 sans: ["var(--font-inter)", "sans-serif"],
