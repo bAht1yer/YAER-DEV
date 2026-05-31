@@ -35,7 +35,7 @@ export default function Hero() {
                 <GlassCard className="px-6 py-10 sm:px-12 sm:py-14 text-center">
                     {/* status chip */}
                     <span className="inline-flex items-center gap-2 rounded-full border border-[#34E5FF]/40 bg-[#34E5FF]/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[#7AF0FF]">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#34E5FF] shadow-[0_0_8px_#34E5FF]" />
+                        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#34E5FF] shadow-[0_0_8px_#34E5FF]" />
                         System Online · Toronto · Available
                     </span>
 
@@ -53,15 +53,16 @@ export default function Hero() {
 
                     <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
                         <button
+                            type="button"
                             onClick={() => setIsContactOpen(true)}
-                            className="inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-b from-[#7AF0FF] to-[#2BC3E0] px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-[#04181d] shadow-[0_0_20px_rgba(52,229,255,0.4)] transition-transform hover:scale-[1.03]"
+                            className="inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-b from-[#7AF0FF] to-[#2BC3E0] px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-[#04181d] shadow-[0_0_20px_rgba(52,229,255,0.4)] transition-transform hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A1014]"
                         >
                             Start a project
                             <Send className="h-4 w-4" />
                         </button>
                         <a
                             href="#projects"
-                            className="inline-flex items-center justify-center gap-2 rounded-md border border-white/15 px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-[#CBD2D9] transition-colors hover:border-[#34E5FF]/50 hover:text-white"
+                            className="inline-flex items-center justify-center gap-2 rounded-md border border-white/15 px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-[#CBD2D9] transition-colors hover:border-[#34E5FF]/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A1014]"
                         >
                             See work
                             <ArrowRight className="h-4 w-4" />
