@@ -1,146 +1,88 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
-import { BriefcaseBusiness, LayoutDashboard, MessageSquareText, Network } from "lucide-react";
-import HeroOverview from "./hero-tabs/HeroOverview";
-import HeroCaseFiles from "./hero-tabs/HeroCaseFiles";
-import HeroBlueprint from "./hero-tabs/HeroBlueprint";
-import HeroStart from "./hero-tabs/HeroStart";
+import { ArrowRight, Send } from "lucide-react";
+import GlassCard from "../ui/GlassCard";
+import ContactModal from "../ui/ContactModal";
 
 /**
- * Hero — industrial rebuild.
- *
- * Drops the fixed CMS sidebar/topbar overlay (the heaviest cyberpunk element on
- * the old hero) and the mix-blend-difference content layer. Tabs survive but as
- * a clean horizontal segmented control instead of a faux IDE sidebar — they're
- * the entry points to four content slices (Overview, Case Files, Blueprint, Start)
- * and removing them would lose meaningful surface area.
+ * Hero — Cyan Chrome single-focused build.
+ * No tab switcher. One glass card: status chip, headline, subhead,
+ * one primary CTA (Start a project), one quiet secondary (See work),
+ * and a HUD stat-readout strip.
  */
-const heroTabs = [
-    {
-        id: "overview",
-        label: "Home",
-        detail: "Start here",
-        icon: LayoutDashboard,
-    },
-    {
-        id: "casefiles",
-        label: "Case Files",
-        detail: "Real proof",
-        icon: BriefcaseBusiness,
-    },
-    {
-        id: "blueprint",
-        label: "Blueprint",
-        detail: "Build logic",
-        icon: Network,
-    },
-    {
-        id: "start",
-        label: "Start",
-        detail: "Ways in",
-        icon: MessageSquareText,
-    },
+const stats = [
+    "IN PRODUCTION",
+    "5-MIN ESTIMATES",
+    "TORONTO",
 ];
 
 export default function Hero() {
-    const [activeTab, setActiveTab] = useState("overview");
+    const [isContactOpen, setIsContactOpen] = useState(false);
 
     return (
-        <section id="about" className="relative min-h-screen w-full bg-transparent pt-20 md:pt-24">
-            {/* Industrial tab bar — horizontal segmented control inside the hero (not sticky;
-                the navbar sits over it once the user scrolls past 50px) */}
-            <div className="relative z-20 border-b border-[#23262B]/70 bg-[#0A0B0D]/40 backdrop-blur-sm">
-                <div className="mx-auto max-w-7xl px-4 md:px-10">
-                    <nav className="flex items-stretch gap-0 overflow-x-auto scrollbar-hide" aria-label="Hero sections">
-                        {heroTabs.map((tab) => {
-                            const Icon = tab.icon;
-                            const isActive = activeTab === tab.id;
-                            return (
-                                <button
-                                    key={tab.id}
-                                    onClick={() => setActiveTab(tab.id)}
-                                    className={`group relative inline-flex shrink-0 items-center gap-2.5 px-5 py-3.5 transition-colors ${
-                                        isActive
-                                            ? "text-white"
-                                            : "text-gray-500 hover:text-gray-300"
-                                    }`}
-                                    aria-pressed={isActive}
-                                >
-                                    <Icon className={`h-4 w-4 ${isActive ? "text-[#E6FF3A]" : ""}`} />
-                                    <span className="flex flex-col items-start text-left">
-                                        <span className="font-mono text-[11px] uppercase tracking-[0.22em]">
-                                            {tab.label}
-                                        </span>
-                                        <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-gray-600">
-                                            {tab.detail}
-                                        </span>
-                                    </span>
-                                    {/* Active underline — industrial accent */}
-                                    {isActive && (
-                                        <motion.span
-                                            layoutId="hero-tab-underline"
-                                            className="absolute inset-x-0 bottom-0 h-[2px] bg-[#E6FF3A]"
-                                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                                        />
-                                    )}
-                                </button>
-                            );
-                        })}
-                    </nav>
-                </div>
-            </div>
+        <section
+            id="about"
+            className="relative min-h-screen w-full bg-transparent flex items-center justify-center px-4 pt-28 pb-20 md:pt-32"
+        >
+            <motion.div
+                initial={{ opacity: 0, y: 22 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="w-full max-w-3xl"
+            >
+                <GlassCard className="px-6 py-10 sm:px-12 sm:py-14 text-center">
+                    {/* status chip */}
+                    <span className="inline-flex items-center gap-2 rounded-full border border-[#34E5FF]/40 bg-[#34E5FF]/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[#7AF0FF]">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#34E5FF] shadow-[0_0_8px_#34E5FF]" />
+                        System Online · Toronto · Available
+                    </span>
 
-            {/* Active tab content — no more mix-blend-difference, no CMS chrome */}
-            <div className="relative">
-                <AnimatePresence mode="wait">
-                    {activeTab === "overview" && (
-                        <motion.div
-                            key="overview"
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.35, ease: "easeOut" }}
+                    <h1 className="mt-7 text-5xl sm:text-6xl md:text-7xl font-black leading-[0.95] tracking-tight text-white">
+                        AI systems<br />
+                        <span className="text-[#34E5FF] drop-shadow-[0_0_18px_rgba(52,229,255,0.5)]">
+                            that ship.
+                        </span>
+                    </h1>
+
+                    <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-[#8AA3AD] md:text-lg">
+                        SaaS, internal tools &amp; lead systems running in
+                        <span className="text-[#CBD2D9]"> production</span> — not just demos.
+                    </p>
+
+                    <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                        <button
+                            onClick={() => setIsContactOpen(true)}
+                            className="inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-b from-[#7AF0FF] to-[#2BC3E0] px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-[#04181d] shadow-[0_0_20px_rgba(52,229,255,0.4)] transition-transform hover:scale-[1.03]"
                         >
-                            <HeroOverview />
-                        </motion.div>
-                    )}
-                    {activeTab === "casefiles" && (
-                        <motion.div
-                            key="casefiles"
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.35, ease: "easeOut" }}
+                            Start a project
+                            <Send className="h-4 w-4" />
+                        </button>
+                        <a
+                            href="#projects"
+                            className="inline-flex items-center justify-center gap-2 rounded-md border border-white/15 px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-[#CBD2D9] transition-colors hover:border-[#34E5FF]/50 hover:text-white"
                         >
-                            <HeroCaseFiles />
-                        </motion.div>
-                    )}
-                    {activeTab === "blueprint" && (
-                        <motion.div
-                            key="blueprint"
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.35, ease: "easeOut" }}
-                        >
-                            <HeroBlueprint />
-                        </motion.div>
-                    )}
-                    {activeTab === "start" && (
-                        <motion.div
-                            key="start"
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.35, ease: "easeOut" }}
-                        >
-                            <HeroStart />
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </div>
+                            See work
+                            <ArrowRight className="h-4 w-4" />
+                        </a>
+                    </div>
+
+                    {/* HUD stat-readout strip */}
+                    <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-white/10 pt-6">
+                        {stats.map((s) => (
+                            <span
+                                key={s}
+                                className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#8AA3AD]"
+                            >
+                                <span className="mr-2 text-[#34E5FF]">/</span>{s}
+                            </span>
+                        ))}
+                    </div>
+                </GlassCard>
+            </motion.div>
+
+            <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
         </section>
     );
 }
