@@ -72,7 +72,7 @@ html {
   .glass-panel::before {
     content: '';
     position: absolute;
-    inset: -1px;
+    inset: 0;
     pointer-events: none;
     background: linear-gradient(
       115deg,
@@ -84,6 +84,7 @@ html {
     background-size: 300% 300%;
     background-position: var(--sheen-x, 50%) 50%;
   }
+  .glass-glow { position: relative; }
   .glass-glow::after {
     content: '';
     position: absolute;
@@ -92,7 +93,7 @@ html {
     opacity: var(--glow-opacity, 0);
     transition: opacity 0.25s ease;
     background: radial-gradient(
-      220px circle at var(--mx, 50%) var(--my, 50%),
+      circle 220px at var(--mx, 50%) var(--my, 50%),
       rgba(52, 229, 255, 0.16),
       rgba(155, 123, 255, 0.06) 40%,
       transparent 70%
@@ -481,10 +482,7 @@ html {
   0%   { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
 }
-@keyframes glow-pulse {
-  0%, 100% { opacity: 0.5; }
-  50%      { opacity: 1; }
-}
+/* NOTE: .sheen-animate must be on the SAME element as .glass-panel — it animates .glass-panel::before. GlassCard applies both together. */
 .sheen-animate::before { animation: holo-sheen 9s linear infinite; }
 
 @media (prefers-reduced-motion: reduce) {
