@@ -49,3 +49,5 @@ prisma_error.log
 debug.js
 debug_prisma.js
 output.txt
+
+.superpowers/
