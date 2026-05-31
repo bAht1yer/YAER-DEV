@@ -6,6 +6,7 @@ import OfferOnePage from "@/components/sections/offers/OfferOnePage";
 import OfferLeadSystem from "@/components/sections/offers/OfferLeadSystem";
 import Skills from "@/components/sections/Skills";
 import Projects from "@/components/sections/Projects";
+import WaysToStart from "@/components/sections/WaysToStart";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/ui/Footer";
 import Scene from "@/components/canvas/Scene";
@@ -60,6 +61,7 @@ export default function Home() {
 
                 <Skills />
                 <Projects />
+                <WaysToStart />
                 <Contact />
                 <Footer />
             </div>
