@@ -18,11 +18,11 @@ export default function Contact() {
                 className="max-w-2xl mx-auto w-full text-center"
             >
                 <div className="flex items-center justify-center gap-3 mb-3">
-                    <span className="h-px w-10 bg-[#E6FF3A]" />
-                    <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#E6FF3A]">
+                    <span className="h-px w-10 bg-[#34E5FF]" />
+                    <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#34E5FF]">
                         Get in touch
                     </span>
-                    <span className="h-px w-10 bg-[#E6FF3A]" />
+                    <span className="h-px w-10 bg-[#34E5FF]" />
                 </div>
                 <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-5">
                     Tell me what you&apos;re building.
@@ -37,7 +37,7 @@ export default function Contact() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.15 }}
                     viewport={{ once: true }}
-                    className="relative border border-[#23262B] bg-[#121316] notch-corners p-6 md:p-10 text-left"
+                    className="relative border border-[#1C2A30] bg-[#0E171D] notch-corners p-6 md:p-10 text-left"
                 >
                     <ContactForm />
                 </motion.div>

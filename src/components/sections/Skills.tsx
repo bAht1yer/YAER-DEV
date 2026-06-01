@@ -27,8 +27,8 @@ export default function Skills() {
                     className="mb-12"
                 >
                     <div className="flex items-center gap-3 mb-2">
-                        <span className="h-px w-10 bg-[#E6FF3A]" />
-                        <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#E6FF3A]">
+                        <span className="h-px w-10 bg-[#34E5FF]" />
+                        <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#34E5FF]">
                             Capabilities
                         </span>
                     </div>
@@ -45,13 +45,13 @@ export default function Skills() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="border border-[#23262B] bg-[#121316] p-6 transition-colors hover:border-[#E6FF3A]/45 group"
+                            className="border border-[#1C2A30] bg-[#0E171D] p-6 transition-colors hover:border-[#34E5FF]/45 group"
                         >
                             <div className="mb-4 flex items-center gap-2">
-                                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-gray-500 group-hover:text-[#E6FF3A] transition-colors">
+                                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-gray-500 group-hover:text-[#34E5FF] transition-colors">
                                     0{index + 1}
                                 </span>
-                                <span className="h-px flex-1 bg-[#23262B]" />
+                                <span className="h-px flex-1 bg-[#1C2A30]" />
                             </div>
                             <h3 className="text-lg font-bold mb-4 text-white">
                                 {skill.category}
@@ -59,7 +59,7 @@ export default function Skills() {
                             <ul className="space-y-2">
                                 {skill.items.map((item) => (
                                     <li key={item} className="text-sm text-gray-400 flex items-center gap-2">
-                                        <span className="w-1 h-1 bg-[#E6FF3A]/70" />
+                                        <span className="w-1 h-1 bg-[#34E5FF]/70" />
                                         {item}
                                     </li>
                                 ))}

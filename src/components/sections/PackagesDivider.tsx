@@ -39,14 +39,14 @@ export default function PackagesDivider() {
                 <div className="mb-10 flex items-center justify-center gap-4">
                     <motion.span
                         style={{ width: lineWidthLeft }}
-                        className="h-px max-w-[100px] bg-[#E6FF3A]"
+                        className="h-px max-w-[100px] bg-[#34E5FF]"
                     />
-                    <span className="font-mono text-[11px] uppercase tracking-[0.32em] text-[#E6FF3A] whitespace-nowrap">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.32em] text-[#34E5FF] whitespace-nowrap">
                         For Trades &amp; Small Businesses
                     </span>
                     <motion.span
                         style={{ width: lineWidthRight }}
-                        className="h-px max-w-[100px] bg-[#E6FF3A]"
+                        className="h-px max-w-[100px] bg-[#34E5FF]"
                     />
                 </div>
 
@@ -55,7 +55,7 @@ export default function PackagesDivider() {
                     style={{ scale: headlineScale, opacity: headlineOpacity }}
                     className="origin-center text-5xl md:text-7xl lg:text-[5.5rem] font-black tracking-tight leading-[1.02] text-white mx-auto max-w-4xl"
                 >
-                    Three ways to <span className="text-[#E6FF3A]">work together.</span>
+                    Three ways to <span className="text-[#34E5FF]">work together.</span>
                 </motion.h2>
 
                 {/* Scroll cue -- cascading chevrons + pulsing label, stacked vertically */}
@@ -68,7 +68,7 @@ export default function PackagesDivider() {
                         {[0, 0.5, 1].map((delay, i) => (
                             <ChevronDown
                                 key={i}
-                                className="scroll-cue-chevron absolute top-0 h-5 w-5 text-[#E6FF3A]"
+                                className="scroll-cue-chevron absolute top-0 h-5 w-5 text-[#34E5FF]"
                                 style={{
                                     // left: 50% + keyframe carries translateX(-50%) for true centering
                                     left: "50%",

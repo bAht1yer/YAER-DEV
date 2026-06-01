@@ -41,9 +41,9 @@ function QuickFixVisual() {
             </MockBrowser>
             <MockBrowser label="After" tone="active">
                 <div className="h-4 w-4/5 bg-white mb-2" />
-                <div className="h-2 w-2/3 bg-[#E6FF3A] mb-4" />
-                <div className="h-12 w-full bg-[#E6FF3A]/15 border border-[#E6FF3A]/40 mb-3 flex items-center px-2">
-                    <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#E6FF3A]">
+                <div className="h-2 w-2/3 bg-[#34E5FF] mb-4" />
+                <div className="h-12 w-full bg-[#34E5FF]/15 border border-[#34E5FF]/40 mb-3 flex items-center px-2">
+                    <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#34E5FF]">
                         Request a quote
                     </span>
                 </div>
@@ -66,14 +66,14 @@ function MockBrowser({
 }) {
     const isActive = tone === "active";
     return (
-        <div className={`relative border ${isActive ? "border-[#E6FF3A]/30" : "border-[#23262B]"} bg-[#121316]`}>
-            <div className="flex items-center justify-between border-b border-[#23262B] px-3 py-2">
+        <div className={`relative border ${isActive ? "border-[#34E5FF]/30" : "border-[#1C2A30]"} bg-[#0E171D]`}>
+            <div className="flex items-center justify-between border-b border-[#1C2A30] px-3 py-2">
                 <div className="flex items-center gap-1.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-white/15" />
                     <span className="h-1.5 w-1.5 rounded-full bg-white/15" />
-                    <span className={`h-1.5 w-1.5 rounded-full ${isActive ? "bg-[#E6FF3A]" : "bg-white/15"}`} />
+                    <span className={`h-1.5 w-1.5 rounded-full ${isActive ? "bg-[#34E5FF]" : "bg-white/15"}`} />
                 </div>
-                <span className={`font-mono text-[9px] uppercase tracking-[0.22em] ${isActive ? "text-[#E6FF3A]" : "text-gray-500"}`}>
+                <span className={`font-mono text-[9px] uppercase tracking-[0.22em] ${isActive ? "text-[#34E5FF]" : "text-gray-500"}`}>
                     {label}
                 </span>
             </div>

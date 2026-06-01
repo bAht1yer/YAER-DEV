@@ -8,7 +8,7 @@ import Link from "next/link";
  */
 export default function Footer() {
     return (
-        <footer className="relative border-t border-[#23262B] bg-transparent py-12">
+        <footer className="relative border-t border-[#1C2A30] bg-transparent py-12">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
                 <Link
                     href="/"
@@ -24,7 +24,7 @@ export default function Footer() {
                     />
                     <span className="flex items-baseline gap-0.5 font-mono text-sm uppercase tracking-[0.25em]">
                         <span className="text-white">yaer</span>
-                        <span className="text-gray-500 group-hover:text-[#E6FF3A] transition-colors">.dev</span>
+                        <span className="text-gray-500 group-hover:text-[#34E5FF] transition-colors">.dev</span>
                     </span>
                 </Link>
                 <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gray-500">

@@ -63,12 +63,12 @@ export default function OfferShell({
                     transition={{ duration: 0.5 }}
                     className="mb-10 flex items-center gap-3"
                 >
-                    <span className="h-px w-12 bg-[#E6FF3A]" />
-                    <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#E6FF3A]">
+                    <span className="h-px w-12 bg-[#34E5FF]" />
+                    <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#34E5FF]">
                         {indexLabel}
                     </span>
                     {recommended && (
-                        <span className="border border-[#E6FF3A] bg-[#E6FF3A]/[0.08] text-[#E6FF3A] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.22em]">
+                        <span className="border border-[#34E5FF] bg-[#34E5FF]/[0.08] text-[#34E5FF] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.22em]">
                             Recommended
                         </span>
                     )}
@@ -149,9 +149,9 @@ export function Deliverables({ items }: { items: string[] }) {
             {items.map((item) => (
                 <li
                     key={item}
-                    className="flex items-center gap-3 text-[14px] leading-6 text-[#D4DCE3]"
+                    className="flex items-center gap-3 text-[14px] leading-6 text-[#CBD2D9]"
                 >
-                    <span className="h-px w-4 bg-[#E6FF3A] flex-shrink-0" />
+                    <span className="h-px w-4 bg-[#34E5FF] flex-shrink-0" />
                     {item}
                 </li>
             ))}
