@@ -162,7 +162,7 @@ html {
     font-size: 10px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--lime);
+    color: var(--cyan);
   }
 
   /* Corner notches — engineered look for panels */
@@ -179,13 +179,13 @@ html {
   }
   .notch-corners::before {
     top: -1px; left: -1px;
-    border-top: 1px solid var(--lime);
-    border-left: 1px solid var(--lime);
+    border-top: 1px solid var(--cyan);
+    border-left: 1px solid var(--cyan);
   }
   .notch-corners::after {
     bottom: -1px; right: -1px;
-    border-bottom: 1px solid var(--lime);
-    border-right: 1px solid var(--lime);
+    border-bottom: 1px solid var(--cyan);
+    border-right: 1px solid var(--cyan);
   }
 
   .btn-industrial-primary {
@@ -193,17 +193,17 @@ html {
     align-items: center;
     gap: 8px;
     padding: 14px 24px;
-    background: var(--lime);
+    background: var(--cyan);
     color: #0A1014;
     font-weight: 700;
     font-size: 13px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    border: 1px solid var(--lime);
+    border: 1px solid var(--cyan);
     transition: background 0.2s ease, transform 0.2s ease;
   }
   .btn-industrial-primary:hover {
-    background: #d4ed2e;
+    background: var(--cyan-bright);
   }
 
   .btn-industrial-secondary {
@@ -267,7 +267,7 @@ html {
     width: var(--size, 3px);
     height: var(--size, 3px);
     border-radius: 999px;
-    background: var(--lime);
+    background: var(--cyan);
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.4);
     box-shadow: 0 0 6px rgba(52, 229, 255, 0.5);
@@ -344,7 +344,7 @@ html {
     left: calc(-1 * var(--borderWidth));
     height: calc(100% + var(--borderWidth) * 2);
     width: calc(100% + var(--borderWidth) * 2);
-    background: var(--lime);
+    background: var(--cyan);
     z-index: -1;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -400,19 +400,6 @@ html {
   .aurora-blob { animation: none !important; }
   .scroll-cue-chevron { animation: none !important; }
   .scroll-cue-label { animation: none !important; }
-  .warm-pulse { animation: none !important; }
-}
-
-/* -------------- Hero accent: warm safety-orange "signal light" pulse --------------
-   Applied to the "THAT SHIP" span. Only the text-shadow halo breathes; the
-   glyph itself stays perfectly stable so reading is undisturbed. The cadence
-   is slow (4s) so the eye reads it as ambient luminance, not motion. */
-@keyframes warm-pulse {
-  0%, 100% { text-shadow: 0 0 0 rgba(255, 90, 31, 0); }
-  50%      { text-shadow: 0 0 28px rgba(255, 90, 31, 0.45); }
-}
-.warm-pulse {
-  animation: warm-pulse 4s ease-in-out infinite;
 }
 
 /* -------------- Scroll-down cue --------------

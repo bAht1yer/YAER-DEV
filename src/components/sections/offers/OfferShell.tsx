@@ -110,8 +110,9 @@ export default function OfferShell({
 
                         <ParticleAccent variant="button">
                             <button
+                                type="button"
                                 onClick={() => setIsContactOpen(true)}
-                                className="btn-industrial-primary"
+                                className="btn-industrial-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A1014]"
                             >
                                 {ctaLabel}
                                 <ArrowRight className="h-4 w-4" />

@@ -61,8 +61,9 @@ export default function ContactModal({ isOpen, onClose, projectType }: ContactMo
                                 </h2>
                             </div>
                             <button
+                                type="button"
                                 onClick={onClose}
-                                className="p-2 text-gray-400 hover:text-white transition-colors"
+                                className="p-2 text-gray-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A1014]"
                                 aria-label="Close"
                             >
                                 <X className="w-5 h-5" />

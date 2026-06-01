@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useCallback, useEffect, useState, type ReactNode } from "react";
+import { useRef, useCallback, useEffect, useState, type ReactNode, type KeyboardEvent } from "react";
 
 /**
  * GlassCard — the single source of the Cyan Chrome "glass feel".
@@ -59,6 +59,14 @@ export default function GlassCard({
         });
     }, [interactive, reduced, maxTilt]);
 
+    const handleKeyDown = useCallback((e: KeyboardEvent) => {
+        if (!onClick) return;
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onClick();
+        }
+    }, [onClick]);
+
     const handleLeave = useCallback(() => {
         const el = ref.current;
         if (!el) return;
@@ -72,7 +80,10 @@ export default function GlassCard({
             onPointerMove={handleMove}
             onPointerLeave={handleLeave}
             onClick={onClick}
-            className={`glass-panel glass-glow hud-corners sheen-animate transition-transform duration-200 ease-out ${className}`}
+            onKeyDown={onClick ? handleKeyDown : undefined}
+            role={onClick ? "button" : undefined}
+            tabIndex={onClick ? 0 : undefined}
+            className={`glass-panel glass-glow hud-corners sheen-animate transition-transform duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A1014] ${className}`}
             style={{ transformStyle: "preserve-3d", willChange: "transform" }}
         >
             {children}

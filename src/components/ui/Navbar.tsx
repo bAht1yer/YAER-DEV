@@ -91,8 +91,9 @@ export default function Navbar({ hideOnTop = false }: { hideOnTop?: boolean }) {
 
                     <div className="md:hidden">
                         <button
+                            type="button"
                             onClick={() => setIsOpen(!isOpen)}
-                            className="text-gray-300 hover:text-[#34E5FF] p-2 transition-colors"
+                            className="text-gray-300 hover:text-[#34E5FF] p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A1014]"
                             aria-label="Toggle menu"
                         >
                             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

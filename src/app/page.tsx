@@ -18,7 +18,7 @@ import GridOverlay from "@/components/canvas/GridOverlay";
  * Homepage composition.
  *
  * Background stack (back -> front):
- *   z-0   Aurora - drifting CSS blobs (lime + steel), breathing
+ *   z-0   Aurora - drifting CSS blobs (cyan + violet), breathing
  *   z-[1] CodeCubes - 3D scene, transparent canvas, industrial palette
  *   z-[2] GridOverlay - structural grid + vignette
  *
