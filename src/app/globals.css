@@ -70,23 +70,27 @@ html {
     overflow: hidden;
   }
   /* Diagonal light beam sweeping across the glass (Stitch-style):
-     a bright white-cyan core flanked by cyan + violet, on a wide
-     canvas so the holo-sheen animation glides it across. */
+     a bright white-cyan core flanked by cyan + violet. It is a narrow
+     band that travels fully off BOTH edges and rests off-screen between
+     passes, so the holo-sheen loop restarts where the beam is invisible
+     — seamless sweep, no jump/reset flash. */
   .glass-panel::before {
     content: '';
     position: absolute;
-    inset: 0;
+    top: -60%;
+    left: 0;
+    width: 34%;
+    height: 220%;
     pointer-events: none;
     background: linear-gradient(
-      110deg,
-      transparent 38%,
-      rgba(122, 240, 255, 0.10) 46%,
-      rgba(224, 250, 255, 0.18) 50%,
-      rgba(155, 123, 255, 0.10) 54%,
-      transparent 62%
+      90deg,
+      transparent 0%,
+      rgba(122, 240, 255, 0.10) 35%,
+      rgba(224, 250, 255, 0.20) 50%,
+      rgba(155, 123, 255, 0.10) 65%,
+      transparent 100%
     );
-    background-size: 250% 250%;
-    background-position: 0% 50%;
+    transform: translateX(-220%) rotate(18deg);
   }
   .glass-glow { position: relative; }
   /* Cursor-follow glow. Position + opacity are lerped per-frame by GlassCard,
@@ -470,12 +474,16 @@ html {
   background: #3A3D43;
 }
 
+/* Seamless beam sweep: glide the band across (0–55% of the cycle), then hold
+   it off the right edge (55–100%) as a rest. Both the start (-220%) and the
+   end (430%) are fully off-card, so the loop reset is never visible. */
 @keyframes holo-sheen {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
+  0%   { transform: translateX(-220%) rotate(18deg); }
+  55%  { transform: translateX(430%) rotate(18deg); }
+  100% { transform: translateX(430%) rotate(18deg); }
 }
 /* NOTE: .sheen-animate must be on the SAME element as .glass-panel — it animates .glass-panel::before. GlassCard applies both together. */
-.sheen-animate::before { animation: holo-sheen 7s ease-in-out infinite; }
+.sheen-animate::before { animation: holo-sheen 6.5s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   .sheen-animate::before { animation: none !important; }
