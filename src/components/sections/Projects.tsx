@@ -5,11 +5,12 @@ import Section from "../ui/Section";
 import { Bot, ExternalLink, Github, ReceiptText, Smartphone, type LucideIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import GlassCard from "../ui/GlassCard";
 
 /**
- * Projects (Selected Work) -- industrial restyle.
- *  - Drop grayscale flip on hover
- *  - Industrial palette (lime + steel), no neon shadows
+ * Projects (Selected Work) -- Cyan Chrome restyle.
+ *  - Cards use shared GlassCard material (cyan glass + HUD corners + cursor glow/tilt)
+ *  - Cyan Chrome palette throughout
  *  - Bossimating featured card gains one line of contractor authority copy
  */
 
@@ -91,8 +92,8 @@ export default function Projects() {
                     className="mb-12"
                 >
                     <div className="flex items-center gap-3 mb-2">
-                        <span className="h-px w-10 bg-[#E6FF3A]" />
-                        <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#E6FF3A]">
+                        <span className="h-px w-10 bg-[#34E5FF]" />
+                        <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#34E5FF]">
                             Selected Work
                         </span>
                     </div>
@@ -111,17 +112,10 @@ export default function Projects() {
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             className={`h-full ${project.featured ? "lg:col-span-2" : ""}`}
                         >
-                            <div
-                                onClick={() => openProject(project)}
-                                className="group relative h-full flex flex-col cursor-pointer overflow-hidden border border-[#23262B] bg-[#121316] transition-colors duration-300 hover:border-[#E6FF3A]/45"
-                            >
-                                <span className="pointer-events-none absolute top-0 left-0 w-2.5 h-2.5 border-t border-l border-[#E6FF3A] opacity-50 group-hover:opacity-100 transition-opacity" />
-                                <span className="pointer-events-none absolute top-0 right-0 w-2.5 h-2.5 border-t border-r border-[#E6FF3A] opacity-50 group-hover:opacity-100 transition-opacity" />
-                                <span className="pointer-events-none absolute bottom-0 left-0 w-2.5 h-2.5 border-b border-l border-[#E6FF3A] opacity-50 group-hover:opacity-100 transition-opacity" />
-                                <span className="pointer-events-none absolute bottom-0 right-0 w-2.5 h-2.5 border-b border-r border-[#E6FF3A] opacity-50 group-hover:opacity-100 transition-opacity" />
+                            <GlassCard onClick={() => openProject(project)} className="group h-full flex flex-col cursor-pointer !rounded-none">
 
                                 <div
-                                    className={`relative overflow-hidden border-b border-[#23262B] ${
+                                    className={`relative overflow-hidden border-b border-[#1C2A30] ${
                                         project.featured ? "h-72 md:h-80" : "h-56"
                                     }`}
                                 >
@@ -133,14 +127,14 @@ export default function Projects() {
                                             className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
                                         />
                                     ) : (
-                                        <div className="absolute inset-0 bg-[#0A0B0D] p-5">
-                                            <div className="h-full border border-[#23262B] bg-[#0F1013] p-4">
-                                                <div className="mb-4 flex items-center justify-between border-b border-[#23262B] pb-3">
+                                        <div className="absolute inset-0 bg-[#0A1014] p-5">
+                                            <div className="h-full border border-[#1C2A30] bg-[#0E171D] p-4">
+                                                <div className="mb-4 flex items-center justify-between border-b border-[#1C2A30] pb-3">
                                                     <div>
                                                         <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gray-500">Dashboard</div>
                                                         <div className="text-sm font-bold text-white">Apex Contracting</div>
                                                     </div>
-                                                    <div className="font-mono text-lg font-bold text-[#E6FF3A]">$184.2k</div>
+                                                    <div className="font-mono text-lg font-bold text-[#34E5FF]">$184.2k</div>
                                                 </div>
                                                 <div className="grid grid-cols-2 gap-3">
                                                     {[
@@ -149,14 +143,14 @@ export default function Projects() {
                                                         ["Outstanding", "$22.4k"],
                                                         ["Approvals", "Court-ready"],
                                                     ].map(([label, value]) => (
-                                                        <div key={label} className="border border-[#23262B] bg-white/[0.02] p-3">
+                                                        <div key={label} className="border border-[#1C2A30] bg-white/[0.02] p-3">
                                                             <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gray-500">{label}</div>
                                                             <div className="mt-2 text-base font-bold text-white">{value}</div>
                                                         </div>
                                                     ))}
                                                 </div>
                                                 <div className="mt-4 h-2 overflow-hidden bg-white/10">
-                                                    <div className="h-full w-[68%] bg-[#E6FF3A]" />
+                                                    <div className="h-full w-[68%] bg-[#34E5FF]" />
                                                 </div>
                                             </div>
                                         </div>
@@ -165,16 +159,16 @@ export default function Projects() {
 
                                 <div className="p-6 flex-grow flex flex-col relative z-20">
                                     <div className="mb-3 flex items-center justify-between gap-3">
-                                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#E6FF3A]">
+                                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#34E5FF]">
                                             {project.eyebrow}
                                         </span>
                                         {project.external && (
-                                            <ExternalLink className="h-4 w-4 text-gray-500 group-hover:text-[#E6FF3A] transition-colors" />
+                                            <ExternalLink className="h-4 w-4 text-gray-500 group-hover:text-[#34E5FF] transition-colors" />
                                         )}
                                     </div>
 
-                                    <h3 className="text-2xl font-bold mb-3 group-hover:text-[#E6FF3A] transition-colors flex items-center gap-2">
-                                        <project.icon className="w-5 h-5 text-[#D4DCE3] opacity-80 group-hover:opacity-100 transition-opacity" />
+                                    <h3 className="text-2xl font-bold mb-3 group-hover:text-[#34E5FF] transition-colors flex items-center gap-2">
+                                        <project.icon className="w-5 h-5 text-[#CBD2D9] opacity-80 group-hover:opacity-100 transition-opacity" />
                                         {project.title}
                                     </h3>
 
@@ -183,7 +177,7 @@ export default function Projects() {
                                     </p>
 
                                     {project.contractorLine && (
-                                        <p className="mb-6 border-l-2 border-[#E6FF3A]/60 pl-4 text-[13px] leading-6 italic text-[#DCE0E5]">
+                                        <p className="mb-6 border-l-2 border-[#34E5FF]/60 pl-4 text-[13px] leading-6 italic text-[#EAF7FB]">
                                             {project.contractorLine}
                                         </p>
                                     )}
@@ -193,7 +187,7 @@ export default function Projects() {
                                             {project.metrics.map((metric) => (
                                                 <span
                                                     key={metric}
-                                                    className="border border-[#E6FF3A]/25 bg-[#E6FF3A]/5 px-3 py-2 font-mono text-[11px] text-[#E6FF3A]"
+                                                    className="border border-[#34E5FF]/25 bg-[#34E5FF]/5 px-3 py-2 font-mono text-[11px] text-[#34E5FF]"
                                                 >
                                                     {metric}
                                                 </span>
@@ -205,7 +199,7 @@ export default function Projects() {
                                         {project.tags.map((tag) => (
                                             <span
                                                 key={tag}
-                                                className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#D4DCE3] border border-[#23262B] bg-white/[0.02] px-2.5 py-1"
+                                                className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#CBD2D9] border border-[#1C2A30] bg-white/[0.02] px-2.5 py-1"
                                             >
                                                 {tag}
                                             </span>
@@ -225,7 +219,7 @@ export default function Projects() {
                                         </div>
                                     )}
                                 </div>
-                            </div>
+                            </GlassCard>
                         </motion.div>
                     ))}
                 </div>
