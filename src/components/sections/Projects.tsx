@@ -48,6 +48,17 @@ const projects: Project[] = [
         metrics: ["Estimates in minutes", "Built for small crews", "Real product, live now"],
     },
     {
+        title: "Revamp Solutions",
+        eyebrow: "AI support experience · GTA",
+        description:
+            "A service website with a live AI support flow, clear service pages, and a polished brand presence that feels ready for customers.",
+        tags: ["Next.js", "Dify AI", "Customer Support", "Live Site"],
+        image: "/projects/revamp.png",
+        links: { demo: "https://www.revampsolutions.ca/" },
+        icon: Bot,
+        external: true,
+    },
+    {
         title: "DigiTao",
         eyebrow: "Mobile learning companion · 道",
         description:
@@ -66,17 +77,6 @@ const projects: Project[] = [
         image: "/projects/wyisdom/home.png",
         links: { demo: "/projects/wyisdom" },
         icon: BookOpenText,
-    },
-    {
-        title: "Revamp Solutions",
-        eyebrow: "AI support experience · GTA",
-        description:
-            "A service website with a live AI support flow, clear service pages, and a polished brand presence that feels ready for customers.",
-        tags: ["Next.js", "Dify AI", "Customer Support", "Live Site"],
-        image: "/projects/revamp.png",
-        links: { demo: "https://www.revampsolutions.ca/" },
-        icon: Bot,
-        external: true,
     },
 ];
 
