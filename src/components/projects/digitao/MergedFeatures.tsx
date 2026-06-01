@@ -85,7 +85,7 @@ export default function MergedFeatures() {
 
                             {/* Image Showcase */}
                             <div className="flex-[1.5] w-full">
-                                <div className="relative group rounded-2xl overflow-hidden border border-white/10 bg-[#050505] shadow-2xl">
+                                <div className="relative group rounded-2xl overflow-hidden border border-white/10 bg-[#070B0E] shadow-2xl">
                                     {/* Browser Header Bar */}
                                     <div className="bg-[#111] px-4 py-3 border-b border-white/5 flex items-center gap-2">
                                         <div className="w-3 h-3 rounded-full bg-red-500/50"></div>

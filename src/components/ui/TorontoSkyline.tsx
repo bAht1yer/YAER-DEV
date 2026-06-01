@@ -63,11 +63,11 @@ export default function TorontoSkyline() {
             aria-hidden="true"
         >
             <div className="absolute left-1/2 top-5 z-10 flex -translate-x-1/2 items-center gap-3 whitespace-nowrap">
-                <span className="h-px w-12 bg-[#E6FF3A]/40" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#E6FF3A]">
+                <span className="h-px w-12 bg-[#34E5FF]/40" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#34E5FF]">
                     Toronto · ON
                 </span>
-                <span className="h-px w-12 bg-[#E6FF3A]/40" />
+                <span className="h-px w-12 bg-[#34E5FF]/40" />
             </div>
 
             <svg
@@ -76,7 +76,7 @@ export default function TorontoSkyline() {
                 className="block h-[210px] w-full md:h-[260px]"
             >
                 {/* Star field (two layers for depth) */}
-                <g fill="#E6FF3A" opacity="0.5">
+                <g fill="#34E5FF" opacity="0.5">
                     <circle cx="110" cy="60" r="0.8" />
                     <circle cx="245" cy="42" r="0.6" />
                     <circle cx="365" cy="70" r="0.7" />
@@ -86,7 +86,7 @@ export default function TorontoSkyline() {
                     <circle cx="1010" cy="70" r="0.6" />
                     <circle cx="1140" cy="45" r="0.7" />
                 </g>
-                <g fill="#D4DCE3" opacity="0.22">
+                <g fill="#CBD2D9" opacity="0.22">
                     <circle cx="80" cy="28" r="0.4" />
                     <circle cx="295" cy="22" r="0.4" />
                     <circle cx="540" cy="26" r="0.5" />
@@ -193,7 +193,7 @@ export default function TorontoSkyline() {
                 </g>
 
                 {/* === Antennae on selected towers === */}
-                <g stroke="#23262B" strokeWidth="0.8" strokeLinecap="square">
+                <g stroke="#1C2A30" strokeWidth="0.8" strokeLinecap="square">
                     <line x1="383" y1="120" x2="383" y2="96"  />
                     <line x1="447" y1="92"  x2="447" y2="64"  />
                     <line x1="549" y1="78"  x2="549" y2="42"  />
@@ -207,7 +207,7 @@ export default function TorontoSkyline() {
                     Each window mostly stays dim and briefly flashes bright once
                     per cycle. Co-prime durations + negative begin offsets keep
                     only a handful lit at any given moment. */}
-                <g fill="#E6FF3A">
+                <g fill="#34E5FF">
                     {windowLights.map((w, i) => (
                         <rect
                             key={`w-${i}`}
@@ -234,7 +234,7 @@ export default function TorontoSkyline() {
                     the dome + vertical structural ribs on the drum. These are
                     what make the silhouette read as the SkyDome rather than a
                     generic mound. */}
-                <g stroke="#23262B" fill="none">
+                <g stroke="#1C2A30" fill="none">
                     {/* Outer dome rim */}
                     <path d="M 735 224 Q 735 192 799 188 Q 863 192 863 224" strokeWidth="0.8" />
                     {/* Roof panel seam 1 -- top, shortest arc */}
@@ -244,7 +244,7 @@ export default function TorontoSkyline() {
                     {/* Roof panel seam 3 -- bottom, longest, meets drum */}
                     <path d="M 740 220 Q 799 210 858 220" strokeWidth="0.55" />
                 </g>
-                <g stroke="#23262B" strokeWidth="0.45">
+                <g stroke="#1C2A30" strokeWidth="0.45">
                     {/* Drum structural ribs */}
                     <line x1="754" y1="224" x2="754" y2="258" />
                     <line x1="772" y1="224" x2="772" y2="258" />
@@ -260,16 +260,16 @@ export default function TorontoSkyline() {
                     <polygon points="895.6,34 898.4,34 898.4,80 895.6,80" fill="#15171B" />
 
                     {/* Main pod -- iconic disc with lime ring on the protruding rim */}
-                    <ellipse cx="897" cy="78" rx="19" ry="6.5" fill="#15171B" stroke="#E6FF3A" strokeWidth="1" />
+                    <ellipse cx="897" cy="78" rx="19" ry="6.5" fill="#15171B" stroke="#34E5FF" strokeWidth="1" />
 
                     {/* Lower restaurant level -- subtle inner detail */}
-                    <ellipse cx="897" cy="82.5" rx="13" ry="3" fill="#15171B" stroke="#23262B" strokeWidth="0.5" opacity="0.9" />
+                    <ellipse cx="897" cy="82.5" rx="13" ry="3" fill="#15171B" stroke="#1C2A30" strokeWidth="0.5" opacity="0.9" />
 
                     {/* Antenna mast */}
-                    <line x1="897" y1="34" x2="897" y2="12" stroke="#E6FF3A" strokeWidth="0.8" />
+                    <line x1="897" y1="34" x2="897" y2="12" stroke="#34E5FF" strokeWidth="0.8" />
 
                     {/* Beacon: steady core + expanding radar halo */}
-                    <circle cx="897" cy="12" r="2" fill="none" stroke="#E6FF3A" strokeWidth="0.6">
+                    <circle cx="897" cy="12" r="2" fill="none" stroke="#34E5FF" strokeWidth="0.6">
                         <animate
                             attributeName="r"
                             values="2;9;9"
@@ -285,7 +285,7 @@ export default function TorontoSkyline() {
                             repeatCount="indefinite"
                         />
                     </circle>
-                    <circle cx="897" cy="12" r="2" fill="none" stroke="#E6FF3A" strokeWidth="0.4">
+                    <circle cx="897" cy="12" r="2" fill="none" stroke="#34E5FF" strokeWidth="0.4">
                         <animate
                             attributeName="r"
                             values="2;6.5;6.5"
@@ -303,7 +303,7 @@ export default function TorontoSkyline() {
                             repeatCount="indefinite"
                         />
                     </circle>
-                    <circle cx="897" cy="12" r="1.6" fill="#E6FF3A">
+                    <circle cx="897" cy="12" r="1.6" fill="#34E5FF">
                         <animate
                             attributeName="opacity"
                             values="0.9;1;0.9"

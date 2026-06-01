@@ -30,7 +30,7 @@ import GridOverlay from "@/components/canvas/GridOverlay";
  */
 export default function Home() {
     return (
-        <main className="relative min-h-screen bg-[#0A0B0D] selection:bg-[#E6FF3A]/30 selection:text-black">
+        <main className="relative min-h-screen bg-[#0A1014] selection:bg-[#34E5FF]/30 selection:text-black">
             {/* Layer 1 - aurora */}
             <div className="fixed inset-0 z-0 pointer-events-none">
                 <AuroraGlow intensity="full" />

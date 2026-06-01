@@ -50,7 +50,7 @@ export default function ArticleClientScripts() {
             header.appendChild(copyBtn);
 
             // style the figure to look like a terminal window
-            fig.classList.add("rounded-lg", "border", "border-primary/20", "overflow-hidden", "my-8", "relative", "bg-[#050505]");
+            fig.classList.add("rounded-lg", "border", "border-primary/20", "overflow-hidden", "my-8", "relative", "bg-[#070B0E]");
 
             // Adjust PRE so it scrolls, but the figure container is hidden overflow
             pre.classList.add("!m-0", "!p-4");

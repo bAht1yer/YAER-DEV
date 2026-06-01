@@ -72,7 +72,7 @@ export default function ContactForm({ onSuccess, initialProjectType = "" }: Cont
     };
 
     const inputClasses =
-        "w-full bg-[#0F1013] border border-[#23262B] px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#E6FF3A] transition-colors disabled:opacity-50";
+        "w-full bg-[#0E171D] border border-[#1C2A30] px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#34E5FF] transition-colors disabled:opacity-50";
     const labelClasses =
         "block font-mono text-[10px] uppercase tracking-[0.22em] text-gray-400 mb-2";
 
@@ -91,7 +91,7 @@ export default function ContactForm({ onSuccess, initialProjectType = "" }: Cont
                     className={inputClasses + " appearance-none cursor-pointer pr-10"}
                     style={{
                         backgroundImage:
-                            "linear-gradient(45deg, transparent 50%, #9CA3AF 50%), linear-gradient(135deg, #9CA3AF 50%, transparent 50%)",
+                            "linear-gradient(45deg, transparent 50%, #8AA3AD 50%), linear-gradient(135deg, #8AA3AD 50%, transparent 50%)",
                         backgroundPosition: "calc(100% - 18px) 50%, calc(100% - 12px) 50%",
                         backgroundSize: "6px 6px, 6px 6px",
                         backgroundRepeat: "no-repeat",
@@ -164,12 +164,12 @@ export default function ContactForm({ onSuccess, initialProjectType = "" }: Cont
             </div>
 
             {status === "success" && (
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#E6FF3A] text-center">
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#34E5FF] text-center">
                     Message sent. I&apos;ll be in touch.
                 </p>
             )}
             {status === "error" && (
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#FF5A1F] text-center">
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#FF5FD2] text-center">
                     Something broke. Please try again.
                 </p>
             )}

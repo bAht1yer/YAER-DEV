@@ -53,7 +53,7 @@ export default function Hero() {
                             <ExternalLink className="w-5 h-5 text-[#D4C4A8] group-hover:scale-110 transition-transform" />
                             <span>Visit Web App</span>
                         </Link>
-                        <div className="flex items-center gap-2 px-5 py-3 text-sm bg-[#050505] border border-white/10 text-gray-400 rounded-md backdrop-blur-sm cursor-not-allowed opacity-75">
+                        <div className="flex items-center gap-2 px-5 py-3 text-sm bg-[#070B0E] border border-white/10 text-gray-400 rounded-md backdrop-blur-sm cursor-not-allowed opacity-75">
                             <Smartphone className="w-4 h-4" />
                             <span>iOS / Android (Coming Soon)</span>
                         </div>
@@ -92,7 +92,7 @@ export default function Hero() {
                         </div>
 
                         {/* App Interface (Screenshot) */}
-                        <div className="relative w-full h-full bg-[#050505] flex items-center justify-center overflow-hidden">
+                        <div className="relative w-full h-full bg-[#070B0E] flex items-center justify-center overflow-hidden">
                             <Image
                                 src="/projects/digitao/home.png"
                                 alt="DigiTao App Home Screen"

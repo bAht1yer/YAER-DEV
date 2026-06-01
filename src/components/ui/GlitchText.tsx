@@ -51,8 +51,8 @@ export default function GlitchText({ text1, text2, className = "" }: GlitchTextP
             animate={{
                 textShadow: isGlitching
                     ? [
-                        "2px 0 #ff003c, -2px 0 #00f0ff",
-                        "-2px 0 #ff003c, 2px 0 #00f0ff",
+                        "2px 0 #FF5FD2, -2px 0 #34E5FF",
+                        "-2px 0 #FF5FD2, 2px 0 #34E5FF",
                         "0 0 0 transparent",
                     ]
                     : "0 0 0 transparent",

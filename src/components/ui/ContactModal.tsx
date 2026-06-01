@@ -49,13 +49,13 @@ export default function ContactModal({ isOpen, onClose, projectType }: ContactMo
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         transition={{ duration: 0.25, ease: "easeOut" }}
-                        className="relative w-full max-w-2xl bg-[#121316] border border-[#23262B] notch-corners overflow-hidden"
+                        className="relative w-full max-w-2xl bg-[#0E171D] border border-[#1C2A30] notch-corners overflow-hidden"
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Header */}
-                        <div className="flex items-center justify-between p-5 border-b border-[#23262B]">
+                        <div className="flex items-center justify-between p-5 border-b border-[#1C2A30]">
                             <div className="flex items-center gap-3">
-                                <span className="h-2 w-2 rounded-full bg-[#E6FF3A]" />
+                                <span className="h-2 w-2 rounded-full bg-[#34E5FF]" />
                                 <h2 className="font-mono text-[12px] uppercase tracking-[0.22em] text-white">
                                     New project -- intake
                                 </h2>

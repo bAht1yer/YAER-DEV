@@ -194,7 +194,7 @@ html {
     gap: 8px;
     padding: 14px 24px;
     background: var(--lime);
-    color: #0A0B0D;
+    color: #0A1014;
     font-weight: 700;
     font-size: 13px;
     letter-spacing: 0.12em;
@@ -270,7 +270,7 @@ html {
     background: var(--lime);
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.4);
-    box-shadow: 0 0 6px rgba(230, 255, 58, 0.5);
+    box-shadow: 0 0 6px rgba(52, 229, 255, 0.5);
   }
 
   .particle-accent:hover .particle-accent__mote,
@@ -469,10 +469,10 @@ html {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0A0B0D;
+  background: #0A1014;
 }
 ::-webkit-scrollbar-thumb {
-  background: #23262B;
+  background: #1C2A30;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #3A3D43;
