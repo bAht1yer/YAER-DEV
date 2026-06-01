@@ -13,14 +13,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 /**
- * Single source of truth for the brand icon: public/brand/yaer-mark.png
+ * Brand icon source: public/brand/yaer-mark.png (full-res, used by the Navbar
+ * and Footer via next/image, which downscales it).
  *
- * Both the browser favicon and the iOS home-screen icon resolve to this one
- * file via metadata.icons below. The Navbar and Footer reference the same
- * /brand/yaer-mark.png path. Maintaining one PNG = no drift, no double work.
- *
- * The previous app/icon.png + app/apple-icon.png file-convention duplicates
- * have been removed.
+ * The browser favicon and iOS home-screen icon use small pre-optimized
+ * derivatives (yaer-mark-64.png / yaer-mark-180.png, < 1 KB each) so the tab
+ * icon isn't an ~840 KB download. Regenerate with sharp if the mark changes.
  */
 export const metadata: Metadata = {
     metadataBase: new URL("https://yaer.dev"),
@@ -28,9 +26,9 @@ export const metadata: Metadata = {
     description:
         "SaaS, internal tools, and contractor lead systems. Shipped software, not demos. Built by Neil Bahtiyer.",
     icons: {
-        icon: [{ url: "/brand/yaer-mark.png", type: "image/png" }],
-        apple: [{ url: "/brand/yaer-mark.png", type: "image/png" }],
-        shortcut: "/brand/yaer-mark.png",
+        icon: [{ url: "/brand/yaer-mark-64.png", type: "image/png", sizes: "64x64" }],
+        apple: [{ url: "/brand/yaer-mark-180.png", type: "image/png", sizes: "180x180" }],
+        shortcut: "/brand/yaer-mark-64.png",
     },
     openGraph: {
         title: "YAER.DEV -- AI systems that ship",
