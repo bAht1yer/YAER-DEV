@@ -43,7 +43,6 @@ const projects: Project[] = [
         links: { demo: "https://bossimating.com/" },
         icon: ReceiptText,
         image: "/projects/bossimating-home.png",
-        featured: true,
         external: true,
         metrics: ["Estimates in minutes", "Built for small crews", "Real product, live now"],
     },
