@@ -7,6 +7,7 @@ import Footer from "@/components/ui/Footer";
 import BlogFilters from "@/components/blog/BlogFilters";
 import BlogPagination from "@/components/blog/Pagination";
 import InteractiveGrid from "@/components/ui/InteractiveGrid";
+import GlassCard from "@/components/ui/GlassCard";
 
 export default async function BlogIndex({
     searchParams,
@@ -74,15 +75,15 @@ export default async function BlogIndex({
 
                     <BlogFilters categories={categories} />
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 py-12 perspective-1000">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 py-12">
                         {posts.map((post) => (
                             <Link
                                 key={post.id}
                                 href={`/blog/${post.slug}`}
-                                className="group block relative h-48 transition-all duration-500 hover:-translate-y-2 gradient-border"
+                                className="group block h-48"
                             >
-                                <div className="absolute inset-0 bg-black/90 flex flex-col justify-center items-center text-center p-6 transition-all duration-500 rounded-xl">
-                                    <div className="text-xs text-primary mb-2 tracking-widest uppercase">
+                                <GlassCard beam={false} className="h-full flex flex-col justify-center items-center text-center p-6">
+                                    <div className="text-xs text-[#34E5FF] mb-2 tracking-widest uppercase">
                                         {post.category?.name || "SYS.LOG"}
                                     </div>
                                     <h2 className="text-xl font-bold text-white uppercase tracking-wider line-clamp-2">
@@ -92,11 +93,11 @@ export default async function BlogIndex({
                                         <div className="text-xs text-gray-400 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-4">
                                             {post.createdAt.toLocaleDateString()}
                                         </div>
-                                        <div className="absolute text-xs font-bold text-primary uppercase tracking-widest flex items-center gap-2 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                                        <div className="absolute text-xs font-bold text-[#34E5FF] uppercase tracking-widest flex items-center gap-2 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                                             Read More <span>&rarr;</span>
                                         </div>
                                     </div>
-                                </div>
+                                </GlassCard>
                             </Link>
                         ))}
 

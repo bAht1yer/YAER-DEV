@@ -20,9 +20,9 @@ export type ProjectType =
     | "other";
 
 export const PROJECT_TYPE_OPTIONS: { value: Exclude<ProjectType, "">; label: string }[] = [
-    { value: "quick-fix", label: "Quick Fix ($499)" },
-    { value: "one-page-site", label: "One-Page Site ($999)" },
-    { value: "lead-system", label: "Lead System ($1,500-$2,000)" },
+    { value: "quick-fix", label: "Quick Fix ($199)" },
+    { value: "one-page-site", label: "One-Page Site ($499)" },
+    { value: "lead-system", label: "Lead System ($799+)" },
     { value: "ai-saas", label: "AI / SaaS work" },
     { value: "other", label: "Other" },
 ];

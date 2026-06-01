@@ -19,6 +19,8 @@ interface GlassCardProps {
     interactive?: boolean;
     /** Max tilt in degrees. */
     maxTilt?: number;
+    /** Show the sweeping diagonal light beam. Default true. */
+    beam?: boolean;
     onClick?: () => void;
 }
 
@@ -27,6 +29,7 @@ export default function GlassCard({
     className = "",
     interactive = true,
     maxTilt = 5,
+    beam = true,
     onClick,
 }: GlassCardProps) {
     const ref = useRef<HTMLDivElement | null>(null);
@@ -122,7 +125,7 @@ export default function GlassCard({
             onKeyDown={onClick ? handleKeyDown : undefined}
             role={onClick ? "button" : undefined}
             tabIndex={onClick ? 0 : undefined}
-            className={`glass-panel glass-glow sheen-animate focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A1014] ${className}`}
+            className={`glass-panel glass-glow ${beam ? "sheen-animate " : ""}focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A1014] ${className}`}
             style={{ transformStyle: "preserve-3d", willChange: "transform" }}
         >
             {children}
