@@ -13,7 +13,6 @@ import ContactModal from "../ui/ContactModal";
  * and a HUD stat-readout strip.
  */
 const stats = [
-    "IN PRODUCTION",
     "TORONTO",
 ];
 
@@ -86,7 +85,6 @@ export default function Hero() {
                                 key={s}
                                 className="inline-flex items-center font-mono text-[10px] uppercase tracking-[0.24em] text-[#8AA3AD]"
                             >
-                                <span className="mr-2 text-[#34E5FF]">/</span>
                                 {s === "TORONTO" && (
                                     <CNTowerGlyph className="mr-1.5 h-3.5 w-2.5 text-[#34E5FF]" />
                                 )}
