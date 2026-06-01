@@ -1,6 +1,6 @@
 "use client";
 
-import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -38,7 +38,6 @@ interface CubeData {
 }
 
 interface PointerState { x: number; y: number; targetX: number; targetY: number; }
-type CubeRegistry = MutableRefObject<Array<THREE.Group | null>>;
 
 function makeLabelTexture(label: string) {
     if (typeof document === "undefined") return null;
@@ -90,12 +89,11 @@ function buildCubeData(count: number, compact: boolean): CubeData[] {
 const scrollState = { velocity: 0 };
 
 function CubeMesh({
-    data, index, pointer, registerCube, reducedMotion,
+    data, index, pointer, reducedMotion,
 }: {
     data: CubeData;
     index: number;
     pointer: MutableRefObject<PointerState>;
-    registerCube: (i: number, g: THREE.Group | null) => void;
     reducedMotion: boolean;
 }) {
     const groupRef = useRef<THREE.Group | null>(null);
@@ -112,16 +110,11 @@ function CubeMesh({
 
     useEffect(() => () => { faceTexture?.dispose(); edgeGeometry.dispose(); }, [edgeGeometry, faceTexture]);
 
-    const setRef = useCallback((node: THREE.Group | null) => {
-        groupRef.current = node;
-        registerCube(index, node);
-    }, [index, registerCube]);
-
     useFrame((state, frameDelta) => {
         const g = groupRef.current;
         if (!g) return;
         const delta = Math.min(frameDelta, 0.045);
-        const m = reducedMotion ? 0.12 : 1;
+        const m = reducedMotion ? 0 : 1;
         const elapsed = state.clock.elapsedTime + data.phase;
 
         const speed = data.orbitSpeed * (1 + scrollState.velocity * 1.5);
@@ -136,13 +129,13 @@ function CubeMesh({
         g.rotation.y += data.spin.y * delta * m;
         g.rotation.z += data.spin.z * delta * m;
 
-        const pulse = (Math.sin(elapsed * 0.8) + 1) * 0.5;
+        const pulse = reducedMotion ? 0 : (Math.sin(elapsed * 0.8) + 1) * 0.5;
         if (edgeMat.current) edgeMat.current.opacity = 0.5 + pulse * 0.3;
         if (coreMat.current) coreMat.current.opacity = 0.05 + pulse * 0.06;
     });
 
     return (
-        <group ref={setRef} position={[Math.cos(data.angle) * data.radius, data.y, Math.sin(data.angle) * data.radius - 2.5]} scale={data.scale} name={`cube-${index}`}>
+        <group ref={groupRef} position={[Math.cos(data.angle) * data.radius, data.y, Math.sin(data.angle) * data.radius - 2.5]} scale={data.scale} name={`cube-${index}`}>
             <mesh>
                 <boxGeometry args={[1, 1, 1]} />
                 <meshStandardMaterial
@@ -181,14 +174,11 @@ function CubeMesh({
 export default function CodeCubes() {
     const { size } = useThree();
     const groupRef = useRef<THREE.Group>(null);
-    const cubeRefs: CubeRegistry = useRef([]);
     const pointer = useRef<PointerState>({ x: 0, y: 0, targetX: 0, targetY: 0 });
     const [reducedMotion, setReducedMotion] = useState(false);
     const compact = size.width < 768;
     const count = compact ? MOBILE_COUNT : DESKTOP_COUNT;
     const cubes = useMemo(() => buildCubeData(count, compact), [count, compact]);
-
-    const registerCube = useCallback((i: number, g: THREE.Group | null) => { cubeRefs.current[i] = g; }, []);
 
     useEffect(() => {
         const q = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -204,13 +194,10 @@ export default function CodeCubes() {
             pointer.current.targetY = -((e.clientY / window.innerHeight) * 2 - 1);
         };
         let lastY = window.scrollY;
-        let raf = 0;
         const onScroll = () => {
             const y = window.scrollY;
             scrollState.velocity = Math.min(Math.abs(y - lastY) / 40, 1.5);
             lastY = y;
-            cancelAnimationFrame(raf);
-            raf = requestAnimationFrame(() => { scrollState.velocity *= 0.6; });
         };
         window.addEventListener("pointermove", onMove, { passive: true });
         window.addEventListener("scroll", onScroll, { passive: true });
@@ -235,7 +222,7 @@ export default function CodeCubes() {
             <pointLight position={[-6, 4, 2]} intensity={0.4} color={CYAN} />
             <pointLight position={[7, -5, 1]} intensity={0.3} color={VIOLET} />
             {cubes.map((data, index) => (
-                <CubeMesh key={data.id} data={data} index={index} pointer={pointer} registerCube={registerCube} reducedMotion={reducedMotion} />
+                <CubeMesh key={data.id} data={data} index={index} pointer={pointer} reducedMotion={reducedMotion} />
             ))}
         </group>
     );
