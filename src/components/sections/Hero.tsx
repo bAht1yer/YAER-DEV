@@ -17,6 +17,23 @@ const stats = [
     "TORONTO",
 ];
 
+/**
+ * Mini CN Tower glyph — recognizable Toronto silhouette (wide pod over a
+ * tapered body). Inherits color via `currentColor`.
+ */
+function CNTowerGlyph({ className = "" }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 16 24" className={className} fill="currentColor" aria-hidden="true">
+            <rect x="7.6" y="0" width="0.8" height="5" />
+            <polygon points="7.2,7 8.8,7 8.4,4 7.6,4" />
+            <ellipse cx="8" cy="8" rx="3.6" ry="1.4" />
+            <ellipse cx="8" cy="9.6" rx="2.6" ry="0.7" opacity="0.85" />
+            <polygon points="7.2,11 8.8,11 9.6,22 6.4,22" />
+            <rect x="5.6" y="22" width="4.8" height="2" />
+        </svg>
+    );
+}
+
 export default function Hero() {
     const [isContactOpen, setIsContactOpen] = useState(false);
 
@@ -67,9 +84,13 @@ export default function Hero() {
                         {stats.map((s) => (
                             <span
                                 key={s}
-                                className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#8AA3AD]"
+                                className="inline-flex items-center font-mono text-[10px] uppercase tracking-[0.24em] text-[#8AA3AD]"
                             >
-                                <span className="mr-2 text-[#34E5FF]">/</span>{s}
+                                <span className="mr-2 text-[#34E5FF]">/</span>
+                                {s === "TORONTO" && (
+                                    <CNTowerGlyph className="mr-1.5 h-3.5 w-2.5 text-[#34E5FF]" />
+                                )}
+                                {s}
                             </span>
                         ))}
                     </div>
