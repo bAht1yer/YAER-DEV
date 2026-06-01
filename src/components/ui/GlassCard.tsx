@@ -83,7 +83,7 @@ export default function GlassCard({
             onKeyDown={onClick ? handleKeyDown : undefined}
             role={onClick ? "button" : undefined}
             tabIndex={onClick ? 0 : undefined}
-            className={`glass-panel glass-glow hud-corners sheen-animate transition-transform duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A1014] ${className}`}
+            className={`glass-panel glass-glow sheen-animate transition-transform duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A1014] ${className}`}
             style={{ transformStyle: "preserve-3d", willChange: "transform" }}
         >
             {children}

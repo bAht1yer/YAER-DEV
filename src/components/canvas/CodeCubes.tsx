@@ -79,7 +79,7 @@ function buildCubeData(count: number, compact: boolean): CubeData[] {
             bobAmp: 0.18 + (i % 3) * 0.06,
             bobSpeed: 0.3 + (i % 4) * 0.05,
             orbitSpeed: (compact ? 0.05 : 0.07) * (i % 2 ? 1 : -1) * (0.7 + (i % 3) * 0.2),
-            scale: (compact ? 0.5 : 0.68) + (i % 2) * 0.08,
+            scale: (compact ? 0.38 : 0.48) + (i % 2) * 0.05,
             spin: new THREE.Vector3(0.05 + (i % 3) * 0.01, 0.07 + (i % 2) * 0.012, 0.03),
             phase: i * 1.37,
         };
@@ -122,8 +122,8 @@ function CubeMesh({
 
         const speed = data.orbitSpeed * (1 + scrollState.velocity * 1.5);
         angle.current += speed * delta * m;
-        const px = pointer.current.x * 0.4;
-        const py = pointer.current.y * 0.3;
+        const px = pointer.current.x * 0.12;
+        const py = pointer.current.y * 0.08;
         g.position.x = Math.cos(angle.current) * data.radius + px;
         g.position.z = Math.sin(angle.current) * data.radius - 2.5;
         g.position.y = data.y + Math.sin(elapsed * data.bobSpeed) * data.bobAmp * m + py;
@@ -212,8 +212,8 @@ export default function CodeCubes() {
 
     useFrame((_, delta) => {
         const d = Math.min(delta, 0.045);
-        pointer.current.x = THREE.MathUtils.damp(pointer.current.x, pointer.current.targetX, 5, d);
-        pointer.current.y = THREE.MathUtils.damp(pointer.current.y, pointer.current.targetY, 5, d);
+        pointer.current.x = THREE.MathUtils.damp(pointer.current.x, pointer.current.targetX, 2.4, d);
+        pointer.current.y = THREE.MathUtils.damp(pointer.current.y, pointer.current.targetY, 2.4, d);
         scrollState.velocity = THREE.MathUtils.damp(scrollState.velocity, 0, 3, d);
     });
 

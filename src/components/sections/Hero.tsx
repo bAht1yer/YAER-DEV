@@ -14,7 +14,6 @@ import ContactModal from "../ui/ContactModal";
  */
 const stats = [
     "IN PRODUCTION",
-    "5-MIN ESTIMATES",
     "TORONTO",
 ];
 
@@ -33,13 +32,7 @@ export default function Hero() {
                 className="w-full max-w-3xl"
             >
                 <GlassCard className="px-6 py-10 sm:px-12 sm:py-14 text-center">
-                    {/* status chip */}
-                    <span className="inline-flex items-center gap-2 rounded-full border border-[#34E5FF]/40 bg-[#34E5FF]/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[#7AF0FF]">
-                        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#34E5FF] shadow-[0_0_8px_#34E5FF]" />
-                        System Online · Toronto · Available
-                    </span>
-
-                    <h1 className="mt-7 text-5xl sm:text-6xl md:text-7xl font-black leading-[0.95] tracking-tight text-white">
+                    <h1 className="text-5xl sm:text-6xl md:text-7xl font-black leading-[0.95] tracking-tight text-white">
                         AI systems<br />
                         <span className="text-[#34E5FF] drop-shadow-[0_0_18px_rgba(52,229,255,0.5)]">
                             that ship.
