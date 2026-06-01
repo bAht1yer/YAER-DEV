@@ -29,7 +29,7 @@ export default function GridOverlay({
                     className="absolute inset-0"
                     style={{
                         backgroundImage:
-                            "linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px)",
+                            "linear-gradient(to right, rgba(52,229,255,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(52,229,255,0.05) 1px, transparent 1px)",
                         backgroundSize: "80px 80px",
                         WebkitMaskImage:
                             "radial-gradient(circle at 50% 50%, black 35%, transparent 85%)",
@@ -47,6 +47,20 @@ export default function GridOverlay({
                     }}
                 />
             )}
+            {/* faint CRT scanlines */}
+            <div className="scanlines absolute inset-0 opacity-40" />
+            {/* retro-future grid-horizon glow at the bottom */}
+            <div
+                className="absolute inset-x-0 bottom-0 h-[34vh]"
+                style={{
+                    backgroundImage:
+                        "repeating-linear-gradient(90deg, rgba(52,229,255,0.14) 0 1px, transparent 1px 28px), repeating-linear-gradient(0deg, rgba(52,229,255,0.14) 0 1px, transparent 1px 22px)",
+                    transform: "perspective(220px) rotateX(68deg)",
+                    transformOrigin: "bottom",
+                    WebkitMaskImage: "linear-gradient(to top, black, transparent)",
+                    maskImage: "linear-gradient(to top, black, transparent)",
+                }}
+            />
         </div>
     );
 }

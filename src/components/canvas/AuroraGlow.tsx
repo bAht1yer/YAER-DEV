@@ -58,7 +58,7 @@ export default function AuroraGlow({ intensity = "full", className = "" }: Auror
             className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
             aria-hidden="true"
         >
-            {/* Bloom 1 - large lime, upper-left, wide arc */}
+            {/* Bloom 1 - large cyan, upper-left, wide arc */}
             <div
                 className="aurora-blob absolute rounded-full"
                 style={{
@@ -66,13 +66,13 @@ export default function AuroraGlow({ intensity = "full", className = "" }: Auror
                     height: 880,
                     top: -240,
                     left: -160,
-                    background: smoothRadial("230,255,58", 0.28 * k),
+                    background: smoothRadial("52,229,255", 0.26 * k),
                     filter: "blur(110px)",
                     animation: "aurora-drift-1 50s ease-in-out infinite",
                     willChange: "transform, opacity",
                 }}
             />
-            {/* Bloom 2 - steel, mid-right, slow heavy drift */}
+            {/* Bloom 2 - violet, mid-right, slow heavy drift */}
             <div
                 className="aurora-blob absolute rounded-full"
                 style={{
@@ -80,13 +80,13 @@ export default function AuroraGlow({ intensity = "full", className = "" }: Auror
                     height: 780,
                     top: "28%",
                     right: -200,
-                    background: smoothRadial("212,220,227", 0.18 * k),
+                    background: smoothRadial("155,123,255", 0.18 * k),
                     filter: "blur(110px)",
                     animation: "aurora-drift-2 78s ease-in-out infinite",
                     willChange: "transform, opacity",
                 }}
             />
-            {/* Bloom 3 - lime, lower-mid */}
+            {/* Bloom 3 - cyan, lower-mid */}
             <div
                 className="aurora-blob absolute rounded-full"
                 style={{
@@ -94,13 +94,13 @@ export default function AuroraGlow({ intensity = "full", className = "" }: Auror
                     height: 720,
                     bottom: -220,
                     left: "28%",
-                    background: smoothRadial("230,255,58", 0.16 * k),
+                    background: smoothRadial("52,229,255", 0.15 * k),
                     filter: "blur(100px)",
                     animation: "aurora-drift-3 64s ease-in-out infinite",
                     willChange: "transform, opacity",
                 }}
             />
-            {/* Bloom 4 - small bright lime accent, fades in and out */}
+            {/* Bloom 4 - small bright violet accent, fades in and out */}
             <div
                 className="aurora-blob absolute rounded-full"
                 style={{
@@ -108,7 +108,7 @@ export default function AuroraGlow({ intensity = "full", className = "" }: Auror
                     height: 460,
                     top: "42%",
                     left: "40%",
-                    background: smoothRadial("230,255,58", 0.32 * k),
+                    background: smoothRadial("155,123,255", 0.30 * k),
                     filter: "blur(70px)",
                     animation: "aurora-drift-4 95s ease-in-out infinite",
                     willChange: "transform, opacity",
