@@ -12,10 +12,6 @@ import ContactModal from "../ui/ContactModal";
  * one primary CTA (Start a project), one quiet secondary (See work),
  * and a HUD stat-readout strip.
  */
-const stats = [
-    "TORONTO",
-];
-
 /**
  * Mini CN Tower glyph — recognizable Toronto silhouette (wide pod over a
  * tapered body). Inherits color via `currentColor`.
@@ -56,8 +52,8 @@ export default function Hero() {
                     </h1>
 
                     <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-[#8AA3AD] md:text-lg">
-                        SaaS, internal tools &amp; lead systems running in
-                        <span className="text-[#CBD2D9]"> production</span> — not just demos.
+                        Production-grade SaaS, internal tools, and lead systems your business
+                        <span className="text-[#CBD2D9]"> actually runs on.</span>
                     </p>
 
                     <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -78,19 +74,15 @@ export default function Hero() {
                         </a>
                     </div>
 
-                    {/* HUD stat-readout strip */}
-                    <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-white/10 pt-6">
-                        {stats.map((s) => (
-                            <span
-                                key={s}
-                                className="inline-flex items-center font-mono text-[10px] uppercase tracking-[0.24em] text-[#8AA3AD]"
-                            >
-                                {s === "TORONTO" && (
-                                    <CNTowerGlyph className="mr-1.5 h-3.5 w-2.5 text-[#34E5FF]" />
-                                )}
-                                {s}
-                            </span>
-                        ))}
+                    {/* Location tag */}
+                    <div className="mt-10 flex flex-col items-center gap-1.5 border-t border-white/10 pt-6">
+                        <span className="inline-flex items-center font-mono text-[10px] uppercase tracking-[0.24em] text-[#8AA3AD]">
+                            <CNTowerGlyph className="mr-1.5 h-3.5 w-2.5 text-[#34E5FF]" />
+                            Toronto
+                        </span>
+                        <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-gray-500">
+                            Supporting local businesses
+                        </span>
                     </div>
                 </GlassCard>
             </motion.div>
