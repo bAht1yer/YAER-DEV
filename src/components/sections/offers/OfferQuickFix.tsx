@@ -9,7 +9,7 @@ export default function OfferQuickFix() {
             indexLabel="01 / Quick Fix"
             headline="Tighten the site you already have."
             subhead="A 48-hour pass on an existing site so it stops costing you customers."
-            price="$499"
+            price="$199"
             priceMeta="Fixed price"
             ctaLabel="Book a Quick Fix"
             projectType="quick-fix"

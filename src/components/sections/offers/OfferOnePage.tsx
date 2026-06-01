@@ -9,7 +9,7 @@ export default function OfferOnePage() {
             indexLabel="02 / One-Page Site"
             headline="A clean site, ready to send."
             subhead="For contractors running off Facebook. One page, well-built, deployed, yours."
-            price="$999"
+            price="$499"
             priceMeta="~1 week"
             ctaLabel="Start a One-Page Site"
             projectType="one-page-site"
