@@ -24,6 +24,21 @@ export default function OfferOnePage() {
                     "Deployed with domain setup",
                 ]}
             />
+
+            <div className="mb-8 max-w-md border-l-2 border-[#34E5FF] bg-[#34E5FF]/[0.04] px-5 py-3">
+                <p className="text-[13px] leading-6 text-[#EAF7FB]">
+                    Backed by{" "}
+                    <a
+                        href="https://www.revampsolutions.ca/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-white border-b border-[#34E5FF] hover:text-[#34E5FF] transition-colors"
+                    >
+                        Revamp Solutions
+                    </a>
+                    , a local business website with AI chatflow.
+                </p>
+            </div>
         </OfferShell>
     );
 }
