@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Section from "../ui/Section";
-import { Bot, ExternalLink, Github, ReceiptText, Smartphone, type LucideIcon } from "lucide-react";
+import { Bot, BookOpenText, ExternalLink, Github, ReceiptText, Smartphone, type LucideIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import GlassCard from "../ui/GlassCard";
@@ -48,6 +48,26 @@ const projects: Project[] = [
         metrics: ["Estimates in minutes", "Built for small crews", "Real product, live now"],
     },
     {
+        title: "DigiTao",
+        eyebrow: "Mobile learning companion · 道",
+        description:
+            "A calm mobile app for reading the Tao Te Ching with character notes, AI interpretation, bilingual recitation, and guided practice.",
+        tags: ["Expo", "React Native", "AI Guidance", "Mobile UX"],
+        image: "/projects/digitao/home.png",
+        links: { demo: "/projects/digitao", github: "https://github.com/Neilblaze/digitao" },
+        icon: Smartphone,
+    },
+    {
+        title: "Wyisdom",
+        eyebrow: "I Ching study platform · 易經",
+        description:
+            "易通 / Wyisdom -- a bilingual study surface for the I Ching. All 64 hexagrams with classical (王弼 · 程頤 · 朱熹) and modern commentary, a daily-hexagram engine, an interactive year-cycle wheel, and a reflective coin / yarrow cast flow.",
+        tags: ["Next.js", "易經 · I Ching", "Bilingual", "Live Web App"],
+        image: "/projects/wyisdom/home.png",
+        links: { demo: "/projects/wyisdom" },
+        icon: BookOpenText,
+    },
+    {
         title: "Revamp Solutions",
         eyebrow: "AI support experience · GTA",
         description:
@@ -57,16 +77,6 @@ const projects: Project[] = [
         links: { demo: "https://www.revampsolutions.ca/" },
         icon: Bot,
         external: true,
-    },
-    {
-        title: "DigiTao",
-        eyebrow: "Mobile learning companion",
-        description:
-            "A calm mobile app for reading the Tao Te Ching with character notes, AI interpretation, bilingual recitation, and guided practice.",
-        tags: ["Expo", "React Native", "AI Guidance", "Mobile UX"],
-        image: "/projects/digitao/home.png",
-        links: { demo: "/projects/digitao", github: "https://github.com/Neilblaze/digitao" },
-        icon: Smartphone,
     },
 ];
 
