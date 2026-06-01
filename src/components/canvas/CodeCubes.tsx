@@ -99,6 +99,9 @@ function CubeMesh({
     const groupRef = useRef<THREE.Group | null>(null);
     const edgeMat = useRef<THREE.LineBasicMaterial>(null);
     const coreMat = useRef<THREE.MeshBasicMaterial>(null);
+    // Accumulate orbit angle in a ref (not on the memoized `data` object — mutating
+    // that is disallowed and would also reset on viewport-driven rebuilds).
+    const angle = useRef(data.angle);
 
     const faceTexture = useMemo(() => makeLabelTexture(data.label), [data.label]);
     const edgeGeometry = useMemo(() => {
@@ -118,11 +121,11 @@ function CubeMesh({
         const elapsed = state.clock.elapsedTime + data.phase;
 
         const speed = data.orbitSpeed * (1 + scrollState.velocity * 1.5);
-        data.angle += speed * delta * m;
+        angle.current += speed * delta * m;
         const px = pointer.current.x * 0.4;
         const py = pointer.current.y * 0.3;
-        g.position.x = Math.cos(data.angle) * data.radius + px;
-        g.position.z = Math.sin(data.angle) * data.radius - 2.5;
+        g.position.x = Math.cos(angle.current) * data.radius + px;
+        g.position.z = Math.sin(angle.current) * data.radius - 2.5;
         g.position.y = data.y + Math.sin(elapsed * data.bobSpeed) * data.bobAmp * m + py;
 
         g.rotation.x += data.spin.x * delta * m;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useCallback, useEffect, useState, type ReactNode, type ElementType } from "react";
+import { useRef, useCallback, useEffect, useState, type ReactNode } from "react";
 
 /**
  * GlassCard — the single source of the Cyan Chrome "glass feel".
@@ -14,7 +14,6 @@ import React, { useRef, useCallback, useEffect, useState, type ReactNode, type E
  */
 interface GlassCardProps {
     children: ReactNode;
-    as?: ElementType;
     className?: string;
     interactive?: boolean;
     /** Max tilt in degrees. */
@@ -24,13 +23,12 @@ interface GlassCardProps {
 
 export default function GlassCard({
     children,
-    as: Tag = "div",
     className = "",
     interactive = true,
     maxTilt = 5,
     onClick,
 }: GlassCardProps) {
-    const ref = useRef<HTMLElement | null>(null);
+    const ref = useRef<HTMLDivElement | null>(null);
     const frame = useRef<number | null>(null);
     const [reduced, setReduced] = useState(false);
 
@@ -68,17 +66,16 @@ export default function GlassCard({
         el.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
     }, []);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return React.createElement(
-        Tag as any,
-        {
-            ref: ref,
-            onPointerMove: handleMove,
-            onPointerLeave: handleLeave,
-            onClick: onClick,
-            className: `glass-panel glass-glow hud-corners sheen-animate transition-transform duration-200 ease-out ${className}`,
-            style: { transformStyle: "preserve-3d", willChange: "transform" },
-        },
-        children,
+    return (
+        <div
+            ref={ref}
+            onPointerMove={handleMove}
+            onPointerLeave={handleLeave}
+            onClick={onClick}
+            className={`glass-panel glass-glow hud-corners sheen-animate transition-transform duration-200 ease-out ${className}`}
+            style={{ transformStyle: "preserve-3d", willChange: "transform" }}
+        >
+            {children}
+        </div>
     );
 }
