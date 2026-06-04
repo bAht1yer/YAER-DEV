@@ -14,7 +14,7 @@ import GlassCard from "../ui/GlassCard";
  *  - Bossimating featured card gains one line of contractor authority copy
  */
 
-type Project = {
+export type Project = {
     title: string;
     eyebrow: string;
     description: string;
@@ -31,12 +31,12 @@ type Project = {
     metrics?: string[];
 };
 
-const projects: Project[] = [
+export const projects: Project[] = [
     {
         title: "Bossimating",
-        eyebrow: "Live contractor product",
+        eyebrow: "Contractor estimating SaaS",
         description:
-            "A product for small construction teams that brings estimates, invoices, payments, approvals, dashboards, and helpful AI tools into one practical workspace.",
+            "A live contractor platform with estimate building, invoice payments, approvals, dashboards, AI helpers, and branded quote workflows.",
         contractorLine:
             "Built to understand how contractors quote, approve, and get paid -- the same thinking goes into every Lead System engagement.",
         tags: ["SaaS", "AI Helpers", "Payments", "Approvals"],
@@ -48,9 +48,9 @@ const projects: Project[] = [
     },
     {
         title: "Revamp Solutions",
-        eyebrow: "AI support experience · GTA",
+        eyebrow: "Local contractor website example",
         description:
-            "A service website with a live AI support flow, clear service pages, and a polished brand presence that feels ready for customers.",
+            "A local service website with clear service sections, customer-ready contact paths, polished brand presence, and a live AI support flow.",
         tags: ["Next.js", "Dify AI", "Customer Support", "Live Site"],
         image: "/projects/revamp.png",
         links: { demo: "https://www.revampsolutions.ca/" },
@@ -91,7 +91,7 @@ export default function Projects() {
     };
 
     return (
-        <Section id="projects" className="bg-transparent relative">
+        <Section id="project-gallery" className="bg-transparent relative">
             <div className="max-w-6xl mx-auto z-10 relative">
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}

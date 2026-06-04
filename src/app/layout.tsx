@@ -22,27 +22,36 @@ const jetbrainsMono = JetBrains_Mono({
  */
 export const metadata: Metadata = {
     metadataBase: new URL("https://yaer.dev"),
-    title: "YAER.DEV -- AI systems that ship",
+    title: "YAER.DEV -- Websites & lead systems for local businesses",
     description:
-        "SaaS, internal tools, and contractor lead systems. Shipped software, not demos. Built by Neil Bahtiyer.",
+        "Websites, quote forms, automations, and useful AI for contractors, local services, and small businesses.",
     icons: {
         icon: [{ url: "/brand/yaer-mark-64.png", type: "image/png", sizes: "64x64" }],
         apple: [{ url: "/brand/yaer-mark-180.png", type: "image/png", sizes: "180x180" }],
         shortcut: "/brand/yaer-mark-64.png",
     },
     openGraph: {
-        title: "YAER.DEV -- AI systems that ship",
+        title: "YAER.DEV -- Websites & lead systems for local businesses",
         description:
-            "SaaS, internal tools, and contractor lead systems. Shipped software, not demos.",
+            "Turn visitors into leads, quotes, and paid jobs with clean sites, forms, automations, and useful AI.",
         url: "https://yaer.dev",
         siteName: "YAER.DEV",
         type: "website",
+        images: [
+            {
+                url: "/brand/yaer-wordmark.png",
+                width: 1254,
+                height: 1254,
+                alt: "YAER.DEV brand mark",
+            },
+        ],
     },
     twitter: {
         card: "summary_large_image",
-        title: "YAER.DEV -- AI systems that ship",
+        title: "YAER.DEV -- Websites & lead systems",
         description:
-            "SaaS, internal tools, and contractor lead systems. Shipped software, not demos.",
+            "Websites, quote forms, automations, and useful AI for contractors and local services.",
+        images: ["/brand/yaer-wordmark.png"],
     },
 };
 

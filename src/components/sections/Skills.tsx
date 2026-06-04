@@ -4,15 +4,27 @@ import { motion } from "framer-motion";
 import Section from "../ui/Section";
 
 /**
- * Skills (Capabilities) — industrial restyle.
- * Same content, swapped to industrial tokens: lime accent on headings, hairline
- * panels instead of glass, mono category labels.
+ * Skills (Capabilities) -- buyer-facing first, technical proof second.
+ * The language starts with outcomes a local business recognizes, then keeps
+ * the stack credibility lower-friction for technical visitors.
  */
 const skills = [
-    { category: "Shape the product", items: ["SaaS workflows", "Client portals", "Admin tools", "Dashboards", "Content systems"] },
-    { category: "Add useful AI", items: ["Dify.ai", "LLM workflows", "OpenAI API", "RAG", "Agent handoffs"] },
-    { category: "Build the stack", items: ["Next.js", "React Native", "TypeScript", "Node.js", "PostgreSQL"] },
-    { category: "Ship and maintain", items: ["Vercel", "Docker", "Prisma", "Linux / VPS", "CI/CD"] },
+    {
+        category: "Turn visits into leads",
+        items: ["Website fixes", "Quote request forms", "Phone + email CTAs", "Google profile cleanup", "Basic local SEO"],
+    },
+    {
+        category: "Clean up the workflow",
+        items: ["Lead sheets", "Email notifications", "Simple dashboards", "PDF quote templates", "Follow-up paths"],
+    },
+    {
+        category: "Add useful AI",
+        items: ["Chat helpers", "Intake summaries", "Draft replies", "FAQ assistants", "Dify / OpenAI builds"],
+    },
+    {
+        category: "Build it properly",
+        items: ["Next.js", "TypeScript", "PostgreSQL", "Vercel", "Maintenance-ready handoff"],
+    },
 ];
 
 export default function Skills() {
@@ -33,7 +45,7 @@ export default function Skills() {
                         </span>
                     </div>
                     <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white">
-                        How I help.
+                        Practical systems, built cleanly.
                     </h2>
                 </motion.div>
 

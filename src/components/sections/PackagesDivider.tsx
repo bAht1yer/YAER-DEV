@@ -55,7 +55,7 @@ export default function PackagesDivider() {
                     style={{ scale: headlineScale, opacity: headlineOpacity }}
                     className="origin-center text-5xl md:text-7xl lg:text-[5.5rem] font-black tracking-tight leading-[1.02] text-white mx-auto max-w-4xl"
                 >
-                    Three ways to <span className="text-[#34E5FF]">work together.</span>
+                    Pick the fastest way to <span className="text-[#34E5FF]">turn clicks into leads.</span>
                 </motion.h2>
 
                 {/* Scroll cue -- cascading chevrons + pulsing label, stacked vertically */}

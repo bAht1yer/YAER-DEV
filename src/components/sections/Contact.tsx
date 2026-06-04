@@ -25,11 +25,11 @@ export default function Contact() {
                     <span className="h-px w-10 bg-[#34E5FF]" />
                 </div>
                 <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-5">
-                    Tell me what you&apos;re building.
+                    Send me your site or rough idea.
                 </h2>
                 <p className="text-gray-400 text-base md:text-lg mb-10">
-                    Send the rough idea, the messy workflow, or the product you want to improve.
-                    I&apos;ll read it and come back with a clear next step.
+                    Drop the current URL, what feels broken, or the workflow you want fixed.
+                    I&apos;ll reply with the clearest next step and, when useful, 3 practical fixes.
                 </p>
 
                 <motion.div

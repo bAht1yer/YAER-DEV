@@ -7,9 +7,9 @@ export default function OfferQuickFix() {
         <OfferShell
             id="packages"
             indexLabel="01 / Quick Fix"
-            headline="Tighten the site you already have."
-            subhead="A 48-hour pass on an existing site so it stops costing you customers."
-            price="$199"
+            headline="Make your current site stop costing you customers."
+            subhead="A 48-hour professional fix for a simple existing site: sharper first impression, cleaner mobile layout, and obvious ways to call or request a quote."
+            price="$399"
             priceMeta="Fixed price"
             ctaLabel="Book a Quick Fix"
             projectType="quick-fix"
@@ -21,9 +21,14 @@ export default function OfferQuickFix() {
                     "Mobile layout cleanup",
                     "Contact form + phone CTA",
                     "Google Maps embed",
-                    "Basic SEO setup",
+                    "Basic SEO title + description",
                 ]}
             />
+
+            <p className="mb-8 max-w-md border-l-2 border-[#34E5FF]/70 pl-4 text-[13px] leading-6 text-[#8AA3AD]">
+                Best for simple existing sites. Not a full redesign, new logo,
+                custom backend, or multi-page rebuild.
+            </p>
         </OfferShell>
     );
 }

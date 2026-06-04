@@ -5,9 +5,9 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Human-readable labels for project_type values (keep in sync with ContactForm).
 const PROJECT_TYPE_LABELS: Record<string, string> = {
-    "quick-fix": "Quick Fix ($499)",
-    "one-page-site": "One-Page Site ($999)",
-    "lead-system": "Lead System ($1,500-$2,000)",
+    "quick-fix": "Quick Fix ($399)",
+    "one-page-site": "One-Page Site ($799)",
+    "lead-system": "Lead System ($1,500+)",
     "ai-saas": "AI / SaaS work",
     "other": "Other",
 };
@@ -15,7 +15,7 @@ const PROJECT_TYPE_LABELS: Record<string, string> = {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { name, email, message, projectType } = body;
+        const { name, email, businessType, currentWebsite, message, projectType } = body;
 
         const typeLabel = projectType ? (PROJECT_TYPE_LABELS[projectType] ?? projectType) : null;
         const subjectTag = typeLabel ? ` - ${typeLabel}` : "";
@@ -29,6 +29,8 @@ export async function POST(request: Request) {
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         ${typeLabel ? `<p><strong>Project Type:</strong> ${typeLabel}</p>` : ""}
+        ${businessType ? `<p><strong>Business Type:</strong> ${businessType}</p>` : ""}
+        ${currentWebsite ? `<p><strong>Current Website:</strong> ${currentWebsite}</p>` : ""}
         <p><strong>Message:</strong></p>
         <p>${message}</p>
       `,

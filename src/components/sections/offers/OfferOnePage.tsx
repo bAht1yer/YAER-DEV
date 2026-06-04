@@ -7,9 +7,9 @@ export default function OfferOnePage() {
         <OfferShell
             id="offer-one-page"
             indexLabel="02 / One-Page Site"
-            headline="A clean site, ready to send."
-            subhead="For contractors running off Facebook. One page, well-built, deployed, yours."
-            price="$499"
+            headline="A polished one-page site you can send with confidence."
+            subhead="For contractors and local services still relying on Facebook, Instagram, or referrals. One clean page, built fast, mobile-ready, and yours."
+            price="$799"
             priceMeta="~1 week"
             ctaLabel="Start a One-Page Site"
             projectType="one-page-site"
@@ -21,9 +21,14 @@ export default function OfferOnePage() {
                     "Services + gallery section",
                     "Contact form",
                     "Mobile optimized",
-                    "Deployed with domain setup",
+                    "Deployment + domain guidance",
                 ]}
             />
+
+            <p className="mb-8 max-w-md border-l-2 border-[#34E5FF]/70 pl-4 text-[13px] leading-6 text-[#8AA3AD]">
+                Includes one revision round. Send rough photos and notes; I can
+                clean up the copy and structure.
+            </p>
 
             <div className="mb-8 max-w-md border-l-2 border-[#34E5FF] bg-[#34E5FF]/[0.04] px-5 py-3">
                 <p className="text-[13px] leading-6 text-[#EAF7FB]">
@@ -36,7 +41,7 @@ export default function OfferOnePage() {
                     >
                         Revamp Solutions
                     </a>
-                    , a local business website with AI chatflow.
+                    , a local contractor-style website with clear service pages and AI support.
                 </p>
             </div>
         </OfferShell>

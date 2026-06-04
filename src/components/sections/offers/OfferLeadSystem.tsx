@@ -15,9 +15,9 @@ export default function OfferLeadSystem() {
             id="offer-lead-system"
             indexLabel="03 / Lead System"
             recommended
-            headline="From visitor to estimate, on rails."
-            subhead="A site plus the system around it -- capture, qualify, notify, convert. Built from real contractor workflow."
-            price="$799+"
+            headline="Turn website visitors into quote-ready leads."
+            subhead="A site plus the system around it: intake questions, notifications, quote handoff, and follow-up paths built from real contractor workflow."
+            price="$1,500+"
             priceMeta="2-3 weeks"
             ctaLabel="Build my Lead System"
             projectType="lead-system"
@@ -26,13 +26,19 @@ export default function OfferLeadSystem() {
         >
             <Deliverables
                 items={[
-                    "Site + multi-step intake form",
-                    "Email + sheet lead notify",
-                    "PDF quote flow",
-                    "Google Business Profile setup",
+                    "Site or landing page",
+                    "One multi-step lead form",
+                    "Email + sheet notification flow",
+                    "Basic quote/PDF template",
                     "Optional AI chatbot",
                 ]}
             />
+
+            <p className="mb-8 max-w-md border-l-2 border-[#34E5FF]/70 pl-4 text-[13px] leading-6 text-[#8AA3AD]">
+                Starter scope includes one intake form, one notification flow,
+                one basic quote/PDF template, and one lead sheet. Extra
+                workflows are scoped separately.
+            </p>
 
             <div className="mb-8 max-w-md border-l-2 border-[#34E5FF] bg-[#34E5FF]/[0.04] px-5 py-3">
                 <p className="text-[13px] leading-6 text-[#EAF7FB]">
@@ -45,7 +51,7 @@ export default function OfferLeadSystem() {
                     >
                         Bossimating
                     </a>
-                    , my contractor estimating platform.
+                    , my contractor estimating platform for quotes, approvals, payments, and dashboards.
                 </p>
             </div>
         </OfferShell>
@@ -66,12 +72,12 @@ const steps = [
     {
         icon: BellRing,
         label: "Sorted & you're notified",
-        note: "Scored hot / warm / cold — pinged in real time.",
+        note: "Key details land in your inbox and lead sheet.",
     },
     {
         icon: BadgeDollarSign,
         label: "Quoted & paid",
-        note: "Branded PDF quote → approval → Stripe link.",
+        note: "Branded quote/PDF handoff with a clear follow-up path.",
     },
 ];
 
@@ -86,7 +92,7 @@ function LeadSystemFlow() {
                     How it works
                 </span>
                 <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#34E5FF]">
-                    Visitor → Paid
+                    Visitor -&gt; Quote
                 </span>
             </div>
 

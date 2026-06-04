@@ -1,5 +1,6 @@
 import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/sections/Hero";
+import ProjectDropCube from "@/components/sections/ProjectDropCube";
 import PackagesDivider from "@/components/sections/PackagesDivider";
 import OfferQuickFix from "@/components/sections/offers/OfferQuickFix";
 import OfferOnePage from "@/components/sections/offers/OfferOnePage";
@@ -22,10 +23,12 @@ import GridOverlay from "@/components/canvas/GridOverlay";
  *   z-[2] GridOverlay - structural grid + vignette
  *
  * Content flow:
- *   Navbar -> Hero (AI/SaaS architect spine) ->
+ *   Navbar -> Hero (local-business lead-gen positioning) ->
+ *   ProjectDropCube (scroll-driven selected-work reveal) ->
  *   PackagesDivider (animated chapter break) ->
  *   Three contractor offer sections (Quick Fix -> One-Page -> Lead System) ->
- *   Skills -> Projects -> Contact -> Footer
+ *   Skills (Capabilities) ->
+ *   Projects -> Contact -> Footer
  */
 export default function Home() {
     return (
@@ -51,6 +54,7 @@ export default function Home() {
             <div className="relative z-10">
                 <Navbar hideOnTop={true} />
                 <Hero />
+                <ProjectDropCube />
 
                 <PackagesDivider />
 
@@ -59,6 +63,7 @@ export default function Home() {
                 <OfferLeadSystem />
 
                 <Skills />
+
                 <Projects />
                 <Contact />
                 <Footer />

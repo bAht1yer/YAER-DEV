@@ -20,9 +20,9 @@ export type ProjectType =
     | "other";
 
 export const PROJECT_TYPE_OPTIONS: { value: Exclude<ProjectType, "">; label: string }[] = [
-    { value: "quick-fix", label: "Quick Fix ($199)" },
-    { value: "one-page-site", label: "One-Page Site ($499)" },
-    { value: "lead-system", label: "Lead System ($799+)" },
+    { value: "quick-fix", label: "Quick Fix ($399)" },
+    { value: "one-page-site", label: "One-Page Site ($799)" },
+    { value: "lead-system", label: "Lead System ($1,500+)" },
     { value: "ai-saas", label: "AI / SaaS work" },
     { value: "other", label: "Other" },
 ];
@@ -44,6 +44,8 @@ export default function ContactForm({ onSuccess, initialProjectType = "" }: Cont
         const data = {
             name: formData.get("name"),
             email: formData.get("email"),
+            businessType: formData.get("businessType"),
+            currentWebsite: formData.get("currentWebsite"),
             message: formData.get("message"),
             projectType: formData.get("projectType") || "",
         };
@@ -108,6 +110,35 @@ export default function ContactForm({ onSuccess, initialProjectType = "" }: Cont
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
+                    <label htmlFor="businessType" className={labelClasses}>
+                        Business type
+                    </label>
+                    <input
+                        type="text"
+                        id="businessType"
+                        name="businessType"
+                        disabled={status === "loading"}
+                        className={inputClasses}
+                        placeholder="Roofing, landscaping, cleaning..."
+                    />
+                </div>
+                <div>
+                    <label htmlFor="currentWebsite" className={labelClasses}>
+                        Current website
+                    </label>
+                    <input
+                        type="url"
+                        id="currentWebsite"
+                        name="currentWebsite"
+                        disabled={status === "loading"}
+                        className={inputClasses}
+                        placeholder="https://yourbusiness.com"
+                    />
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
                     <label htmlFor="name" className={labelClasses}>
                         Name
                     </label>
@@ -139,7 +170,7 @@ export default function ContactForm({ onSuccess, initialProjectType = "" }: Cont
 
             <div>
                 <label htmlFor="message" className={labelClasses}>
-                    What are you building?
+                    What do you want improved?
                 </label>
                 <textarea
                     id="message"
@@ -148,7 +179,7 @@ export default function ContactForm({ onSuccess, initialProjectType = "" }: Cont
                     rows={4}
                     disabled={status === "loading"}
                     className={inputClasses}
-                    placeholder="A rough idea, a messy workflow, or a product you want to improve..."
+                    placeholder="Send the current problem, the goal, or the 3 things you wish worked better..."
                 />
             </div>
 
@@ -159,7 +190,7 @@ export default function ContactForm({ onSuccess, initialProjectType = "" }: Cont
                     className="btn-industrial-primary w-full md:w-auto justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <Send className="w-4 h-4" />
-                    {status === "loading" ? "Sending..." : "Send message"}
+                    {status === "loading" ? "Sending..." : "Send project note"}
                 </button>
             </div>
 

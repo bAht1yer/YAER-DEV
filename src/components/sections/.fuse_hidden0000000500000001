@@ -34,7 +34,6 @@ export default function Hero() {
             className="relative min-h-screen w-full bg-transparent flex flex-col items-start justify-center px-4 pt-28 pb-20 sm:items-center md:pt-32"
         >
             <motion.div
-                id="hero-card"
                 initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease: "easeOut" }}

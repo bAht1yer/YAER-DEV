@@ -57,7 +57,7 @@ export default function ContactModal({ isOpen, onClose, projectType }: ContactMo
                             <div className="flex items-center gap-3">
                                 <span className="h-2 w-2 rounded-full bg-[#34E5FF]" />
                                 <h2 className="font-mono text-[12px] uppercase tracking-[0.22em] text-white">
-                                    New project -- intake
+                                    Website / lead system intake
                                 </h2>
                             </div>
                             <button
@@ -73,7 +73,8 @@ export default function ContactModal({ isOpen, onClose, projectType }: ContactMo
                         {/* Body */}
                         <div className="p-6 md:p-10 max-h-[80vh] overflow-y-auto">
                             <p className="text-sm leading-7 text-gray-400 mb-6">
-                                Tell me what you&apos;re building. Rough is fine -- I&apos;ll come back with a clear next step within 24 hours.
+                                Send the current site, the stuck workflow, or the idea in plain English.
+                                Rough is fine -- I&apos;ll come back with a clear next step within 24 hours.
                             </p>
                             <ContactForm onSuccess={onClose} initialProjectType={projectType} />
                         </div>
