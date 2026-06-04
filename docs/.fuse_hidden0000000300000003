@@ -113,4 +113,8 @@ Everything else (cube phase, face texture, dot, section length, timing) follows 
 
 ## Responsive behavior
 
-The cube reel renders **only on large screens (≥1024px)** — the default export gates the experience behind a `matchMedia("(min-widt
+The cube reel renders **only on large screens (≥1024px)** — the default export gates the experience behind a `matchMedia("(min-width: 1024px)")` check, so on mobile/tablet it renders nothing (no tall section, no fixed WebGL canvas) and visitors see the standard `Projects` gallery instead. The gallery (`Projects.tsx`) is the canonical `#projects` anchor on every screen size, so the navbar "Projects" link and the hero "See work" button always jump to it; the cube reel section uses `id="projects-reel"`.
+
+## Accessibility / fallbacks
+
+- `prefers-reduced-motion`: the cube skips the emerge, idle, and tumble easing and simply presents the active face with a slight 
