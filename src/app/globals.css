@@ -411,6 +411,75 @@ html {
   .scroll-cue-label { animation: none !important; }
 }
 
+/* Homepage body background -------------------------------------------------
+   The Hero paints its own opaque WebGL scene. This surface begins after the
+   Hero and is shared by Process, Projects, Contact, and Footer. Its restrained
+   blooms are viewport-fixed background images (not independently moving
+   blobs), so every post-Hero section receives the same lighting at the same
+   screen position. The grid repeats evenly instead of using a page-centered
+   radial mask or a bottom-only horizon that would brighten one section. */
+.homepage-body-surface {
+  position: relative;
+  isolation: isolate;
+  background-color: #0A1014;
+  background-image:
+    radial-gradient(ellipse 64vw 58vh at 16% 28%, rgba(52, 229, 255, 0.045), transparent 72%),
+    radial-gradient(ellipse 58vw 54vh at 86% 72%, rgba(155, 123, 255, 0.035), transparent 74%);
+  background-attachment: fixed, fixed;
+}
+
+.homepage-body-surface::before,
+.homepage-body-surface::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.homepage-body-surface::before {
+  z-index: 0;
+  background-image:
+    linear-gradient(to right, rgba(52, 229, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(52, 229, 255, 0.022) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.homepage-body-surface::after {
+  z-index: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.012) 0,
+    rgba(255, 255, 255, 0.012) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+.homepage-body-content {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 767px) {
+  .homepage-body-surface {
+    /* Fixed backgrounds can force expensive repainting on mobile browsers.
+       Keep the same restrained base and grid without the viewport blooms. */
+    background-image: none;
+  }
+}
+
+/* The opaque WebGL hero fully covers these homepage background layers.
+   Hiding and pausing them while the hero is visible avoids compositing work
+   that cannot contribute to the rendered result. */
+body.hero-performance-mode .homepage-aurora-layer,
+body.hero-performance-mode .homepage-grid-layer {
+  visibility: hidden;
+}
+
+body.hero-performance-mode .aurora-blob {
+  animation-play-state: paused !important;
+}
+
 /* -------------- Scroll-down cue --------------
    Three stacked chevrons cascade downward on staggered delays to create a
    continuous "flow" pointing the eye toward the next section.

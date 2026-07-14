@@ -1,238 +1,203 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Section from "../ui/Section";
-import { Bot, BookOpenText, ExternalLink, Github, ReceiptText, Smartphone, type LucideIcon } from "lucide-react";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { Bot, BookOpenText, ExternalLink, ReceiptText, Smartphone, type LucideIcon } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import GlassCard from "../ui/GlassCard";
+import { PROJECT_CATALOG, type ProjectCatalogItem, type ProjectId } from "@/data/projectCatalog";
+import RevealText from "../ui/RevealText";
 
 /**
- * Projects (Selected Work) -- Cyan Chrome restyle.
- *  - Cards use shared GlassCard material (cyan glass + HUD corners + cursor glow/tilt)
- *  - Cyan Chrome palette throughout
- *  - Bossimating featured card gains one line of contractor authority copy
+ * Projects -- sticky stacked case-study cards inspired by the reference prompt.
+ * Compact stacked case-study cards keep each project focused on one strong image.
  */
 
-export type Project = {
-    title: string;
-    eyebrow: string;
-    description: string;
-    contractorLine?: string;
-    tags: string[];
-    links: {
-        demo: string;
-        github?: string;
-    };
-    icon: LucideIcon;
-    image?: string;
-    featured?: boolean;
-    external?: boolean;
-    metrics?: string[];
+const PROJECT_ICONS: Record<ProjectId, LucideIcon> = {
+    bossimating: ReceiptText,
+    revamp: Bot,
+    digitao: Smartphone,
+    wyisdom: BookOpenText,
 };
 
-export const projects: Project[] = [
-    {
-        title: "Bossimating",
-        eyebrow: "Contractor estimating SaaS",
-        description:
-            "A live contractor platform with estimate building, invoice payments, approvals, dashboards, AI helpers, and branded quote workflows.",
-        contractorLine:
-            "Built to understand how contractors quote, approve, and get paid -- the same thinking goes into every Lead System engagement.",
-        tags: ["SaaS", "AI Helpers", "Payments", "Approvals"],
-        links: { demo: "https://bossimating.com/" },
-        icon: ReceiptText,
-        image: "/projects/bossimating-home.png",
-        external: true,
-        metrics: ["Estimates in minutes", "Built for small crews", "Real product, live now"],
-    },
-    {
-        title: "Revamp Solutions",
-        eyebrow: "Local contractor website example",
-        description:
-            "A local service website with clear service sections, customer-ready contact paths, polished brand presence, and a live AI support flow.",
-        tags: ["Next.js", "Dify AI", "Customer Support", "Live Site"],
-        image: "/projects/revamp.png",
-        links: { demo: "https://www.revampsolutions.ca/" },
-        icon: Bot,
-        external: true,
-    },
-    {
-        title: "DigiTao",
-        eyebrow: "Mobile learning companion · 道",
-        description:
-            "A calm mobile app for reading the Tao Te Ching with character notes, AI interpretation, bilingual recitation, and guided practice.",
-        tags: ["Expo", "React Native", "AI Guidance", "Mobile UX"],
-        image: "/projects/digitao/home.png",
-        links: { demo: "/projects/digitao", github: "https://github.com/Neilblaze/digitao" },
-        icon: Smartphone,
-    },
-    {
-        title: "Wyisdom",
-        eyebrow: "I Ching study platform · 易經",
-        description:
-            "易通 / Wyisdom -- a bilingual study surface for the I Ching. All 64 hexagrams with classical (王弼 · 程頤 · 朱熹) and modern commentary, a daily-hexagram engine, an interactive year-cycle wheel, and a reflective coin / yarrow cast flow.",
-        tags: ["Next.js", "易經 · I Ching", "Bilingual", "Live Web App"],
-        image: "/projects/wyisdom/home.png",
-        links: { demo: "/projects/wyisdom" },
-        icon: BookOpenText,
-    },
-];
+export type Project = ProjectCatalogItem & { icon: LucideIcon };
 
-export default function Projects() {
-    const router = useRouter();
+// Kept as a compatibility export for the existing project cube reel. The
+// content itself now has one serializable source of truth in PROJECT_CATALOG.
+export const projects: Project[] = PROJECT_CATALOG.map((project) => ({
+    ...project,
+    icon: PROJECT_ICONS[project.id],
+}));
 
-    const openProject = (project: (typeof projects)[number]) => {
-        if (project.external) {
-            window.open(project.links.demo, "_blank", "noopener,noreferrer");
-            return;
-        }
-        router.push(project.links.demo);
-    };
+function ProjectImage({
+    project,
+}: {
+    project: Project;
+}) {
+    const isContained = project.imageFit === "contain";
 
     return (
-        <Section id="projects" className="bg-transparent relative">
-            <div className="max-w-6xl mx-auto z-10 relative">
-                <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    className="mb-12"
-                >
-                    <div className="flex items-center gap-3 mb-2">
-                        <span className="h-px w-10 bg-[#34E5FF]" />
-                        <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#34E5FF]">
-                            Selected Work
-                        </span>
-                    </div>
-                    <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white">
-                        Shipped, not shelved.
-                    </h2>
-                </motion.div>
+        <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-[#34E5FF]/18 bg-[#071218] shadow-[inset_0_0_40px_rgba(52,229,255,0.035)]">
+            {isContained && (
+                <>
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_44%,rgba(52,229,255,0.14),transparent_46%),linear-gradient(135deg,#071218_0%,#09151d_48%,#0c1020_100%)]" />
+                    <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(52,229,255,0.09)_1px,transparent_1px),linear-gradient(90deg,rgba(52,229,255,0.09)_1px,transparent_1px)] [background-size:32px_32px]" />
+                </>
+            )}
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {projects.map((project, index) => (
-                        <motion.div
-                            key={project.title}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className={`h-full ${project.featured ? "lg:col-span-2" : ""}`}
-                        >
-                            <GlassCard onClick={() => openProject(project)} className="group h-full flex flex-col cursor-pointer !rounded-none">
+            <div className={isContained ? "absolute inset-[7%] sm:inset-[8%]" : "absolute inset-0"}>
+                <Image
+                    src={project.image}
+                    alt={`${project.title} preview`}
+                    fill
+                    className={isContained ? "object-contain object-center" : "object-cover object-top"}
+                    sizes="(min-width: 1280px) 680px, (min-width: 768px) 54vw, calc(100vw - 3rem)"
+                />
+            </div>
 
-                                <div
-                                    className={`relative overflow-hidden border-b border-[#1C2A30] ${
-                                        project.featured ? "h-72 md:h-80" : "h-56"
-                                    }`}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071218]/25 via-transparent to-transparent" />
+            <div className="pointer-events-none absolute inset-x-4 top-4 flex items-center justify-between font-mono text-[8px] uppercase tracking-[0.2em] text-[#EAF7FB]/55 sm:inset-x-5 sm:top-5">
+                <span>{isContained ? "Product interface" : "Live page capture"}</span>
+                <span>{project.id.toUpperCase()}</span>
+            </div>
+        </div>
+    );
+}
+
+function ProjectCard({ project, index, total }: { project: Project; index: number; total: number }) {
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const reducedMotion = useReducedMotion();
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "start start"],
+    });
+    const targetScale = 1 - (total - 1 - index) * 0.025;
+    const scale = useTransform(scrollYProgress, [0, 1], [1, targetScale]);
+    const entranceY = useTransform(scrollYProgress, [0, 0.6], [reducedMotion ? 0 : 48, 0]);
+    const Icon = project.icon;
+
+    return (
+        <div ref={containerRef} className="relative py-4 md:h-[68vh] md:min-h-[540px]">
+            <motion.article
+                style={{ scale, y: entranceY, top: `calc(4.5rem + ${index * 14}px)` }}
+                className="relative overflow-hidden rounded-lg border border-[#34E5FF]/28 bg-[#08151B]/95 p-4 shadow-[0_22px_64px_rgba(0,0,0,0.46)] md:sticky md:p-5 lg:p-6"
+            >
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(52,229,255,0.08),transparent_38%,rgba(155,123,255,0.08))]" />
+                <div className="relative z-10 grid gap-6 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:items-center lg:gap-8">
+                    <div className="flex min-w-0 flex-col">
+                        <div className="mb-5 flex items-start justify-between gap-4 md:mb-7">
+                            <div className="font-mono text-5xl font-black leading-none text-[#34E5FF] md:text-6xl lg:text-7xl">
+                                {String(index + 1).padStart(2, "0")}
+                            </div>
+                            <span className="mt-1 font-mono text-[9px] uppercase tracking-[0.22em] text-[#8AA3AD]">
+                                Case study / {String(index + 1).padStart(2, "0")}
+                            </span>
+                        </div>
+
+                        <div className="min-w-0">
+                            <div className="mb-3 flex flex-wrap items-center gap-3">
+                                <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-[#34E5FF]">
+                                    <Icon className="h-3.5 w-3.5" />
+                                    {project.eyebrow}
+                                </span>
+                            </div>
+                            <h3 className="text-3xl font-black tracking-normal text-white md:text-4xl">
+                                {project.title}
+                            </h3>
+                            <p className="mt-3 max-w-3xl text-sm leading-6 text-[#A8BAC3] md:text-base">
+                                {project.description}
+                            </p>
+                            {project.contractorLine && (
+                                <p className="mt-3 max-w-3xl border-l border-[#34E5FF]/60 pl-4 text-sm leading-6 text-[#EAF7FB]">
+                                    {project.contractorLine}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="mt-5 flex flex-wrap gap-2">
+                            {project.tags.map((tag) => (
+                                <span
+                                    key={tag}
+                                    className="rounded-full border border-[#34E5FF]/20 bg-[#34E5FF]/5 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[#CBD2D9]"
                                 >
-                                    {project.image ? (
-                                        <Image
-                                            src={project.image}
-                                            alt={project.title}
-                                            fill
-                                            className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
-                                        />
-                                    ) : (
-                                        <div className="absolute inset-0 bg-[#0A1014] p-5">
-                                            <div className="h-full border border-[#1C2A30] bg-[#0E171D] p-4">
-                                                <div className="mb-4 flex items-center justify-between border-b border-[#1C2A30] pb-3">
-                                                    <div>
-                                                        <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gray-500">Dashboard</div>
-                                                        <div className="text-sm font-bold text-white">Apex Contracting</div>
-                                                    </div>
-                                                    <div className="font-mono text-lg font-bold text-[#34E5FF]">$184.2k</div>
-                                                </div>
-                                                <div className="grid grid-cols-2 gap-3">
-                                                    {[
-                                                        ["Projects", "14"],
-                                                        ["Pending", "5"],
-                                                        ["Outstanding", "$22.4k"],
-                                                        ["Approvals", "Court-ready"],
-                                                    ].map(([label, value]) => (
-                                                        <div key={label} className="border border-[#1C2A30] bg-white/[0.02] p-3">
-                                                            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gray-500">{label}</div>
-                                                            <div className="mt-2 text-base font-bold text-white">{value}</div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                                <div className="mt-4 h-2 overflow-hidden bg-white/10">
-                                                    <div className="h-full w-[68%] bg-[#34E5FF]" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
 
-                                <div className="p-6 flex-grow flex flex-col relative z-20">
-                                    <div className="mb-3 flex items-center justify-between gap-3">
-                                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#34E5FF]">
-                                            {project.eyebrow}
-                                        </span>
-                                        {project.external && (
-                                            <ExternalLink className="h-4 w-4 text-gray-500 group-hover:text-[#34E5FF] transition-colors" />
-                                        )}
-                                    </div>
+                        <a
+                            href={project.links.demo}
+                            target={project.external ? "_blank" : undefined}
+                            rel={project.external ? "noopener noreferrer" : undefined}
+                            className="mt-6 inline-flex w-fit items-center justify-center gap-2 rounded-full border border-[#CBD2D9]/45 px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-[#CBD2D9] transition-colors hover:border-[#34E5FF] hover:text-white"
+                        >
+                            Live Project
+                            <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                    </div>
 
-                                    <h3 className="text-2xl font-bold mb-3 group-hover:text-[#34E5FF] transition-colors flex items-center gap-2">
-                                        <project.icon className="w-5 h-5 text-[#CBD2D9] opacity-80 group-hover:opacity-100 transition-opacity" />
-                                        {project.title}
-                                    </h3>
+                    <div className="min-w-0">
+                        <ProjectImage project={project} />
+                    </div>
+                </div>
+            </motion.article>
+        </div>
+    );
+}
 
-                                    <p className="text-gray-400 mb-4 text-sm leading-7">
-                                        {project.description}
-                                    </p>
+export default function Projects() {
 
-                                    {project.contractorLine && (
-                                        <p className="mb-6 border-l-2 border-[#34E5FF]/60 pl-4 text-[13px] leading-6 italic text-[#EAF7FB]">
-                                            {project.contractorLine}
-                                        </p>
-                                    )}
+    return (
+        <section id="projects" className="relative w-full bg-transparent px-4 py-24 sm:px-6 lg:px-8">
+            <div className="relative z-10 mx-auto max-w-7xl">
+                <div className="mb-12">
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6 }}
+                        viewport={{ once: true }}
+                        className="flex items-center gap-3 mb-2"
+                    >
+                        <motion.span
+                            initial={{ scaleX: 0 }}
+                            whileInView={{ scaleX: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                            className="h-px w-10 origin-left bg-[#34E5FF]"
+                        />
+                        <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#34E5FF]">
+                            Selected work
+                        </span>
+                    </motion.div>
+                    <RevealText
+                        as="h2"
+                        text="Projects"
+                        stagger={0.04}
+                        className="text-4xl font-black tracking-tight text-white md:text-5xl"
+                    />
+                    <motion.p
+                        initial={{ opacity: 0, y: 16 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.25 }}
+                        className="mt-5 max-w-2xl text-base leading-7 text-[#8AA3AD]"
+                    >
+                        Each project shows a different part of how I build: product
+                        systems, local-service pages, mobile learning UX, and bilingual
+                        study tools.
+                    </motion.p>
+                </div>
 
-                                    {project.metrics && (
-                                        <div className="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-2">
-                                            {project.metrics.map((metric) => (
-                                                <span
-                                                    key={metric}
-                                                    className="border border-[#34E5FF]/25 bg-[#34E5FF]/5 px-3 py-2 font-mono text-[11px] text-[#34E5FF]"
-                                                >
-                                                    {metric}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    )}
-
-                                    <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                                        {project.tags.map((tag) => (
-                                            <span
-                                                key={tag}
-                                                className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#CBD2D9] border border-[#1C2A30] bg-white/[0.02] px-2.5 py-1"
-                                            >
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-
-                                    {project.links.github && (
-                                        <div className="flex gap-4">
-                                            <a
-                                                href={project.links.github}
-                                                onClick={(e) => e.stopPropagation()}
-                                                className="text-gray-400 hover:text-white transition-colors"
-                                                aria-label={`${project.title} GitHub`}
-                                            >
-                                                <Github className="w-5 h-5" />
-                                            </a>
-                                        </div>
-                                    )}
-                                </div>
-                            </GlassCard>
-                        </motion.div>
+                <div className="relative">
+                    {projects.map((project, index) => (
+                        <ProjectCard
+                            key={project.title}
+                            project={project}
+                            index={index}
+                            total={projects.length}
+                        />
                     ))}
                 </div>
             </div>
-        </Section>
+        </section>
     );
 }

@@ -86,7 +86,12 @@ function buildCubeData(count: number, compact: boolean): CubeData[] {
     });
 }
 
-const scrollState = { velocity: 0 };
+// Shared scroll signals: velocity spikes on fast scrolling, progress is the
+// eased 0..1 depth through the whole page (drives rotation + hue shift).
+const scrollState = { velocity: 0, progress: 0, easedProgress: 0 };
+
+const CYAN_COLOR = new THREE.Color(CYAN);
+const VIOLET_COLOR = new THREE.Color(VIOLET);
 
 function CubeMesh({
     data, index, pointer, reducedMotion,
@@ -133,7 +138,11 @@ function CubeMesh({
         g.rotation.z += data.spin.z * delta * m;
 
         const pulse = reducedMotion ? 0 : (Math.sin(elapsed * 0.8) + 1) * 0.5;
-        if (edgeMat.current) edgeMat.current.opacity = 0.5 + pulse * 0.3;
+        if (edgeMat.current) {
+            edgeMat.current.opacity = 0.5 + pulse * 0.3;
+            // Hue drifts cyan -> violet as the visitor travels down the page.
+            edgeMat.current.color.lerpColors(CYAN_COLOR, VIOLET_COLOR, scrollState.easedProgress * 0.65);
+        }
         if (coreMat.current) coreMat.current.opacity = 0.05 + pulse * 0.06;
     });
 
@@ -200,8 +209,11 @@ export default function CodeCubes() {
         const onScroll = () => {
             const y = window.scrollY;
             scrollState.velocity = Math.min(Math.abs(y - lastY) / 40, 1.5);
+            const range = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+            scrollState.progress = Math.min(1, Math.max(0, y / range));
             lastY = y;
         };
+        onScroll();
         window.addEventListener("pointermove", onMove, { passive: true });
         window.addEventListener("scroll", onScroll, { passive: true });
         return () => {
@@ -215,6 +227,16 @@ export default function CodeCubes() {
         pointer.current.x = THREE.MathUtils.damp(pointer.current.x, pointer.current.targetX, 2.4, d);
         pointer.current.y = THREE.MathUtils.damp(pointer.current.y, pointer.current.targetY, 2.4, d);
         scrollState.velocity = THREE.MathUtils.damp(scrollState.velocity, 0, 3, d);
+        scrollState.easedProgress = THREE.MathUtils.damp(scrollState.easedProgress, scrollState.progress, 2.2, d);
+
+        // Whole constellation slowly yaws, tips, and rises with page depth.
+        const g = groupRef.current;
+        if (g && !reducedMotion) {
+            const p = scrollState.easedProgress;
+            g.rotation.y = p * Math.PI * 0.55;
+            g.rotation.x = p * 0.14;
+            g.position.y = p * 2.2;
+        }
     });
 
     return (

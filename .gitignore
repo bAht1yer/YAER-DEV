@@ -51,3 +51,7 @@ debug_prisma.js
 output.txt
 
 .superpowers/
+
+# local agent/browser artifacts
+.claude/settings.local.json
+.playwright-cli/

@@ -22,18 +22,18 @@ const jetbrainsMono = JetBrains_Mono({
  */
 export const metadata: Metadata = {
     metadataBase: new URL("https://yaer.dev"),
-    title: "YAER.DEV -- Websites & lead systems for local businesses",
+    title: "YAER.DEV -- Websites & AI Apps",
     description:
-        "Websites, quote forms, automations, and useful AI for contractors, local services, and small businesses.",
+        "Sharp websites, AI workflows, automations, and loop engineering solutions.",
     icons: {
         icon: [{ url: "/brand/yaer-mark-64.png", type: "image/png", sizes: "64x64" }],
         apple: [{ url: "/brand/yaer-mark-180.png", type: "image/png", sizes: "180x180" }],
         shortcut: "/brand/yaer-mark-64.png",
     },
     openGraph: {
-        title: "YAER.DEV -- Websites & lead systems for local businesses",
+        title: "YAER.DEV -- Websites & AI Apps",
         description:
-            "Turn visitors into leads, quotes, and paid jobs with clean sites, forms, automations, and useful AI.",
+            "Sharp websites, AI workflows, automations, and loop engineering solutions.",
         url: "https://yaer.dev",
         siteName: "YAER.DEV",
         type: "website",
@@ -48,9 +48,9 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "YAER.DEV -- Websites & lead systems",
+        title: "YAER.DEV -- Websites & AI Apps",
         description:
-            "Websites, quote forms, automations, and useful AI for contractors and local services.",
+            "Sharp websites, AI workflows, automations, and loop engineering solutions.",
         images: ["/brand/yaer-wordmark.png"],
     },
 };
