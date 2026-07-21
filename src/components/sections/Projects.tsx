@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { Bot, BookOpenText, ExternalLink, ReceiptText, Smartphone, type LucideIcon } from "lucide-react";
+import { Bot, BookOpenText, Building2, ExternalLink, ReceiptText, Smartphone, type LucideIcon } from "lucide-react";
 import Image from "next/image";
 import { PROJECT_CATALOG, type ProjectCatalogItem, type ProjectId } from "@/data/projectCatalog";
 import RevealText from "../ui/RevealText";
@@ -13,6 +13,7 @@ import RevealText from "../ui/RevealText";
  */
 
 const PROJECT_ICONS: Record<ProjectId, LucideIcon> = {
+    nuo: Building2,
     bossimating: ReceiptText,
     revamp: Bot,
     digitao: Smartphone,
@@ -56,7 +57,7 @@ function ProjectImage({
 
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071218]/25 via-transparent to-transparent" />
             <div className="pointer-events-none absolute inset-x-4 top-4 flex items-center justify-between font-mono text-[8px] uppercase tracking-[0.2em] text-[#EAF7FB]/55 sm:inset-x-5 sm:top-5">
-                <span>{isContained ? "Product interface" : "Live page capture"}</span>
+                <span>{project.featured ? "Flagship launch" : isContained ? "Product interface" : "Live page capture"}</span>
                 <span>{project.id.toUpperCase()}</span>
             </div>
         </div>
@@ -79,7 +80,11 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
         <div ref={containerRef} className="relative py-4 md:h-[68vh] md:min-h-[540px]">
             <motion.article
                 style={{ scale, y: entranceY, top: `calc(4.5rem + ${index * 14}px)` }}
-                className="relative overflow-hidden rounded-lg border border-[#34E5FF]/28 bg-[#08151B]/95 p-4 shadow-[0_22px_64px_rgba(0,0,0,0.46)] md:sticky md:p-5 lg:p-6"
+                className={`relative overflow-hidden rounded-lg bg-[#08151B]/95 p-4 shadow-[0_22px_64px_rgba(0,0,0,0.46)] md:sticky md:p-5 lg:p-6 ${
+                    project.featured
+                        ? "border border-[#A4F7FF]/58 shadow-[0_28px_90px_rgba(52,229,255,0.13)]"
+                        : "border border-[#34E5FF]/28"
+                }`}
             >
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(52,229,255,0.08),transparent_38%,rgba(155,123,255,0.08))]" />
                 <div className="relative z-10 grid gap-6 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:items-center lg:gap-8">
@@ -89,7 +94,7 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
                                 {String(index + 1).padStart(2, "0")}
                             </div>
                             <span className="mt-1 font-mono text-[9px] uppercase tracking-[0.22em] text-[#8AA3AD]">
-                                Case study / {String(index + 1).padStart(2, "0")}
+                                {project.featured ? "New flagship" : "Case study"} / {String(index + 1).padStart(2, "0")}
                             </span>
                         </div>
 
@@ -181,9 +186,9 @@ export default function Projects() {
                         transition={{ duration: 0.6, delay: 0.25 }}
                         className="mt-5 max-w-2xl text-base leading-7 text-[#8AA3AD]"
                     >
-                        Each project shows a different part of how I build: product
-                        systems, local-service pages, mobile learning UX, and bilingual
-                        study tools.
+                        From an AI company that keeps working after you close the tab to
+                        SaaS, service sites, and learning tools — each project is a live
+                        product built around a real job people need done.
                     </motion.p>
                 </div>
 

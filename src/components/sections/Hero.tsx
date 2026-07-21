@@ -138,7 +138,7 @@ export default function Hero() {
                 role="group"
             >
                 <span className="mr-2 font-mono text-[8px] font-semibold uppercase tracking-[0.24em] text-[#7AF0FF]/75">
-                    Project portals
+                    Live project portals
                 </span>
                 {PROJECT_CATALOG.map((project, index) => (
                     <button
@@ -150,7 +150,9 @@ export default function Hero() {
                         className={`flex h-8 w-8 items-center justify-center border font-mono text-[9px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7AF0FF] ${
                             selectedProject === index
                                 ? "border-[#7AF0FF] bg-[#7AF0FF] text-[#04181D]"
-                                : "border-[#34E5FF]/28 bg-[#071218]/80 text-[#A8BAC3] hover:border-[#7AF0FF] hover:text-white"
+                                : project.featured
+                                  ? "border-[#7AF0FF]/70 bg-[#7AF0FF]/10 text-[#A4F7FF] shadow-[0_0_22px_rgba(52,229,255,0.13)] hover:bg-[#7AF0FF]/20"
+                                  : "border-[#34E5FF]/28 bg-[#071218]/80 text-[#A8BAC3] hover:border-[#7AF0FF] hover:text-white"
                         }`}
                     >
                         {String(index + 1).padStart(2, "0")}
@@ -166,26 +168,26 @@ export default function Hero() {
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={reducedMotion ? { opacity: 0 } : { opacity: 0, x: 22, scale: 0.975 }}
                         transition={{ duration: reducedMotion ? 0.15 : 0.36, ease: [0.16, 1, 0.3, 1] }}
-                        className="pointer-events-auto absolute right-[4vw] top-[18%] z-20 hidden w-[min(32rem,36vw)] lg:block"
+                        className="pointer-events-none absolute right-[2vw] top-[15%] z-20 hidden w-[min(34rem,38vw)] lg:block"
                         aria-live="polite"
                     >
-                        <div className="relative border border-[#7AF0FF]/55 bg-[#071218]/96 p-2 shadow-[0_20px_80px_rgba(0,0,0,0.56),0_0_38px_rgba(52,229,255,0.12)]">
+                        <div className="relative border border-[#7AF0FF]/55 bg-[#071218]/82 p-2 shadow-[0_20px_80px_rgba(0,0,0,0.5),0_0_38px_rgba(52,229,255,0.12)] backdrop-blur-[2px]">
                             <span className="pointer-events-none absolute -left-px -top-px h-5 w-5 border-l-2 border-t-2 border-[#A4F7FF]" />
                             <span className="pointer-events-none absolute -bottom-px -right-px h-5 w-5 border-b-2 border-r-2 border-[#A4F7FF]" />
 
-                            <div className="flex items-center justify-between px-2 py-1.5 font-mono text-[8px] uppercase tracking-[0.22em] text-[#7AF0FF]">
+                            <div className="flex items-center justify-between px-2 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7AF0FF]">
                                 <span>Project projection / {String(selectedProject! + 1).padStart(2, "0")}</span>
                                 <button
                                     type="button"
                                     onClick={() => setSelectedProject(null)}
-                                    className="flex h-7 w-7 items-center justify-center border border-white/10 text-[#A8BAC3] transition-colors hover:border-[#7AF0FF]/60 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7AF0FF]"
+                                    className="pointer-events-auto flex h-9 w-9 items-center justify-center border border-white/14 bg-[#071218]/90 text-[#A8BAC3] transition-colors hover:border-[#7AF0FF]/60 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7AF0FF]"
                                     aria-label="Close project projection"
                                 >
-                                    <X className="h-3.5 w-3.5" />
+                                <X className="h-4 w-4" />
                                 </button>
                             </div>
 
-                            <div className="relative aspect-[16/10] overflow-hidden border border-[#34E5FF]/20 bg-[#050B0E]">
+                            <div className="relative aspect-[16/9] overflow-hidden border border-[#34E5FF]/20 bg-[#050B0E]">
                                 {projectedProject.imageFit === "contain" && (
                                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_44%,rgba(52,229,255,0.14),transparent_48%),linear-gradient(135deg,#071218,#0B1020)]" />
                                 )}
@@ -202,22 +204,33 @@ export default function Hero() {
                                     }
                                 />
                                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(122,240,255,0.06),transparent_25%,transparent_75%,rgba(7,18,24,0.28))]" />
+                                {projectedProject.featured && (
+                                    <div className="absolute left-4 top-4 flex items-center gap-2 border border-[#FF8A5B]/55 bg-[#120A07]/88 px-3 py-2.5 font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#FFD2B3] backdrop-blur-sm">
+                                        <span className="h-2 w-2 rounded-full bg-[#FF6A3D] shadow-[0_0_12px_rgba(255,106,61,0.95)]" />
+                                        New flagship · live AI company
+                                    </div>
+                                )}
                             </div>
 
-                            <div className="flex items-end justify-between gap-5 px-3 pb-3 pt-4">
+                            <div className="flex items-center justify-between gap-5 px-3 pb-3 pt-4">
                                 <div className="min-w-0">
-                                    <p className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#7AF0FF]/75">
+                                    <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7AF0FF]/85">
                                         {projectedProject.eyebrow}
                                     </p>
-                                    <h2 className="mt-1 truncate text-2xl font-black tracking-tight text-white">
+                                    <h2 className="mt-1 truncate text-3xl font-black tracking-tight text-white">
                                         {projectedProject.title}
                                     </h2>
+                                    {projectedProject.featured && (
+                                        <p className="mt-2 text-[11px] font-semibold leading-4 text-[#D6E3E8]">
+                                            Hire in one sentence · Run once or on a loop
+                                        </p>
+                                    )}
                                 </div>
                                 <div className="flex shrink-0 items-center gap-2">
                                     <button
                                         type="button"
                                         onClick={() => stepProject(-1)}
-                                        className="flex h-9 w-9 items-center justify-center border border-white/14 text-[#A8BAC3] transition-colors hover:border-[#7AF0FF]/60 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7AF0FF]"
+                                        className="pointer-events-auto flex h-10 w-10 items-center justify-center border border-white/14 bg-[#071218]/88 text-[#A8BAC3] transition-colors hover:border-[#7AF0FF]/60 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7AF0FF]"
                                         aria-label="Previous project"
                                     >
                                         <ChevronLeft className="h-4 w-4" />
@@ -225,7 +238,7 @@ export default function Hero() {
                                     <button
                                         type="button"
                                         onClick={() => stepProject(1)}
-                                        className="flex h-9 w-9 items-center justify-center border border-white/14 text-[#A8BAC3] transition-colors hover:border-[#7AF0FF]/60 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7AF0FF]"
+                                        className="pointer-events-auto flex h-10 w-10 items-center justify-center border border-white/14 bg-[#071218]/88 text-[#A8BAC3] transition-colors hover:border-[#7AF0FF]/60 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7AF0FF]"
                                         aria-label="Next project"
                                     >
                                         <ChevronRight className="h-4 w-4" />
@@ -234,9 +247,13 @@ export default function Hero() {
                                         href={projectedProject.links.demo}
                                         target={projectedProject.external ? "_blank" : undefined}
                                         rel={projectedProject.external ? "noopener noreferrer" : undefined}
-                                        className="inline-flex h-9 items-center gap-2 bg-[#7AF0FF] px-4 font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-[#04181D] transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                                        className="pointer-events-auto inline-flex h-10 items-center gap-2 bg-[#7AF0FF] px-4 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[#04181D] transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                                     >
-                                        {projectedProject.external ? "Live page" : "Case study"}
+                                        {projectedProject.id === "nuo"
+                                            ? "Enter Nuo"
+                                            : projectedProject.external
+                                              ? "Live page"
+                                              : "Case study"}
                                         <ArrowUpRight className="h-3.5 w-3.5" />
                                     </a>
                                 </div>
@@ -280,6 +297,30 @@ export default function Hero() {
                     >
                         I build clear websites, straightforward quote forms, and useful automations for small teams.
                     </motion.p>
+
+                    <motion.a
+                        variants={reveal}
+                        initial="hidden"
+                        animate="visible"
+                        custom={0.5}
+                        href={PROJECT_CATALOG[0].links.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pointer-events-auto mt-5 flex max-w-md items-center gap-3 border border-[#7AF0FF]/42 bg-[#071A20]/82 p-3.5 shadow-[0_16px_46px_rgba(0,0,0,0.32)] backdrop-blur-sm lg:hidden"
+                    >
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#A4F7FF]/55 bg-[#A4F7FF]/10 font-mono text-[11px] font-black text-[#A4F7FF]">
+                            N
+                        </span>
+                        <span className="min-w-0 flex-1">
+                            <span className="block font-mono text-[8px] font-semibold uppercase tracking-[0.2em] text-[#7AF0FF]">
+                                New flagship · Nuo
+                            </span>
+                            <span className="mt-1 block text-xs font-semibold text-white">
+                                Hire AI employees. Keep work moving.
+                            </span>
+                        </span>
+                        <ArrowUpRight className="h-4 w-4 shrink-0 text-[#7AF0FF]" />
+                    </motion.a>
 
                     <motion.div
                         variants={reveal}

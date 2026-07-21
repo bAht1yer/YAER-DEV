@@ -47,10 +47,11 @@ function createBlocks(mobile: boolean): Block[] {
     const colors = ["#16303A", "#132830", "#1A2033", "#10232A", "#20243A"];
     const blocks: Block[] = [];
     const projectPortals = new Map<string, number>([
-        ["1:7", 0],
-        ["2:8", 1],
-        ["4:7", 2],
-        ["5:8", 3],
+        ["3:8", 0],
+        ["1:7", 1],
+        ["2:9", 2],
+        ["4:7", 3],
+        ["5:8", 4],
     ]);
 
     for (let row = 0; row < rows; row += 1) {
@@ -121,6 +122,7 @@ function BlockWall({
     const solidRef = useRef<THREE.InstancedMesh | null>(null);
     const groupRef = useRef<THREE.Group | null>(null);
     const cursorLightRef = useRef<THREE.PointLight | null>(null);
+    const featuredLightRef = useRef<THREE.PointLight | null>(null);
     const [hoveredProject, setHoveredProject] = useState<number | null>(null);
     const hoveredProjectRef = useRef<number | null>(null);
     const blocks = useMemo(() => createBlocks(mobile), [mobile]);
@@ -136,8 +138,12 @@ function BlockWall({
     const dummy = useMemo(() => new THREE.Object3D(), []);
     const smoothedPointer = useRef(new THREE.Vector2(0.45, 0.08));
     const portalColor = useMemo(() => new THREE.Color("#246978"), []);
+    const portalFeaturedColor = useMemo(() => new THREE.Color("#8A3C2A"), []);
+    const portalFeaturedHoverColor = useMemo(() => new THREE.Color("#FF6A3D"), []);
+    const portalFeaturedSelectedColor = useMemo(() => new THREE.Color("#FFE0B5"), []);
     const portalHoverColor = useMemo(() => new THREE.Color("#42C5D7"), []);
     const portalSelectedColor = useMemo(() => new THREE.Color("#A4F7FF"), []);
+    const featuredAnimatedColor = useMemo(() => new THREE.Color("#A4F7FF"), []);
 
     useEffect(() => {
         const solid = solidRef.current;
@@ -145,12 +151,17 @@ function BlockWall({
 
         solid.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
         blocks.forEach((block, index) => {
-            const initialColor = block.projectIndex === null ? block.color : portalColor;
+            const initialColor =
+                block.projectIndex === null
+                    ? block.color
+                    : block.projectIndex === 0
+                      ? portalFeaturedColor
+                      : portalColor;
             animatedColors[index].copy(initialColor);
             solid.setColorAt(index, initialColor);
         });
         if (solid.instanceColor) solid.instanceColor.needsUpdate = true;
-    }, [animatedColors, blocks, portalColor]);
+    }, [animatedColors, blocks, portalColor, portalFeaturedColor]);
 
     useFrame((state, delta) => {
         const solid = solidRef.current;
@@ -162,6 +173,12 @@ function BlockWall({
         const pointerX = smoothedPointer.current.x * (mobile ? 2.25 : 5.7);
         const pointerY = smoothedPointer.current.y * (mobile ? 3.7 : 3.65);
         const elapsed = state.clock.elapsedTime;
+        const featuredPulse = active ? (Math.sin(elapsed * 1.1) + 1) * 0.5 : 0.35;
+        featuredAnimatedColor.lerpColors(
+            portalFeaturedColor,
+            portalFeaturedHoverColor,
+            0.12 + featuredPulse * 0.18
+        );
 
         blocks.forEach((block, index) => {
             const dx = block.x - pointerX;
@@ -171,7 +188,16 @@ function BlockWall({
             const push = influence * (mobile ? 0.72 : 1.12);
             const isSelected = block.projectIndex !== null && block.projectIndex === selectedProject;
             const isHovered = block.projectIndex !== null && block.projectIndex === hoveredProject;
-            const targetLift = isSelected ? 1.22 : isHovered ? 0.42 : 0;
+            const isFeatured = block.projectIndex === 0;
+            const targetLift = isSelected
+                ? 1.08 + (isFeatured ? featuredPulse * 0.12 : 0)
+                : isHovered
+                  ? isFeatured
+                      ? 0.5 + featuredPulse * 0.08
+                      : 0.42
+                  : isFeatured
+                    ? 0.14 + featuredPulse * 0.08
+                    : 0;
             lifts[index] = THREE.MathUtils.damp(
                 lifts[index],
                 targetLift,
@@ -179,21 +205,47 @@ function BlockWall({
                 Math.min(delta, 1 / 20)
             );
 
+            const featuredJitterX =
+                isFeatured && active
+                    ? Math.sin(elapsed * 0.82 + block.phase) * 0.035 +
+                      Math.sin(elapsed * 1.65) * 0.01
+                    : 0;
+            const featuredJitterY =
+                isFeatured && active
+                    ? Math.sin(elapsed * 0.68 + 0.8) * 0.045 +
+                      Math.sin(elapsed * 1.3 + block.phase) * 0.012
+                    : 0;
+            const featuredJitterZ =
+                isFeatured && active ? Math.sin(elapsed * 0.94 + 1.7) * 0.04 : 0;
+
             dummy.position.set(
-                block.x + float * 0.18,
-                block.y + float * 0.26,
-                block.z + float + push + lifts[index]
+                block.x + float * 0.18 + featuredJitterX,
+                block.y + float * 0.26 + featuredJitterY,
+                block.z + float + push + lifts[index] + featuredJitterZ
             );
-            dummy.rotation.set(-dy * influence * 0.018, dx * influence * 0.022, 0);
+            dummy.rotation.set(
+                -dy * influence * 0.018 +
+                    (isFeatured && active ? Math.sin(elapsed * 0.76) * 0.018 : 0),
+                dx * influence * 0.022 +
+                    (isFeatured && active ? Math.sin(elapsed * 0.62 + 0.6) * 0.022 : 0),
+                isFeatured && active ? Math.sin(elapsed * 0.88) * 0.012 : 0
+            );
             dummy.scale.set(block.sx, block.sy, block.sz + influence * 0.16);
+            if (isFeatured) dummy.scale.multiplyScalar(1.08 + featuredPulse * 0.03);
             if (isSelected) dummy.scale.multiplyScalar(1.055);
             else if (isHovered) dummy.scale.multiplyScalar(1.025);
             dummy.updateMatrix();
             solid.setMatrixAt(index, dummy.matrix);
 
             if (block.projectIndex !== null) {
-                const targetColor = isSelected
-                    ? portalSelectedColor
+                const targetColor = isFeatured
+                    ? isSelected
+                        ? portalFeaturedSelectedColor
+                        : isHovered
+                          ? portalFeaturedHoverColor
+                          : featuredAnimatedColor
+                    : isSelected
+                      ? portalSelectedColor
                     : isHovered
                       ? portalHoverColor
                       : portalColor;
@@ -227,6 +279,12 @@ function BlockWall({
             cursorLightRef.current.position.set(pointerX, pointerY, 3.4);
             cursorLightRef.current.intensity = active ? 22 : 12;
         }
+
+        if (featuredLightRef.current) {
+            featuredLightRef.current.intensity =
+                (selectedProject === 0 ? 28 : hoveredProject === 0 ? 23 : 14) +
+                featuredPulse * 4;
+        }
     });
 
     const handlePortalOver = (projectIndex: number) => {
@@ -252,6 +310,14 @@ function BlockWall({
                 distance={8.5}
                 decay={2}
                 color="#34E5FF"
+            />
+            <pointLight
+                ref={featuredLightRef}
+                position={[1.9, 0, 2.2]}
+                intensity={18}
+                distance={7}
+                decay={2}
+                color="#FF6A3D"
             />
             <group ref={groupRef}>
                 <instancedMesh
@@ -279,11 +345,19 @@ function BlockWall({
                         >
                             <button
                                 type="button"
-                                aria-label={`Open project ${block.projectIndex! + 1} from cube`}
+                                aria-label={
+                                    block.projectIndex === 0
+                                        ? "Open featured Nuo project from cube"
+                                        : `Open project ${block.projectIndex! + 1} from cube`
+                                }
                                 onPointerEnter={() => handlePortalOver(block.projectIndex!)}
                                 onPointerLeave={handlePortalOut}
                                 onClick={() => onProjectSelect?.(block.projectIndex!)}
-                                className="h-24 w-24 cursor-pointer bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7AF0FF]"
+                                className={`cursor-pointer bg-transparent focus-visible:outline-none focus-visible:ring-2 ${
+                                    block.projectIndex === 0
+                                        ? "h-36 w-36 focus-visible:ring-[#FF8A5B]"
+                                        : "h-24 w-24 focus-visible:ring-[#7AF0FF]"
+                                }`}
                             />
                         </Html>
                     ))}

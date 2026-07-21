@@ -1,4 +1,4 @@
-export type ProjectId = "bossimating" | "revamp" | "digitao" | "wyisdom";
+export type ProjectId = "nuo" | "bossimating" | "revamp" | "digitao" | "wyisdom";
 
 export type ProjectImageFit = "cover" | "contain";
 
@@ -26,6 +26,22 @@ export type ProjectCatalogItem = {
  * their respective components rather than in this catalog.
  */
 export const PROJECT_CATALOG: ProjectCatalogItem[] = [
+    {
+        id: "nuo",
+        title: "Nuo",
+        eyebrow: "Personal AI company · always on",
+        description:
+            "A personal AI company presented like chat. Hire an AI employee with one sentence, give it a one-off or recurring job, then watch it execute, verify, and report back — with budgets and approvals built in.",
+        contractorLine:
+            "Nuo turns prompts into accountable operators: scheduled, costed, traceable, and ready to ask before a decision becomes an action.",
+        tags: ["AI Employees", "Scheduled Loops", "Human Approvals", "Cost Controls"],
+        links: { demo: "https://nuo-web-eight.vercel.app" },
+        image: "/projects/nuo-live.png",
+        imageFit: "cover",
+        external: true,
+        featured: true,
+        metrics: ["Hire in one sentence", "Runs once or on a loop", "Verified work, not prompt spam"],
+    },
     {
         id: "bossimating",
         title: "Bossimating",
