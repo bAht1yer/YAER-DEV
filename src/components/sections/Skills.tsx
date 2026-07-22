@@ -1,45 +1,180 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import {
+    Bot,
+    Code2,
+    Compass,
+    Database,
+    FileText,
+    Mail,
+    MonitorSmartphone,
+    MousePointerClick,
+    PenTool,
+    ShieldCheck,
+    Sparkles,
+    Target,
+    Workflow,
+    type LucideIcon,
+} from "lucide-react";
 import Section from "../ui/Section";
 import RevealText from "../ui/RevealText";
-import TiltCard from "../ui/TiltCard";
 
-/**
- * Skills (Capabilities) -- personal capability map.
- * Header rises out of a mask; cards stagger in, then tilt toward the cursor
- * with a travelling cyan spotlight. List items cascade on first view.
- */
-const skills = [
+type ProcessStep = {
+    title: string;
+    summary: string;
+    icon: LucideIcon;
+    signals: { icon: LucideIcon; label: string }[];
+};
+
+const processSteps: ProcessStep[] = [
     {
-        category: "Shape the idea",
-        items: ["Map the user path", "Find the smallest useful version", "Write clearer page copy", "Turn fuzzy goals into tasks"],
+        title: "Scope",
+        summary: "Goals · audience · conversion path",
+        icon: Compass,
+        signals: [
+            { icon: Target, label: "Goal" },
+            { icon: FileText, label: "Content" },
+            { icon: MousePointerClick, label: "User path" },
+        ],
     },
     {
-        category: "Build the interface",
-        items: ["Next.js pages", "Responsive UI", "Forms and dashboards", "Motion with restraint", "Polished handoff states"],
+        title: "Design",
+        summary: "Page structure · responsive states · prototype",
+        icon: PenTool,
+        signals: [
+            { icon: MonitorSmartphone, label: "Responsive UI" },
+            { icon: MousePointerClick, label: "Interactions" },
+            { icon: Sparkles, label: "Motion" },
+        ],
     },
     {
-        category: "Connect the workflow",
-        items: ["Lead capture", "Email notifications", "Admin tools", "PDF and email handoffs", "Simple automations"],
+        title: "Build",
+        summary: "Frontend · integrations · quality checks",
+        icon: Code2,
+        signals: [
+            { icon: Code2, label: "Frontend" },
+            { icon: Database, label: "Data" },
+            { icon: ShieldCheck, label: "Guardrails" },
+        ],
     },
     {
-        category: "Use AI carefully",
-        items: ["Chat helpers", "Intake summaries", "Drafting assistants", "OpenAI and Dify builds", "Practical guardrails"],
+        title: "Launch",
+        summary: "Deployment · handoff · measured iteration",
+        icon: Workflow,
+        signals: [
+            { icon: Bot, label: "AI helpers" },
+            { icon: Mail, label: "Notifications" },
+            { icon: Workflow, label: "Automation" },
+        ],
     },
 ];
 
+function HoverLabel({ children }: { children: string }) {
+    return (
+        <span className="pointer-events-none absolute left-1/2 top-[calc(100%+0.55rem)] z-30 -translate-x-1/2 whitespace-nowrap border border-[#34E5FF]/28 bg-[#071218]/95 px-2 py-1 font-mono text-[8px] font-bold uppercase tracking-[0.14em] text-[#D9FBFF] opacity-0 shadow-[0_8px_22px_rgba(0,0,0,0.42)] transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+            {children}
+        </span>
+    );
+}
+
+function ProcessVisual({ step, index }: { step: ProcessStep; index: number }) {
+    const reducedMotion = !!useReducedMotion();
+    const MainIcon = step.icon;
+
+    return (
+        <div className="relative z-10 flex h-56 flex-col items-center overflow-visible lg:h-64">
+            <div className="relative flex h-44 w-full shrink-0 items-center justify-center lg:h-48">
+                <motion.div
+                    aria-hidden="true"
+                    className="absolute h-36 w-36 rounded-full border border-dashed border-[#34E5FF]/30"
+                    animate={reducedMotion ? undefined : { rotate: index % 2 === 0 ? 360 : -360 }}
+                    transition={{ duration: 16 + index * 2, repeat: Infinity, ease: "linear" }}
+                />
+                <motion.div
+                    aria-hidden="true"
+                    className="absolute h-44 w-44 rounded-full border border-dotted border-[#7AF0FF]/15"
+                    animate={reducedMotion ? undefined : { rotate: index % 2 === 0 ? -360 : 360, scale: [0.97, 1.025, 0.97] }}
+                    transition={{ duration: 22 + index * 2, repeat: Infinity, ease: "linear" }}
+                />
+
+                <motion.div
+                    role="img"
+                    tabIndex={0}
+                    aria-label={`${step.title}: ${step.summary}`}
+                    className="group relative z-20 flex h-20 w-20 cursor-default items-center justify-center border border-[#7AF0FF]/60 bg-[#0C2028] text-[#A4F7FF] shadow-[0_0_40px_rgba(52,229,255,0.14)] outline-none focus-visible:ring-2 focus-visible:ring-[#7AF0FF]"
+                    animate={reducedMotion ? undefined : { y: [0, -5, 0], rotate: [-1.6, 1.6, -1.6] }}
+                    whileHover={reducedMotion ? undefined : { scale: 1.08, rotate: 3, boxShadow: "0 0 52px rgba(52,229,255,0.25)" }}
+                    whileFocus={reducedMotion ? undefined : { scale: 1.06, rotate: 2 }}
+                    transition={{ duration: 3.1 + index * 0.35, repeat: Infinity, ease: "easeInOut" }}
+                >
+                    <MainIcon className="h-9 w-9" strokeWidth={1.4} />
+                    <HoverLabel>{step.title}</HoverLabel>
+                </motion.div>
+
+                {step.signals.map((signal, signalIndex) => {
+                    const SignalIcon = signal.icon;
+                    const positions = ["left-[12%] top-[8%]", "right-[12%] top-[12%]", "bottom-[4%] right-[20%]"];
+                    return (
+                        <motion.div
+                            key={signal.label}
+                            role="img"
+                            tabIndex={0}
+                            aria-label={signal.label}
+                            className={`group absolute z-20 flex h-10 w-10 cursor-default items-center justify-center rounded-full border border-[#34E5FF]/30 bg-[#0B171D] text-[#7DABB6] outline-none transition-colors hover:border-[#7AF0FF]/75 hover:bg-[#102832] hover:text-[#D9FBFF] focus-visible:ring-2 focus-visible:ring-[#7AF0FF] ${positions[signalIndex]}`}
+                            animate={reducedMotion ? undefined : { y: [0, signalIndex % 2 === 0 ? -6 : 6, 0], opacity: [0.62, 1, 0.62] }}
+                            whileHover={reducedMotion ? undefined : { scale: 1.18, opacity: 1 }}
+                            whileFocus={reducedMotion ? undefined : { scale: 1.14, opacity: 1 }}
+                            transition={{ duration: 2.4 + signalIndex * 0.45, delay: index * 0.18, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                            <SignalIcon className="h-4 w-4" strokeWidth={1.55} />
+                            <HoverLabel>{signal.label}</HoverLabel>
+                        </motion.div>
+                    );
+                })}
+            </div>
+
+            <div className="relative z-20 mt-2 bg-[#0A1014] px-4 py-1.5 text-center">
+                <div className="flex items-center justify-center gap-2.5">
+                    <span className="font-mono text-[9px] font-bold tracking-[0.18em] text-[#34E5FF]">
+                        0{index + 1}
+                    </span>
+                    <span className="h-px w-5 bg-[#34E5FF]/45" />
+                    <h3 className="text-base font-bold uppercase tracking-[0.08em] text-white">
+                        {step.title}
+                    </h3>
+                </div>
+                <p className="mt-1.5 text-[11px] leading-5 text-[#A8BAC3]">{step.summary}</p>
+            </div>
+        </div>
+    );
+}
+
 export default function Skills() {
+    const processRef = useRef<HTMLDivElement | null>(null);
+    const { scrollYProgress } = useScroll({
+        target: processRef,
+        offset: ["start 88%", "end 40%"],
+    });
+    const connectionProgress = useSpring(scrollYProgress, {
+        stiffness: 260,
+        damping: 34,
+        mass: 0.45,
+    });
+    const pulseX = useTransform(connectionProgress, [0, 1], ["0%", "100%"]);
+    const pulseY = useTransform(connectionProgress, [0, 1], ["0%", "100%"]);
+
     return (
         <Section id="skills" className="bg-transparent !min-h-0 py-24">
-      <div className="max-w-7xl mx-auto w-full">
-                <div className="mb-12">
+            <div className="mx-auto w-full max-w-7xl">
+                <div className="mb-8 lg:mb-5">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="flex items-center gap-3 mb-2"
+                        className="mb-2 flex items-center gap-3"
                     >
                         <motion.span
                             initial={{ scaleX: 0 }}
@@ -54,63 +189,58 @@ export default function Skills() {
                     </motion.div>
                     <RevealText
                         as="h2"
-                        text="How I turn ideas into working things."
+                        text="Scope. Design. Build. Launch."
                         stagger={0.04}
                         className="text-4xl font-black tracking-tight text-white md:text-5xl"
                     />
                     <motion.p
-                        initial={{ opacity: 0, y: 16 }}
+                        initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.25 }}
-                        className="mt-5 max-w-2xl text-base leading-7 text-[#8AA3AD]"
+                        transition={{ duration: 0.45, delay: 0.18 }}
+                        className="mt-3 text-sm text-[#8AA3AD]"
                     >
-                        I move between product shape, visual detail, code, and automation.
-                        The useful part is not just making a page exist; it is making the
-                        next click feel obvious.
+                        A focused path from brief to production.
                     </motion.p>
                 </div>
 
                 <div
+                    ref={processRef}
                     id="capabilities"
-                    className="grid scroll-mt-28 grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"
+                    className="relative grid scroll-mt-28 grid-cols-1 gap-2 lg:grid-cols-4 lg:gap-0"
                 >
-                    {skills.map((skill, index) => (
+                    <div className="pointer-events-none absolute bottom-24 left-1/2 top-24 z-0 w-px -translate-x-1/2 bg-[#1C3942] lg:hidden">
                         <motion.div
-                            key={skill.category}
-                            initial={{ opacity: 0, y: 28 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-60px" }}
-                            transition={{ duration: 0.55, delay: index * 0.09, ease: [0.22, 1, 0.36, 1] }}
+                            className="absolute inset-0 origin-top bg-gradient-to-b from-[#34E5FF] via-[#7AF0FF] to-[#9B7BFF] shadow-[0_0_12px_rgba(52,229,255,0.45)]"
+                            style={{ scaleY: connectionProgress }}
+                        />
+                        <motion.span
+                            className="absolute -left-[3px] h-[7px] w-[7px] rounded-full bg-white shadow-[0_0_16px_rgba(122,240,255,1)]"
+                            style={{ top: pulseY }}
+                        />
+                    </div>
+
+                    <div className="pointer-events-none absolute left-[12.5%] right-[12.5%] top-24 z-0 hidden h-px -translate-y-1/2 bg-[#1C3942] lg:block">
+                        <motion.div
+                            className="absolute inset-0 origin-left bg-gradient-to-r from-[#34E5FF] via-[#7AF0FF] to-[#9B7BFF] shadow-[0_0_12px_rgba(52,229,255,0.45)]"
+                            style={{ scaleX: connectionProgress }}
+                        />
+                        <motion.span
+                            className="absolute -top-[3px] h-[7px] w-[7px] rounded-full bg-white shadow-[0_0_16px_rgba(122,240,255,1)]"
+                            style={{ left: pulseX }}
+                        />
+                    </div>
+
+                    {processSteps.map((step, index) => (
+                        <motion.div
+                            key={step.title}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true, margin: "-70px" }}
+                            transition={{ duration: 0.42, delay: index * 0.055, ease: [0.22, 1, 0.36, 1] }}
+                            className="relative"
                         >
-                            <TiltCard className="h-full border border-[#1C2A30] bg-[#0E171D] transition-colors duration-300 hover:border-[#34E5FF]/45">
-                                <div className="relative z-[2] p-6" style={{ transform: "translateZ(24px)" }}>
-                                    <div className="mb-4 flex items-center gap-2">
-                                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-gray-500 group-hover:text-[#34E5FF] transition-colors">
-                                            0{index + 1}
-                                        </span>
-                                        <span className="h-px flex-1 bg-[#1C2A30]" />
-                                    </div>
-                                    <h3 className="text-lg font-bold mb-4 text-white">
-                                        {skill.category}
-                                    </h3>
-                                    <ul className="space-y-2">
-                                        {skill.items.map((item, itemIndex) => (
-                                            <motion.li
-                                                key={item}
-                                                initial={{ opacity: 0, x: -10 }}
-                                                whileInView={{ opacity: 1, x: 0 }}
-                                                viewport={{ once: true }}
-                                                transition={{ duration: 0.4, delay: index * 0.09 + 0.25 + itemIndex * 0.06 }}
-                                                className="text-sm text-gray-400 flex items-center gap-2"
-                                            >
-                                                <span className="w-1 h-1 bg-[#34E5FF]/70" />
-                                                {item}
-                                            </motion.li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </TiltCard>
+                            <ProcessVisual step={step} index={index} />
                         </motion.div>
                     ))}
                 </div>

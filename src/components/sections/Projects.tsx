@@ -37,7 +37,11 @@ function ProjectImage({
     const isContained = project.imageFit === "contain";
 
     return (
-        <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-[#34E5FF]/18 bg-[#071218] shadow-[inset_0_0_40px_rgba(52,229,255,0.035)]">
+        <motion.div
+            className="group/image relative aspect-[16/10] overflow-hidden rounded-lg border border-[#34E5FF]/18 bg-[#071218] shadow-[inset_0_0_40px_rgba(52,229,255,0.035)]"
+            whileHover={{ scale: 1.012 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        >
             {isContained && (
                 <>
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_44%,rgba(52,229,255,0.14),transparent_46%),linear-gradient(135deg,#071218_0%,#09151d_48%,#0c1020_100%)]" />
@@ -50,17 +54,15 @@ function ProjectImage({
                     src={project.image}
                     alt={`${project.title} preview`}
                     fill
-                    className={isContained ? "object-contain object-center" : "object-cover object-top"}
+                    className={`${isContained ? "object-contain object-center" : "object-cover object-top"} transition-transform duration-700 group-hover/image:scale-[1.025]`}
                     sizes="(min-width: 1280px) 680px, (min-width: 768px) 54vw, calc(100vw - 3rem)"
                 />
             </div>
 
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071218]/25 via-transparent to-transparent" />
-            <div className="pointer-events-none absolute inset-x-4 top-4 flex items-center justify-between font-mono text-[8px] uppercase tracking-[0.2em] text-[#EAF7FB]/55 sm:inset-x-5 sm:top-5">
-                <span>{project.featured ? "Flagship launch" : isContained ? "Product interface" : "Live page capture"}</span>
-                <span>{project.id.toUpperCase()}</span>
-            </div>
-        </div>
+            <span className="pointer-events-none absolute bottom-4 left-4 h-6 w-6 border-b border-l border-[#7AF0FF]/45" />
+            <span className="pointer-events-none absolute right-4 top-4 h-6 w-6 border-r border-t border-[#7AF0FF]/45" />
+        </motion.div>
     );
 }
 
@@ -74,8 +76,6 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
     const targetScale = 1 - (total - 1 - index) * 0.025;
     const scale = useTransform(scrollYProgress, [0, 1], [1, targetScale]);
     const entranceY = useTransform(scrollYProgress, [0, 0.6], [reducedMotion ? 0 : 48, 0]);
-    const Icon = project.icon;
-
     return (
         <div ref={containerRef} className="relative py-4 md:h-[68vh] md:min-h-[540px]">
             <motion.article
@@ -89,37 +89,20 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(52,229,255,0.08),transparent_38%,rgba(155,123,255,0.08))]" />
                 <div className="relative z-10 grid gap-6 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:items-center lg:gap-8">
                     <div className="flex min-w-0 flex-col">
-                        <div className="mb-5 flex items-start justify-between gap-4 md:mb-7">
-                            <div className="font-mono text-5xl font-black leading-none text-[#34E5FF] md:text-6xl lg:text-7xl">
-                                {String(index + 1).padStart(2, "0")}
-                            </div>
-                            <span className="mt-1 font-mono text-[9px] uppercase tracking-[0.22em] text-[#8AA3AD]">
-                                {project.featured ? "New flagship" : "Case study"} / {String(index + 1).padStart(2, "0")}
-                            </span>
-                        </div>
-
                         <div className="min-w-0">
-                            <div className="mb-3 flex flex-wrap items-center gap-3">
-                                <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-[#34E5FF]">
-                                    <Icon className="h-3.5 w-3.5" />
-                                    {project.eyebrow}
-                                </span>
-                            </div>
+                            <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[#34E5FF]">
+                                {project.eyebrow}
+                            </p>
                             <h3 className="text-3xl font-black tracking-normal text-white md:text-4xl">
                                 {project.title}
                             </h3>
                             <p className="mt-3 max-w-3xl text-sm leading-6 text-[#A8BAC3] md:text-base">
                                 {project.description}
                             </p>
-                            {project.contractorLine && (
-                                <p className="mt-3 max-w-3xl border-l border-[#34E5FF]/60 pl-4 text-sm leading-6 text-[#EAF7FB]">
-                                    {project.contractorLine}
-                                </p>
-                            )}
                         </div>
 
                         <div className="mt-5 flex flex-wrap gap-2">
-                            {project.tags.map((tag) => (
+                            {project.tags.slice(0, 3).map((tag) => (
                                 <span
                                     key={tag}
                                     className="rounded-full border border-[#34E5FF]/20 bg-[#34E5FF]/5 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[#CBD2D9]"
@@ -184,11 +167,9 @@ export default function Projects() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.25 }}
-                        className="mt-5 max-w-2xl text-base leading-7 text-[#8AA3AD]"
+                        className="mt-4 max-w-xl text-base leading-7 text-[#8AA3AD]"
                     >
-                        From an AI company that keeps working after you close the tab to
-                        SaaS, service sites, and learning tools — each project is a live
-                        product built around a real job people need done.
+                        Live products, focused interfaces, and systems built around real work.
                     </motion.p>
                 </div>
 

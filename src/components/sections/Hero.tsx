@@ -129,8 +129,8 @@ export default function Hero() {
             </motion.div>
 
             {/* Symmetric edge fades keep the wall immersive without hard canvas boundaries. */}
-            <div className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(90deg,rgba(7,11,14,0.94)_0%,rgba(7,11,14,0.7)_34%,rgba(7,11,14,0.1)_66%,rgba(7,11,14,0.12)_78%,rgba(7,11,14,0.94)_100%)]" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[44%] bg-gradient-to-t from-[#070B0E] via-[#070B0E]/46 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(90deg,rgba(7,11,14,0.76)_0%,rgba(7,11,14,0.42)_38%,rgba(7,11,14,0.08)_72%,rgba(7,11,14,0.5)_100%)] lg:bg-[linear-gradient(90deg,rgba(7,11,14,0.94)_0%,rgba(7,11,14,0.7)_34%,rgba(7,11,14,0.1)_66%,rgba(7,11,14,0.12)_78%,rgba(7,11,14,0.94)_100%)]" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[42%] bg-gradient-to-t from-[#070B0E] via-[#070B0E]/38 to-transparent lg:h-[44%] lg:via-[#070B0E]/46" />
 
             <div
                 className="pointer-events-auto absolute right-8 top-24 z-20 hidden items-center gap-2 lg:flex"
@@ -263,6 +263,73 @@ export default function Hero() {
                 )}
             </AnimatePresence>
 
+            <AnimatePresence>
+                {projectedProject && (
+                    <motion.aside
+                        key={`mobile-${projectedProject.id}`}
+                        role="dialog"
+                        aria-label={`${projectedProject.title} project preview`}
+                        initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -18, scale: 0.94 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.96 }}
+                        transition={{ duration: reducedMotion ? 0.14 : 0.3, ease: [0.16, 1, 0.3, 1] }}
+                        className="pointer-events-auto absolute inset-x-4 top-24 z-30 lg:hidden"
+                    >
+                        <div className="relative border border-[#7AF0FF]/58 bg-[#071218]/95 p-2 shadow-[0_24px_70px_rgba(0,0,0,0.62),0_0_35px_rgba(52,229,255,0.15)] backdrop-blur-md">
+                            <span className="pointer-events-none absolute -left-px -top-px h-5 w-5 border-l-2 border-t-2 border-[#A4F7FF]" />
+                            <span className="pointer-events-none absolute -bottom-px -right-px h-5 w-5 border-b-2 border-r-2 border-[#A4F7FF]" />
+
+                            <div className="flex h-9 items-center justify-between px-2">
+                                <div className="flex items-center gap-2">
+                                    <span className="h-1.5 w-1.5 rounded-full bg-[#FF6A3D] shadow-[0_0_10px_rgba(255,106,61,0.9)]" />
+                                    <span className="font-mono text-[8px] font-bold uppercase tracking-[0.2em] text-[#A4F7FF]">
+                                        Project window / {projectedProject.title}
+                                    </span>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setSelectedProject(null)}
+                                    className="flex h-8 w-8 items-center justify-center text-[#8AA3AD] transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7AF0FF]"
+                                    aria-label="Close mobile project window"
+                                >
+                                    <X className="h-4 w-4" />
+                                </button>
+                            </div>
+
+                            <div className="relative aspect-[16/7.8] overflow-hidden border border-[#34E5FF]/18 bg-[#050B0E]">
+                                <Image
+                                    src={projectedProject.image}
+                                    alt={`${projectedProject.title} project preview`}
+                                    fill
+                                    priority
+                                    sizes="calc(100vw - 3rem)"
+                                    className="object-cover object-top"
+                                />
+                                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071218]/55 via-transparent to-transparent" />
+                            </div>
+
+                            <div className="flex items-center justify-between gap-4 px-2 py-3">
+                                <div className="min-w-0">
+                                    <h2 className="text-lg font-black text-white">{projectedProject.title}</h2>
+                                    <p className="mt-0.5 truncate text-[10px] text-[#A8BAC3]">
+                                        Hire AI employees. Keep work moving.
+                                    </p>
+                                </div>
+                                <a
+                                    href={projectedProject.links.demo}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex h-9 shrink-0 items-center gap-2 bg-[#7AF0FF] px-3 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-[#04181D] transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                                >
+                                    Open
+                                    <ArrowUpRight className="h-3.5 w-3.5" />
+                                </a>
+                            </div>
+                        </div>
+                    </motion.aside>
+                )}
+            </AnimatePresence>
+
             <div className="pointer-events-none relative z-10 w-full px-4 pb-8 pt-32 sm:px-6 sm:pb-10 md:px-10 lg:px-16 lg:pb-12">
                 <div className="max-w-[56rem]">
                     <motion.div
@@ -298,30 +365,6 @@ export default function Hero() {
                         I build clear websites, straightforward quote forms, and useful automations for small teams.
                     </motion.p>
 
-                    <motion.a
-                        variants={reveal}
-                        initial="hidden"
-                        animate="visible"
-                        custom={0.5}
-                        href={PROJECT_CATALOG[0].links.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="pointer-events-auto mt-5 flex max-w-md items-center gap-3 border border-[#7AF0FF]/42 bg-[#071A20]/82 p-3.5 shadow-[0_16px_46px_rgba(0,0,0,0.32)] backdrop-blur-sm lg:hidden"
-                    >
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#A4F7FF]/55 bg-[#A4F7FF]/10 font-mono text-[11px] font-black text-[#A4F7FF]">
-                            N
-                        </span>
-                        <span className="min-w-0 flex-1">
-                            <span className="block font-mono text-[8px] font-semibold uppercase tracking-[0.2em] text-[#7AF0FF]">
-                                New flagship · Nuo
-                            </span>
-                            <span className="mt-1 block text-xs font-semibold text-white">
-                                Hire AI employees. Keep work moving.
-                            </span>
-                        </span>
-                        <ArrowUpRight className="h-4 w-4 shrink-0 text-[#7AF0FF]" />
-                    </motion.a>
-
                     <motion.div
                         variants={reveal}
                         initial="hidden"
@@ -331,7 +374,7 @@ export default function Hero() {
                     >
                         <a
                             href="#contact"
-                            className="pointer-events-auto inline-flex items-center justify-center gap-2 bg-[#34E5FF] px-6 py-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[#04181D] transition-all hover:bg-[#7AF0FF] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7AF0FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#070B0E] md:px-8 md:py-4"
+                            className="pointer-events-auto inline-flex w-fit items-center justify-center gap-2 whitespace-nowrap bg-[#34E5FF] px-4 py-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[#04181D] transition-all hover:bg-[#7AF0FF] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7AF0FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#070B0E] sm:px-6 md:px-8 md:py-4"
                         >
                             Send me your site
                             <Send className="h-3.5 w-3.5" />

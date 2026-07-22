@@ -44,15 +44,21 @@ function createBlocks(mobile: boolean): Block[] {
     const rows = mobile ? 8 : 7;
     const gapX = mobile ? 0.88 : 1.28;
     const gapY = mobile ? 1.05 : 1.22;
-    const colors = ["#16303A", "#132830", "#1A2033", "#10232A", "#20243A"];
+    const colors = mobile
+        ? ["#205160", "#173C47", "#242D4A", "#15343D", "#2A3152"]
+        : ["#16303A", "#132830", "#1A2033", "#10232A", "#20243A"];
     const blocks: Block[] = [];
-    const projectPortals = new Map<string, number>([
-        ["3:8", 0],
-        ["1:7", 1],
-        ["2:9", 2],
-        ["4:7", 3],
-        ["5:8", 4],
-    ]);
+    const projectPortals = new Map<string, number>(
+        mobile
+            ? [["6:3", 0]]
+            : [
+                  ["3:8", 0],
+                  ["1:7", 1],
+                  ["2:9", 2],
+                  ["4:7", 3],
+                  ["5:8", 4],
+              ]
+    );
 
     for (let row = 0; row < rows; row += 1) {
         for (let column = 0; column < columns; column += 1) {
@@ -60,15 +66,15 @@ function createBlocks(mobile: boolean): Block[] {
             blocks.push({
                 x: (column - (columns - 1) / 2) * gapX + (random() - 0.5) * 0.08,
                 y: (row - (rows - 1) / 2) * gapY + (random() - 0.5) * 0.08,
-                z: -2.65 + random() * 1.65 - edgeDistance * 0.35,
+                z: (mobile ? -1.95 : -2.65) + random() * 1.65 - edgeDistance * 0.35,
                 sx: gapX * (0.78 + random() * 0.16),
                 sy: gapY * (0.76 + random() * 0.18),
                 sz: 0.28 + random() * 1.15,
                 phase: random() * Math.PI * 2,
                 speed: 0.42 + random() * 0.42,
-                drift: 0.055 + random() * 0.075,
+                drift: mobile ? 0.13 + random() * 0.12 : 0.055 + random() * 0.075,
                 color: new THREE.Color(colors[Math.floor(random() * colors.length)]),
-                projectIndex: mobile ? null : (projectPortals.get(`${row}:${column}`) ?? null),
+                projectIndex: projectPortals.get(`${row}:${column}`) ?? null,
             });
         }
     }
@@ -220,7 +226,7 @@ function BlockWall({
 
             dummy.position.set(
                 block.x + float * 0.18 + featuredJitterX,
-                block.y + float * 0.26 + featuredJitterY,
+                block.y + float * (mobile ? 0.72 : 0.26) + featuredJitterY,
                 block.z + float + push + lifts[index] + featuredJitterZ
             );
             dummy.rotation.set(
@@ -301,8 +307,8 @@ function BlockWall({
 
     return (
         <>
-            <ambientLight intensity={0.34} color="#86AAB4" />
-            <directionalLight position={[-3, 5, 6]} intensity={0.78} color="#DDFBFF" />
+            <ambientLight intensity={mobile ? 0.5 : 0.34} color="#86AAB4" />
+            <directionalLight position={[-3, 5, 6]} intensity={mobile ? 1.05 : 0.78} color="#DDFBFF" />
             <pointLight
                 ref={cursorLightRef}
                 position={[2.5, 0.5, 3.4]}
@@ -313,7 +319,7 @@ function BlockWall({
             />
             <pointLight
                 ref={featuredLightRef}
-                position={[1.9, 0, 2.2]}
+                position={mobile ? [0.9, 2.55, 2.2] : [1.9, 0, 2.2]}
                 intensity={18}
                 distance={7}
                 decay={2}
@@ -328,37 +334,48 @@ function BlockWall({
                     <boxGeometry args={[1, 1, 1]} />
                     <meshStandardMaterial
                         color="#C4D5D9"
-                        roughness={0.52}
+                        roughness={mobile ? 0.4 : 0.52}
                         metalness={0.3}
                         emissive="#06151A"
-                        emissiveIntensity={0.16}
+                        emissiveIntensity={mobile ? 0.3 : 0.16}
                     />
                 </instancedMesh>
 
-                {!mobile &&
-                    portalBlocks.map((block) => (
+                {portalBlocks.map((block) => (
                         <Html
                             key={`portal-hit-${block.projectIndex}`}
                             position={[block.x, block.y, block.z + block.sz * 0.52]}
                             center
                             zIndexRange={[3, 3]}
                         >
-                            <button
-                                type="button"
-                                aria-label={
-                                    block.projectIndex === 0
-                                        ? "Open featured Nuo project from cube"
-                                        : `Open project ${block.projectIndex! + 1} from cube`
-                                }
-                                onPointerEnter={() => handlePortalOver(block.projectIndex!)}
-                                onPointerLeave={handlePortalOut}
-                                onClick={() => onProjectSelect?.(block.projectIndex!)}
-                                className={`cursor-pointer bg-transparent focus-visible:outline-none focus-visible:ring-2 ${
-                                    block.projectIndex === 0
-                                        ? "h-36 w-36 focus-visible:ring-[#FF8A5B]"
-                                        : "h-24 w-24 focus-visible:ring-[#7AF0FF]"
-                                }`}
-                            />
+                            {mobile ? (
+                                <button
+                                    type="button"
+                                    aria-label="Open featured Nuo project from cube"
+                                    aria-pressed={selectedProject === block.projectIndex}
+                                    onPointerEnter={() => handlePortalOver(block.projectIndex!)}
+                                    onPointerLeave={handlePortalOut}
+                                    onClick={() => onProjectSelect?.(block.projectIndex!)}
+                                    className="block h-28 w-28 cursor-pointer bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF8A5B]"
+                                />
+                            ) : (
+                                <button
+                                    type="button"
+                                    aria-label={
+                                        block.projectIndex === 0
+                                            ? "Open featured Nuo project from cube"
+                                            : `Open project ${block.projectIndex! + 1} from cube`
+                                    }
+                                    onPointerEnter={() => handlePortalOver(block.projectIndex!)}
+                                    onPointerLeave={handlePortalOut}
+                                    onClick={() => onProjectSelect?.(block.projectIndex!)}
+                                    className={`cursor-pointer bg-transparent focus-visible:outline-none focus-visible:ring-2 ${
+                                        block.projectIndex === 0
+                                            ? "h-36 w-36 focus-visible:ring-[#FF8A5B]"
+                                            : "h-24 w-24 focus-visible:ring-[#7AF0FF]"
+                                    }`}
+                                />
+                            )}
                         </Html>
                     ))}
             </group>
@@ -391,7 +408,7 @@ export default function FloatingBlockField({
         const canvas = document.createElement("canvas");
         const supported = !!(
             window.WebGLRenderingContext &&
-            (canvas.getContext("webgl", { powerPreference: "low-power" }) ||
+            (canvas.getContext("webgl", { powerPreference: "high-performance" }) ||
                 canvas.getContext("experimental-webgl"))
         );
         const media = window.matchMedia("(max-width: 1023px)");
@@ -460,14 +477,14 @@ export default function FloatingBlockField({
             ) : (
                 <Canvas
                     frameloop="demand"
-                    dpr={mobile ? [1, 1.1] : [1, 1.35]}
+                    dpr={mobile ? [1.5, 2] : [1, 1.6]}
                     camera={{ position: [0, 0, 8], fov: mobile ? 49 : 46, near: 0.1, far: 30 }}
                     gl={{
-                        antialias: false,
+                        antialias: true,
                         alpha: false,
                         depth: true,
                         stencil: false,
-                        powerPreference: "low-power",
+                        powerPreference: "high-performance",
                     }}
                     onCreated={({ gl }) => {
                         gl.setClearColor(new THREE.Color("#070B0E"), 1);
