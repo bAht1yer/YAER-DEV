@@ -1,86 +1,69 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import ContactForm, { type ProjectType } from "./ContactForm";
-import { useEffect } from "react";
 
 interface ContactModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    /** Preselect a project type when the modal opens (used by offer section CTAs). */
-    projectType?: ProjectType;
+  isOpen: boolean;
+  onClose: () => void;
+  projectType?: ProjectType;
 }
 
-/**
- * ContactModal — industrial restyle.
- * Drops the terminal-prompt header and cyan accent in favor of a hairline panel
- * with mono caps title. Accepts an optional projectType to preselect the
- * dropdown when opened from an offer section CTA.
- */
-export default function ContactModal({ isOpen, onClose, projectType }: ContactModalProps) {
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "unset";
-        }
-        return () => {
-            document.body.style.overflow = "unset";
-        };
-    }, [isOpen]);
+export default function ContactModal({
+  isOpen,
+  onClose,
+  projectType,
+}: ContactModalProps) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const panel = dialog.current;
+    if (!panel || !isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const previousFocus =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    panel.showModal();
+    document.body.style.overflow = "hidden";
+    return () => {
+      panel.close();
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
+    };
+  }, [isOpen]);
 
-    return (
-        <AnimatePresence>
-            {isOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                    {/* Backdrop */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={onClose}
-                        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-                    />
-
-                    {/* Panel */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        transition={{ duration: 0.25, ease: "easeOut" }}
-                        className="relative w-full max-w-2xl bg-[#0E171D] border border-[#1C2A30] notch-corners overflow-hidden"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        {/* Header */}
-                        <div className="flex items-center justify-between p-5 border-b border-[#1C2A30]">
-                            <div className="flex items-center gap-3">
-                                <span className="h-2 w-2 rounded-full bg-[#34E5FF]" />
-                                <h2 className="font-mono text-[12px] uppercase tracking-[0.22em] text-white">
-                                    Website / lead system intake
-                                </h2>
-                            </div>
-                            <button
-                                type="button"
-                                onClick={onClose}
-                                className="p-2 text-gray-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A1014]"
-                                aria-label="Close"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
-                        </div>
-
-                        {/* Body */}
-                        <div className="p-6 md:p-10 max-h-[80vh] overflow-y-auto">
-                            <p className="text-sm leading-7 text-gray-400 mb-6">
-                                Send the current site, the stuck workflow, or the idea in plain English.
-                                Rough is fine -- I&apos;ll come back with a clear next step within 24 hours.
-                            </p>
-                            <ContactForm onSuccess={onClose} initialProjectType={projectType} />
-                        </div>
-                    </motion.div>
-                </div>
-            )}
-        </AnimatePresence>
-    );
+  return (
+    <dialog
+      ref={dialog}
+      className="contact-dialog"
+      aria-labelledby="contact-dialog-title"
+      onCancel={onClose}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+      data-lenis-prevent
+    >
+      <div className="dialog-header">
+        <h2 id="contact-dialog-title">Let&apos;s make something useful.</h2>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close contact form"
+          autoFocus
+        >
+          <X size={22} />
+        </button>
+      </div>
+      <div className="dialog-body">
+        <p>
+          Share your idea, current site, or the workflow you want to improve.
+          I&apos;ll come back with a clear next step.
+        </p>
+        {isOpen && (
+          <ContactForm onSuccess={onClose} initialProjectType={projectType} />
+        )}
+      </div>
+    </dialog>
+  );
 }

@@ -5,9 +5,9 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Human-readable labels for project_type values (keep in sync with ContactForm).
 const PROJECT_TYPE_LABELS: Record<string, string> = {
-    "quick-fix": "Quick Fix ($399)",
-    "one-page-site": "One-Page Site ($799)",
-    "lead-system": "Lead System ($1,500+)",
+    "one-page-site": "One-Page Website ($399)",
+    "cms-site": "CMS Website ($799)",
+    "web-cloud": "Web & Cloud Systems ($1,500+)",
     "ai-saas": "AI / SaaS work",
     "other": "Other",
 };

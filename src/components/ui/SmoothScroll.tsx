@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
+import { MotionConfig, useReducedMotion } from "framer-motion";
 
 /**
  * SmoothScroll -- Lenis-powered easing wrapper + scroll-reset on route change.
@@ -15,44 +16,53 @@ import Lenis from "lenis";
  * pathname change fixes it without breaking back/forward restoration on the
  * homepage hash anchors.
  */
-export default function SmoothScroll({ children }: { children: React.ReactNode }) {
-    const lenisRef = useRef<Lenis | null>(null);
-    const pathname = usePathname();
+export default function SmoothScroll({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname();
+  const reducedMotion = useReducedMotion();
 
-    useEffect(() => {
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            orientation: "vertical",
-            gestureOrientation: "vertical",
-            smoothWheel: true,
-        });
-        lenisRef.current = lenis;
+  useEffect(() => {
+    if (reducedMotion) return;
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      anchors: { offset: -100 },
+    });
+    lenisRef.current = lenis;
 
-        function raf(time: number) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
+    let frame = 0;
+    function raf(time: number) {
+      lenis.raf(time);
+      frame = requestAnimationFrame(raf);
+    }
+    frame = requestAnimationFrame(raf);
 
-        return () => {
-            lenis.destroy();
-            lenisRef.current = null;
-        };
-    }, []);
+    return () => {
+      cancelAnimationFrame(frame);
+      lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, [reducedMotion]);
 
-    // Reset scroll on route change. Skip when the URL has a hash so anchor
-    // navigations (#projects, #contact) still work.
-    useEffect(() => {
-        if (typeof window === "undefined") return;
-        if (window.location.hash) return;
+  // Reset scroll on route change. Skip when the URL has a hash so anchor
+  // navigations (#projects, #contact) still work.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.location.hash) return;
 
-        const lenis = lenisRef.current;
-        if (lenis) {
-            lenis.scrollTo(0, { immediate: true });
-        }
-        window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
-    }, [pathname]);
+    const lenis = lenisRef.current;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    }
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+  }, [pathname]);
 
-    return <>{children}</>;
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
 }
