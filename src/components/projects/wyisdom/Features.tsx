@@ -8,45 +8,45 @@ import Section from "../../ui/Section";
 const features = [
   {
     icon: <BookOpenText className="w-6 h-6 text-[#DFFF00]" />,
-    title: "六十四卦 · The 64 Hexagrams",
+    title: "Explore all 64 hexagrams",
     description:
-      "Every one of the 64 hexagrams is fully seeded — 卦辭, 彖傳, 大象, the six lines with 小象, four-domain application, and four schools of commentary (王弼 · 程頤 · 朱熹 · modern lineage). Image-first reading before parsing the words.",
-    image: "/projects/wyisdom/hexagram.png",
-    imageAlt: "Hexagram reading surface for 乾 Qian",
-    tab: "六十四卦",
+      "Clear explanations, bilingual readings, and practical examples help you connect each hexagram to everyday life.",
+    image: "/projects/wyisdom/hexagram-2026.webp",
+    imageAlt: "GuanXiang reading page for Zhun, with its hexagram diagram and guided sections",
+    tab: "64 hexagrams",
     bg: "bg-[#DFFF00]/5",
     border: "border-[#DFFF00]/20",
   },
   {
     icon: <Dices className="w-6 h-6 text-[#DFFF00]" />,
-    title: "起卦 · Cast a Hexagram",
+    title: "Reflect on a real question",
     description:
-      "A guided coin or yarrow-stalk cast: frame a real situation, choose a method, watch the lines build, then read the result and journal it. Reflection, not forecast — no fortune claims.",
-    image: "/projects/wyisdom/cast.png",
-    imageAlt: "Cast flow — situation prompt",
-    tab: "起卦",
+      "Start with a situation on your mind. A guided coin or yarrow-stalk reading helps you explore it and find a useful next step.",
+    image: "/projects/wyisdom/cast-2026.webp",
+    imageAlt: "GuanXiang guided reflection screen for entering a question",
+    tab: "Guided reflection",
     bg: "bg-[#DFFF00]/5",
     border: "border-[#DFFF00]/20",
   },
   {
     icon: <CircleDot className="w-6 h-6 text-[#DFFF00]" />,
-    title: "十二消息卦 · The Year Cycle",
+    title: "Follow the rhythm of the year",
     description:
-      "An interactive TimeWheel of the twelve 消息卦, mapping yang waxing and waning across the solar year. Today's hexagram is derived live from the 京房 卦氣 60-day cycle.",
-    image: "/projects/wyisdom/cycle.png",
-    imageAlt: "Twelve sovereign hexagrams year-cycle wheel",
-    tab: "十二消息卦",
+      "Explore an interactive wheel of 12 seasonal hexagrams and see how their themes change throughout the year.",
+    image: "/projects/wyisdom/cycle-2026.webp",
+    imageAlt: "GuanXiang seasonal wheel showing all 12 hexagrams and the current season",
+    tab: "Year cycle",
     bg: "bg-[#DFFF00]/5",
     border: "border-[#DFFF00]/20",
   },
   {
     icon: <GraduationCap className="w-6 h-6 text-[#DFFF00]" />,
-    title: "學 · Foundations & Method",
+    title: "Learn at your own pace",
     description:
-      "Structured pedagogy from first principles — 陰陽, 八卦, 三才, 五行, 河圖洛書, 干支, the King Wen sequence — plus method modules on how to read the image, the lines, and a situation. Cross-cutting indices by image, position, and theme.",
-    image: "/projects/wyisdom/learn.png",
-    imageAlt: "Bagua foundation lesson",
-    tab: "八卦",
+      "Start with yin and yang and the eight trigrams. Illustrated lessons make the ideas easier to understand, one step at a time.",
+    image: "/projects/wyisdom/learn-2026.webp",
+    imageAlt: "GuanXiang illustrated trigram learning cards with Chinese and English explanations",
+    tab: "Learning foundations",
     bg: "bg-[#DFFF00]/5",
     border: "border-[#DFFF00]/20",
   },
@@ -66,9 +66,8 @@ export default function Features() {
             What&apos;s inside
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            A scholarly yet readable study surface — primary sources inline with
-            attribution, two registers (introductory and scholarly), both aiming
-            at 通透.
+            Ancient ideas, made easier to explore. Read, reflect, and learn in
+            Chinese and English.
           </p>
         </motion.div>
 
@@ -112,9 +111,9 @@ export default function Features() {
                       src={feature.image}
                       alt={feature.imageAlt}
                       fill
-                      className="object-cover object-top opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                      sizes="(max-width: 1023px) 92vw, 58vw"
+                      className="object-cover object-top"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 pointer-events-none" />
                   </div>
                 </div>
               </div>

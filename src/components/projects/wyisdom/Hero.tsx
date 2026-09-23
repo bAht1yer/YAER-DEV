@@ -33,17 +33,17 @@ export default function Hero() {
                         </div>
 
                         <h1 className="text-5xl md:text-7xl font-bold font-serif leading-tight mb-6 text-[#E6D9BE]">
-                            Wyisdom<br />
+                            GuanXiang<br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C75B43] to-[#C9A227] relative">
-                                易通
+                                觀象
                                 <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[#C75B43]/50 to-transparent blur-sm" />
                             </span>
                         </h1>
 
                         <p className="text-xl text-gray-400 max-w-lg leading-relaxed">
-                            A bilingual study surface for the I Ching (易經). All 64 hexagrams with
-                            classical and modern commentary, a daily-hexagram engine, an interactive
-                            year-cycle wheel, and a reflective coin / yarrow cast flow.
+                            A fresh way to explore the I Ching. Learn its 64 hexagrams,
+                            reflect on everyday questions, and build a daily practice
+                            — in Chinese and English.
                         </p>
                     </motion.div>
 
@@ -64,7 +64,7 @@ export default function Hero() {
                         </Link>
                         <div className="flex items-center gap-2 px-5 py-3 text-sm bg-[#070B0E] border border-white/10 text-gray-400 rounded-md backdrop-blur-sm">
                             <BookOpen className="w-4 h-4" />
-                            <span>64 / 64 hexagrams seeded</span>
+                            <span>Explore all 64 hexagrams</span>
                         </div>
                     </motion.div>
 
@@ -74,7 +74,7 @@ export default function Hero() {
                         transition={{ delay: 0.5, duration: 0.6 }}
                         className="flex flex-wrap gap-3 mt-4"
                     >
-                        {["Next.js", "易經 · I Ching", "Bilingual zh/en", "京房 卦氣", "Live Web App"].map((tech) => (
+                        {["Next.js", "I Ching", "Chinese & English", "Live Web App"].map((tech) => (
                             <span key={tech} className="text-xs font-mono text-gray-400 bg-black/40 border border-[#C75B43]/20 px-2 py-1 rounded">
                                 {tech}
                             </span>
@@ -103,8 +103,8 @@ export default function Hero() {
 
                         <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#070B0E]">
                             <Image
-                                src="/projects/wyisdom/home.png"
-                                alt="Wyisdom — I Ching study platform home"
+                                src="/projects/wyisdom/home-2026.webp"
+                                alt="GuanXiang — I Ching reflection and learning homepage"
                                 fill
                                 priority
                                 sizes="(min-width: 1024px) 560px, 92vw"

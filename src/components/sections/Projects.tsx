@@ -1,7 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import ProjectPreview from "../ui/ProjectPreview";
+import CapabilitiesStrip from "../ui/CapabilitiesStrip";
 import {
   ArrowUpRight,
   Bot,
@@ -62,33 +63,7 @@ export default function Projects() {
               className="work-link"
               aria-label={`${project.title} — ${project.external ? "open live project in a new tab" : "view project"}`}
             >
-              <div
-                className={`work-image ${project.imageFit === "contain" ? "work-image-contained" : ""}`}
-              >
-                <span className="work-index eyebrow">
-                  0{index + 1} {project.featured ? "/ Featured" : ""}
-                </span>
-                <div className="work-image-frame">
-                  <Image
-                    src={project.image}
-                    alt={`${project.title} interface`}
-                    fill
-                    sizes={
-                      index === 0
-                        ? "(max-width: 700px) 100vw, 64vw"
-                        : "(max-width: 700px) 100vw, 48vw"
-                    }
-                    className={
-                      project.imageFit === "contain"
-                        ? "object-contain"
-                        : "object-cover object-top"
-                    }
-                  />
-                </div>
-                <span className="work-open">
-                  <ArrowUpRight size={23} />
-                </span>
-              </div>
+              <ProjectPreview project={project} index={index} />
               <div className="work-caption">
                 <div>
                   <p className="eyebrow">
@@ -107,17 +82,7 @@ export default function Projects() {
           </article>
         ))}
       </div>
-      <div className="expertise-strip" aria-label="Expertise">
-        <span>
-          Web development <ArrowUpRight />
-        </span>
-        <span>
-          AI &amp; automation <ArrowUpRight />
-        </span>
-        <span>
-          Digital products <ArrowUpRight />
-        </span>
-      </div>
+      <CapabilitiesStrip />
     </section>
   );
 }

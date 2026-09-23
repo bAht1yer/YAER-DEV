@@ -7,15 +7,19 @@ Implemented from the approved second visual direction. The identity pairs a cust
 - Shared theme and responsive layouts: `src/app/afterimage.css`.
 - Vector identity: `src/components/ui/Brand.tsx` and `public/brand/afterimage-*.svg`.
 - Homepage: oversized identity, pointer-responsive sculpture, real project gallery, about/process, contact.
+- The capabilities strip is a noninteractive, three-column list covering engineering, intelligence, and experience. It flips through 12 skills every 4.2 seconds while visible, pauses in hidden tabs, and exposes every skill to assistive technology. Reduced-motion users see a still list.
+- The four process steps use descriptive icons: a compass for Scope, a pen tool for Design, code brackets for Build, and a rocket for Launch. Directional arrows are reserved for navigation.
+- GuanXiang's card and feature descriptions use plain, concise language. Its homepage, reading, casting, year-cycle, and learning images were recaptured from the upgraded live app on 2026-09-22 and saved as `public/projects/wyisdom/*-2026.webp` (about 224 KB combined). The source pages are `https://calclife.vercel.app/`, `/texts/yijing/3`, `/cast`, `/cycle`, and `/learn/bagua`. Local PNG captures and review screenshots are retained under `output/guanxiang-refresh/`.
 - Shared identity applied to services, notes, article reader, project pages, login, and dashboard navigation.
 - Existing project catalog, prices, authentication, and API behavior retained.
 - Native contact dialog provides modal focus isolation, Escape dismissal, and focus restoration. Form instance IDs remain unique when inline and dialog forms coexist.
-- Reduced-motion preferences disable sculpture motion and smooth scrolling; shared Framer Motion configuration respects the same preference.
-- The sculpture is an optimized transparent WebP (~136 KB). Its motion is a lightweight image transform, not a live 3D mesh.
+- Reduced-motion preferences hold the sculpture still and disable entrance motion and smooth scrolling; shared Framer Motion configuration respects the same preference.
+- The hero renders the original folded-chrome sculpture (`afterimage-sculpture.webp`) with Next Image, its original gentle float, and spring-smoothed pointer tilt. The experimental liquid shader has been removed, and there is no caption beneath the artwork. Reduced-motion users see the still sculpture.
+- The About monogram uses the original Y contours as a live extruded mesh, with a citron face, metallic beveled edges, and subtle pointer rotation. It loads only near the viewport, renders on demand, and releases its canvas when offscreen. Touch input and reduced-motion preferences retain a fixed angle. An SVG relief provides the loading and unsupported-WebGL fallback.
 
 ## Artwork provenance
 
-The sculpture was generated with the built-in ImageGen tool using the approved concept as its reference. The wordmark, monogram, and favicon are editable SVGs. Social and Apple icons are built from those assets with `node scripts/build-afterimage-assets.cjs`.
+The sculpture was generated with the built-in ImageGen tool using the approved concept as its reference; the homepage displays that original artwork with gentle float and pointer tilt. The wordmark, monogram, and favicon are editable SVGs. Social and Apple icons are built from those assets with `node scripts/build-afterimage-assets.cjs`.
 
 Production files:
 

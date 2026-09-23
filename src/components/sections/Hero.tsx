@@ -2,12 +2,7 @@
 
 import Image from "next/image";
 import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-} from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { type PointerEvent } from "react";
 import { Wordmark } from "../ui/Brand";
 
@@ -35,7 +30,7 @@ export default function Hero() {
       }}
       tabIndex={-1}
     >
-      <div className="hero-wordmark">
+      <div className="hero-wordmark hero-reveal">
         <Wordmark decorative />
       </div>
       <div className="hero-art" aria-hidden="true">

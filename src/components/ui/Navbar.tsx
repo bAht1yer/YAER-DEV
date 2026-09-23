@@ -49,9 +49,7 @@ export default function Navbar() {
         >
           <Wordmark decorative />
         </Link>
-        <span className="nav-location">
-          Independent developer <span>/</span> Toronto
-        </span>
+        <span className="nav-location">Independent developer</span>
         <nav className="desktop-nav" aria-label="Main navigation">
           {links.map((link) => (
             <Link
@@ -95,7 +93,7 @@ export default function Navbar() {
             <ArrowUpRight size={22} />
           </Link>
         ))}
-        <p className="eyebrow">Based in Toronto. Building everywhere.</p>
+        <p className="eyebrow">Building everywhere.</p>
       </nav>
     </header>
   );

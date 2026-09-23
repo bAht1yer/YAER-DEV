@@ -1,25 +1,29 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { BrandMark } from "../ui/Brand";
+import { ArrowUpRight, Code2, Compass, PenTool, Rocket } from "lucide-react";
+import SculptedBrandMark from "../ui/SculptedBrandMark";
 
 const steps = [
   {
     name: "Scope",
+    icon: Compass,
     description:
       "The right questions first. Goals, audience, and a clear path from idea to outcome.",
   },
   {
     name: "Design",
+    icon: PenTool,
     description:
       "Structure, identity, and the small interactions that make a product feel considered.",
   },
   {
     name: "Build",
+    icon: Code2,
     description:
       "Frontend, backend, and integrations. Built together, tested as one working product.",
   },
   {
     name: "Launch",
+    icon: Rocket,
     description:
       "Deploy, hand over, and keep improving with feedback from the people using it.",
   },
@@ -35,7 +39,7 @@ export default function Skills() {
       <div className="about-intro">
         <div className="about-label">
           <p className="eyebrow">02 / The person behind the pixels</p>
-          <BrandMark className="about-mark" />
+          <SculptedBrandMark />
         </div>
         <div>
           <h2 id="about-heading">
@@ -69,7 +73,7 @@ export default function Skills() {
               <span className="process-number">0{index + 1}</span>
               <h3>
                 {step.name}
-                <ArrowUpRight size={19} />
+                <step.icon size={21} strokeWidth={1.6} aria-hidden="true" />
               </h3>
               <p>{step.description}</p>
             </article>

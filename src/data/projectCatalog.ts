@@ -85,9 +85,9 @@ export const PROJECT_CATALOG: ProjectCatalogItem[] = [
     title: "GuanXiang 觀象",
     eyebrow: "I Ching study platform · 易經",
     description:
-      "觀象 / GuanXiang — a bilingual study surface for the I Ching. All 64 hexagrams with classical (王弼 · 程頤 · 朱熹) and modern commentary, a daily-hexagram engine, an interactive year-cycle wheel, and a reflective coin / yarrow cast flow.",
+      "A fresh way to explore the I Ching. Learn its 64 hexagrams, reflect on everyday questions, and build a daily practice — in Chinese and English.",
         tags: ["Next.js", "易經 · I Ching", "Bilingual", "Live Web App"],
-        image: "/projects/wyisdom/home-live.png",
+        image: "/projects/wyisdom/home-2026.webp",
         imageFit: "contain",
         links: { demo: "/projects/wyisdom" },
     },
